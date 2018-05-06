@@ -80,8 +80,6 @@ def request(host, path, api_key, url_params=None):
     print(u'Querying {0} ...'.format(url))
 
     response = requests.request('GET', url, headers=headers, params=url_params)
-    helper = DBHelper()
-    helper.create_yelp_location(response.text)
     return response.json()
 
 
@@ -128,16 +126,11 @@ def query_api(term, location):
         print(u'No businesses for {0} in {1} found.'.format(term, location))
         return
 
-    business_id = businesses[0]['id']
-
-    print(u'{0} businesses found, querying business info ' \
-        'for the top result "{1}" ...'.format(
-            len(businesses), business_id))
-    response = get_business(API_KEY, business_id)
-
-    print(u'Result for business "{0}" found:'.format(business_id))
-    pprint.pprint(response, indent=2)
-
+    for business in businesses:
+        business_id = business['id']
+        response = get_business(API_KEY, business_id)
+        helper = DBHelper()
+        helper.create_yelp_location(str(response))
 
 def main():
     parser = argparse.ArgumentParser()
