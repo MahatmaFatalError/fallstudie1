@@ -3,16 +3,10 @@
 import requests
 import config
 
-try:
-    # For Python 3.0 and later
-    from urllib.error import HTTPError
-    from urllib.parse import quote
-    from urllib.parse import urlencode
-except ImportError:
-    # Fall back to Python 2's urllib2 and urllib
-    from urllib2 import HTTPError
-    from urllib import quote
-    from urllib import urlencode
+# For Python 3.0 and later
+from urllib.error import HTTPError
+from urllib.parse import quote
+from urllib.parse import urlencode
 
 
 class YelpHelper:
@@ -24,10 +18,11 @@ class YelpHelper:
             'Authorization': 'Bearer %s' % api_key,
         }
 
-    def search(self, term, location):
+    def search(self, location, offset, term='restaurants'):
         """Query the Search API by a search term and location.
         Args:
             term (str): The search term passed to the API.
+            offset (int): Offset the list of returned business results by this amount.
             location (str): The search location passed to the API.
         Returns:
             dict: The JSON response from the request.
@@ -37,9 +32,10 @@ class YelpHelper:
             'term': term.replace(' ', '+'),
             'radius': config.YELP_RADIUS,
             'limit': config.YELP_SEARCH_LIMIT,
-            'location': location.replace(' ', '+')
+            'location': location.replace(' ', '+'),
+            'offset': offset
         }
-        return self.request(config.YELP_SEARCH_PATH, url_params=url_params)
+        return self._request(config.YELP_SEARCH_PATH, url_params=url_params)
 
     def get_business(self, business_id):
         """Query the Business API by a business ID.
