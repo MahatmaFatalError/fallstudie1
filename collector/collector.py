@@ -6,5 +6,3 @@ class Collector(ABC):
     @abstractmethod
     def collect(self):
         pass
-
-

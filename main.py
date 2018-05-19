@@ -1,5 +1,5 @@
 from helper.DBHelper import DBHelper
-import collector
+from collector.factory import CollectorFactory
 from config import constants
 import os
 import json
@@ -26,7 +26,7 @@ def setup_logging(default_path='config/logging.json', default_level=logging.INFO
 
 def read_csv():
     db = DBHelper()
-    csv_collector = collector.create('csv')
+    csv_collector = CollectorFactory.create('csv')
 
     csv_collector.collect('data/staedte.csv')
     content = csv_collector.get_data()
@@ -45,7 +45,7 @@ def read_csv():
 
 def save_businesses():
     db = DBHelper()
-    yelp_collector = collector.create('yelp')
+    yelp_collector = CollectorFactory.create('yelp')
     yelp_collector.authenticate(constants.YELP_API_KEY)
     yelp_collector.set_host(constants.YELP_API_HOST)
     cities = db.list_all_entities('City')
@@ -71,7 +71,7 @@ def save_businesses():
                         'lat': business['coordinates']['latitude'],
                         'long': business['coordinates']['longitude']
                     }
-                    db.create_or_update(constants.GCP_RESTAURANT_ENTITY, business_id, attributes)
+                    db.create_or_update(constants.GCP_YELP_RESTAURANT_ENTITY, business_id, attributes)
                 offset += constants.YELP_SEARCH_LIMIT + 1
             else:
                 print(u'Key "{0} not found in query result ...'.format(key))
