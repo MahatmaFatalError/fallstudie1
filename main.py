@@ -8,6 +8,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def setup_logging(default_path='config/logging.json', default_level=logging.INFO, env_key='LOG_CFG'):
     """Setup logging configuration"""
 
