@@ -8,9 +8,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
-# TODO: Logging https://www.loggly.com/ultimate-guide/python-logging-basics/
-
 def setup_logging(default_path='config/logging.json', default_level=logging.INFO, env_key='LOG_CFG'):
     """Setup logging configuration"""
 
