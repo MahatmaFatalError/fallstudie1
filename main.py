@@ -1,6 +1,6 @@
 import argparse
 import config
-from YelpHelper import YelpHelper
+from collector.yelp import YelpHelper
 import sys
 
 # This client code can run on Python 2.x or 3.x.  Your imports can be

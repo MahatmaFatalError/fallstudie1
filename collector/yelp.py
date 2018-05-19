@@ -1,24 +1,30 @@
 # -*- coding: utf-8 -*-
-
 import requests
 import config
-
-# For Python 3.0 and later
+from .collector import Collector
 from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.parse import urlencode
 
 
-class YelpHelper:
+class Yelp(Collector):
 
-    def __init__(self, host, api_key):
-        self.host = host
+    def __init__(self):
+        Collector.__init__(self)
+        self.api_key = 'None'
+        self.host = 'None'
+        self.headers = {}
+
+    def authenticate(self, api_key):
         self.api_key = api_key
         self.headers = {
             'Authorization': 'Bearer %s' % api_key,
         }
 
-    def search(self, location, offset, term='restaurants'):
+    def set_host(self, host):
+        self.host = host
+
+    def collect(self, location, offset, term='restaurants'):
         """Query the Search API by a search term and location.
         Args:
             term (str): The search term passed to the API.

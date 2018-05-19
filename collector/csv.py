@@ -1,12 +1,14 @@
+from .collector import Collector
 import csv
 
 
-class CSVReader:
+class Csv(Collector):
 
     def __init__(self):
+        Collector.__init__(self)
         self.data = []
 
-    def read(self, filename):
+    def collect(self, filename):
         with open(filename) as data:
             csv_reader = csv.DictReader(data, delimiter=';')
             column_names = csv_reader.fieldnames
