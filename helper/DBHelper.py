@@ -6,7 +6,7 @@ from google.cloud import datastore
 class DBHelper:
 
     def __init__(self):
-        self.client = datastore.Client.from_service_account_json('data/auth/Project_THD-513f30ac6360.json')
+        self.client = datastore.Client.from_service_account_json('data/auth/BDCS1.json')
 
     def create_or_update(self, entity_name, unique_id, attributes=None):
         key = self.client.key(entity_name, unique_id)

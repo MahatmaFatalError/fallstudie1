@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 import requests
-import config
+from config import constants
 from .collector import Collector
-from urllib.error import HTTPError
 from urllib.parse import quote
-from urllib.parse import urlencode
 
 
 class Yelp(Collector):
@@ -36,12 +34,12 @@ class Yelp(Collector):
 
         url_params = {
             'term': term.replace(' ', '+'),
-            'radius': config.YELP_RADIUS,
-            'limit': config.YELP_SEARCH_LIMIT,
+            'radius': constants.YELP_RADIUS,
+            'limit': constants.YELP_SEARCH_LIMIT,
             'location': location.replace(' ', '+'),
             'offset': offset
         }
-        return self._request(config.YELP_SEARCH_PATH, url_params=url_params)
+        return self._request(constants.YELP_SEARCH_PATH, url_params=url_params)
 
     def get_business(self, business_id):
         """Query the Business API by a business ID.
@@ -50,9 +48,9 @@ class Yelp(Collector):
         Returns:
             dict: The JSON response from the request.
         """
-        business_path = config.YELP_BUSINESS_PATH.replace('{id}', business_id)
+        business_path = constants.YELP_BUSINESS_PATH.replace('{id}', business_id)
 
-        return self._request(config.YELP_API_HOST, business_path)
+        return self._request(constants.YELP_API_HOST, business_path)
 
     def get_reviews(self, business_id):
         """Query the Review API by a business ID.
@@ -61,9 +59,9 @@ class Yelp(Collector):
         Returns:
             dict: The JSON response from the request.
         """
-        business_path = config.YELP_REVIEW_PATH.replace('{id}', business_id)
+        business_path = constants.YELP_REVIEW_PATH.replace('{id}', business_id)
 
-        return self._request(config.YELP_API_HOST, business_path)
+        return self._request(constants.YELP_API_HOST, business_path)
 
     def _request(self, path, url_params=None):
         """Given your API_KEY, send a GET request to the API.

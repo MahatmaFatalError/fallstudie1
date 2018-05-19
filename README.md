@@ -14,3 +14,4 @@ https://srhk-my.sharepoint.com/:f:/g/personal/11010021_stud_hochschule-heidelber
 - https://www.yelp.de/developers/documentation/v3/business_search
 - https://cloud.google.com/datastore/docs/concepts/entities#datastore-update-python
 - https://github.com/Yelp/yelp-fusion/blob/master/fusion/python/sample.py
+- https://opensource.com/article/17/9/python-logging
