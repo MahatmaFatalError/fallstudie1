@@ -1,6 +1,6 @@
-from helper.DBHelper import DBHelper
-from collector.factory import CollectorFactory
+from main.factory import EverythingFactory
 from config import constants
+from main.database.DBHelper import DatastoreHelper
 import os
 import json
 import logging.config
@@ -25,27 +25,16 @@ def setup_logging(default_path='config/logging.json', default_level=logging.INFO
 
 
 def read_csv():
-    db = DBHelper()
-    csv_collector = CollectorFactory.create('csv')
-
-    csv_collector.collect('data/staedte.csv')
-    content = csv_collector.get_data()
-    # save entities in database
-    for item in content:
-        attributes = {'name': item['Stadt'], 'population': item['Bevölkerung gesamt'], 'plz': item['Postleitzahl']}
-        city_id = item['Lfd. Nr.']
-        # split additional "Stadt" Prefix from name cell
-        name = attributes['name']
-        name = name.split(',')[0]
-        attributes['name'] = name
-        if name:
-            logger.info('Creating %s ...',name)
-            db.create_or_update(constants.GCP_LOCATION_ENTITY, city_id, attributes)
+    csv_collector = EverythingFactory.create('collector', 'csv')
+    csv_collector.set_filename('data/staedte.csv')
+    csv_collector.collect()
+    print(csv_collector.get_data())
+    # csv_collector.save(constants.GCP_LOCATION_ENTITY)
 
 
 def save_businesses():
-    db = DBHelper()
-    yelp_collector = CollectorFactory.create('yelp')
+    db = DatastoreHelper()
+    yelp_collector = EverythingFactory.create('collector', 'yelp')
     yelp_collector.authenticate(constants.YELP_API_KEY)
     yelp_collector.set_host(constants.YELP_API_HOST)
     cities = db.list_all_entities('City')
