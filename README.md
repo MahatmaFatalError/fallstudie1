@@ -6,9 +6,9 @@
 [THD OneDrive](https://srhk-my.sharepoint.com/:f:/g/personal/11010021_stud_hochschule-heidelberg_de/EsJ-yxpcI2BGk5ccB-yAlkMBkr0FEeI69z9Gz9BdiL1NCg?e=Udhkxj)
 
 ## Prerequistes
- 1. Python 2.7
+ 1. Python 3.6
     - https://www.python.org/downloads/
- 2. Google Cloud SDK
+ 2. Google Cloud SDK (with bundled Python)
     - https://cloud.google.com/sdk/docs/?hl=de
  3. pip (should be included in python install bundle)
     - https://pip.pypa.io/en/stable/installing/
