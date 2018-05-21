@@ -1,4 +1,4 @@
-psy# Fallstudie1 - T(eam) HD
+# Fallstudie1 - T(eam) HD
 
 ## Data Pipeline
 
@@ -27,3 +27,4 @@ psy# Fallstudie1 - T(eam) HD
 - https://cloud.google.com/datastore/docs/concepts/entities#datastore-update-python
 - https://github.com/Yelp/yelp-fusion/blob/master/fusion/python/sample.py
 - https://opensource.com/article/17/9/python-logging
+- http://ipv4.whatismyv6.com/

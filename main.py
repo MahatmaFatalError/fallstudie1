@@ -26,11 +26,19 @@ def setup_logging(default_path='config/logging.json', default_level=logging.INFO
         logging.basicConfig(level=default_level)
 
 
-def read_csv():
+def collect_csv():
     csv_collector = EverythingFactory.create('collector', 'csv')
     csv_collector.set_filename('data/staedte.csv')
     csv_collector.collect()
     csv_collector.save(constants.GCP_LOCATION_ENTITY)
+
+
+def transport_csv():
+    csv_transporter = EverythingFactory.create('transporter', 'csv',
+                                               constants.SQL_DATABASE_NAME,
+                                               constants.GCP_LOCATION_ENTITY,
+                                               constants.SQL_CITY_TABLE)
+    csv_transporter.transport()
 
 
 def save_businesses():
@@ -38,7 +46,7 @@ def save_businesses():
     yelp_collector = EverythingFactory.create('collector', 'yelp')
     yelp_collector.authenticate(constants.YELP_API_KEY)
     yelp_collector.set_host(constants.YELP_API_HOST)
-    cities = db.list_all_entities('City')
+    cities = db.fetch_all_entities('City')
     for city in cities:
         location = city['plz'] + ', DE'
         city_id = city.key
@@ -69,5 +77,6 @@ def save_businesses():
 
 if __name__ == '__main__':
     setup_logging()
-    read_csv()
+    # collect_csv()
+    transport_csv()
     # save_businesses()

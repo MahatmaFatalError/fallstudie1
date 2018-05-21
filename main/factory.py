@@ -19,7 +19,7 @@ class AbstractFactory(ABCMeta):
 # The Concrete Factory
 class EverythingFactory(AbstractFactory):
     @staticmethod
-    def create(package, name):
+    def create(package, name, *args):
         try:
             if '.' in name:
                 module_name, class_name = name.rsplit('.', 1)
@@ -32,7 +32,7 @@ class EverythingFactory(AbstractFactory):
             module = import_module('.' + module_name, package='main.' + package)
             logger.debug(module)
             python_class = getattr(module, class_name)
-            instance = python_class()
+            instance = python_class(*args)
             logger.debug(instance)
         except (AttributeError, ModuleNotFoundError):
             raise ImportError('{} is not part of {}!'.format(name, package))

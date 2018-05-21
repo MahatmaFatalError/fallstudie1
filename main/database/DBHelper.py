@@ -18,7 +18,8 @@ class DatastoreHelper:
 
     def create_or_update(self, entity_name, unique_id, attributes=None):
         key = self.client.key(entity_name, unique_id)
-        item = datastore.Entity(key)
+        # create key and exclude from index because indexed properties cant be longer than 1500 bytes
+        item = datastore.Entity(key=key, exclude_from_indexes=['content'])
         item.update(attributes)
         self.client.put(item)
         return item.key

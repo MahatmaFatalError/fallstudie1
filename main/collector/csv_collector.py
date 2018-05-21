@@ -30,7 +30,8 @@ class Csv(Collector):
 
     def save(self, entity_name):
         db = DatastoreHelper()
-        attributes = {'updatedAt': datetime.datetime.now(), 'content': self.data}
+        content = json.dumps(self.data)
+        attributes = {'updatedAt': datetime.datetime.now(), 'content': content}
         db.create_or_update(entity_name, str(uuid.uuid4()), attributes)
 
     def get_data(self):

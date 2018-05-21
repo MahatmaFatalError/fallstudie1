@@ -1,30 +1,20 @@
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 
 
 # ... means "not-yet-written code"
 # Abstract Transporter
-class Transporter(ABCMeta):
+class Transporter(ABC):
 
-    @abstractproperty
-    def source_data(self):
-        pass
-
-    @abstractproperty
-    def target_data(self):
-        pass
-
-    @abstractmethod
-    def do_mapping(self):
-        pass
+    def __init__(self, database, source_entity, target_table):
+        self.database = database
+        self.source_entity = source_entity
+        self.target_table = target_table
 
     @abstractmethod
     def transport(self):
-        pass
+        ...
 
+    # maps target and source structure and return entity to save in db
     @abstractmethod
-    def read(self):
-        pass
-
-    @abstractmethod
-    def save(self):
-        pass
+    def map(self, source_entity, target_fields):
+        ...
