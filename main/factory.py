@@ -1,6 +1,8 @@
 import logging
 from importlib import import_module
 from abc import ABCMeta, abstractmethod
+from main.collector.collector import Collector
+from main.transporter.transporter import Transporter
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +34,6 @@ class EverythingFactory(AbstractFactory):
             python_class = getattr(module, class_name)
             instance = python_class()
             logger.debug(instance)
-        except AttributeError:
+        except (AttributeError, ModuleNotFoundError):
             raise ImportError('{} is not part of {}!'.format(name, package))
         return instance

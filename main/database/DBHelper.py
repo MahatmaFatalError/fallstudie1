@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from google.cloud import datastore
-from pathlib2 import Path
+from pathlib import Path
 from config import constants
 import logging
 import sqlalchemy
@@ -11,7 +11,10 @@ logger = logging.getLogger(__name__)
 class DatastoreHelper:
 
     def __init__(self):
-        self.client = datastore.Client()
+        root_path = Path(__file__).parents[2]
+        final_path = root_path.joinpath('data/auth/BDCS1.json')
+        logger.debug(final_path)
+        self.client = datastore.Client.from_service_account_json(final_path)
 
     def create_or_update(self, entity_name, unique_id, attributes=None):
         key = self.client.key(entity_name, unique_id)
@@ -20,7 +23,7 @@ class DatastoreHelper:
         self.client.put(item)
         return item.key
 
-    def list_all_entities(self, entity_name):
+    def fetch_all_entities(self, entity_name):
         query = self.client.query(kind=entity_name)
         return list(query.fetch())
 

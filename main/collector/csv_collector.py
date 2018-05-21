@@ -1,5 +1,4 @@
 import csv
-import io
 import datetime
 import json
 import logging
@@ -31,9 +30,8 @@ class Csv(Collector):
 
     def save(self, entity_name):
         db = DatastoreHelper()
-        json_data = json.dumps(self.data)
-        attributes = {'updatedAt': datetime.datetime.now(), 'content': json_data}
-        db.create_or_update(entity_name, uuid.uuid4(), attributes)
+        attributes = {'updatedAt': datetime.datetime.now(), 'content': self.data}
+        db.create_or_update(entity_name, str(uuid.uuid4()), attributes)
 
     def get_data(self):
         return self.data

@@ -1,3 +1,5 @@
+import csv
+
 from main.factory import EverythingFactory
 from config import constants
 from main.database.DBHelper import DatastoreHelper
@@ -28,8 +30,7 @@ def read_csv():
     csv_collector = EverythingFactory.create('collector', 'csv')
     csv_collector.set_filename('data/staedte.csv')
     csv_collector.collect()
-    print(csv_collector.get_data())
-    # csv_collector.save(constants.GCP_LOCATION_ENTITY)
+    csv_collector.save(constants.GCP_LOCATION_ENTITY)
 
 
 def save_businesses():
