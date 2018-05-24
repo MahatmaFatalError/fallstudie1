@@ -1,5 +1,5 @@
-import csv
-
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
 from main.factory import EverythingFactory
 from config import constants
 from main.database.DBHelper import DatastoreHelper
@@ -27,7 +27,7 @@ def setup_logging(default_path='config/logging.json', default_level=logging.INFO
 
 
 def collect_csv():
-    csv_collector = EverythingFactory.create('collector', 'csv')
+    csv_collector = EverythingFactory.create('collector', 'csv', 'german_cities', ';')
     csv_collector.set_filename('data/staedte.csv')
     csv_collector.collect()
     csv_collector.save(constants.GCP_LOCATION_ENTITY)
@@ -77,6 +77,6 @@ def save_businesses():
 
 if __name__ == '__main__':
     setup_logging()
-    # collect_csv()
+    collect_csv()
     transport_csv()
     # save_businesses()

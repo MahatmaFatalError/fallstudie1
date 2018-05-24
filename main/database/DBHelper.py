@@ -1,7 +1,10 @@
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 from google.cloud import datastore
 from pathlib import Path
+from sqlalchemy.orm import sessionmaker
 from config import constants
+
 import logging
 import sqlalchemy
 
@@ -19,7 +22,7 @@ class DatastoreHelper:
     def create_or_update(self, entity_name, unique_id, attributes=None):
         key = self.client.key(entity_name, unique_id)
         # create key and exclude from index because indexed properties cant be longer than 1500 bytes
-        item = datastore.Entity(key=key, exclude_from_indexes=['content'])
+        item = datastore.Entity(key, exclude_from_indexes=['content'])
         item.update(attributes)
         self.client.put(item)
         return item.key
@@ -30,6 +33,11 @@ class DatastoreHelper:
 
 
 class SqlHelper:
+
+    con = None
+    meta = None
+    session = None
+
     def __init__(self, database):
         self.connect(constants.SQL_DATABASE_USER, constants.SQL_DATABASE_PW, database)
 
@@ -49,10 +57,19 @@ class SqlHelper:
     def get_connection(self):
         return self.con
 
-    def insert(self, entry, table_name):
-        table = self.meta.tables[table_name]
-        statement = table.insert().values(entry)
-        self.con.execute(statement)
+    def create_session(self):
+        # create a configured "Session" class
+        Session = sessionmaker(bind=self.con)
+        # create a Session
+        self.session = Session()
+
+    def insert(self, entry):
+        self.session.add(entry)
+        self.session.commit()
+
+    def insert_all(self, entries):
+        self.session.add_all(entries)
+        self.session.commit()
 
     def get_table_column_names(self, table_name):
         table = self.meta.tables[table_name]
@@ -64,4 +81,9 @@ class SqlHelper:
     def select_all_entries_where(self, table_name, key, value):
         results = self.meta.tables[table_name]
         statement = results.select().where(getattr(results.c, key) == value)
+        return self.con.execute(statement)
+
+    def select_all(self, table_name):
+        results = self.meta.tables[table_name]
+        statement = results.select()
         return self.con.execute(statement)

@@ -16,5 +16,5 @@ class Transporter(ABC):
 
     # maps target and source structure and return entity to save in db
     @abstractmethod
-    def map(self, source_entity, target_fields):
+    def map(self, source_entity, target_entity):
         ...

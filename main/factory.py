@@ -26,7 +26,7 @@ class EverythingFactory(AbstractFactory):
             else:
                 module_name = name + '_' + package
                 logger.debug(module_name)
-                class_name = name.capitalize()
+                class_name = name.capitalize() + package.capitalize()
                 logger.debug(class_name)
 
             module = import_module('.' + module_name, package='main.' + package)
