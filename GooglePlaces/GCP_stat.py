@@ -13,7 +13,6 @@ from builtins import str
 
 # GCP connection
 db = create_engine('postgres://postgres:team123@35.190.205.207:5432/fonethd')
-#db = create_engine('postgres://postgres:sano123@localhost:5432/fallstudie')
 base = declarative_base()
 
 class City(base):
