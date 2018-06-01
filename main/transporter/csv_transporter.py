@@ -32,7 +32,7 @@ class CsvTransporter(Transporter):
     def map(self, source_entity, target_entity):
         entities = []
         for item in source_entity:
-            target_entity = City() # TODO; instantiate dynamic entity
+            target_entity = City()  # TODO; instantiate dynamic entity
             target_entity.id = item['Lfd. Nr.']
             # split additional "Stadt" Prefix from name cell
             target_entity.name = str(item['Stadt']).split(',')[0]

@@ -28,3 +28,8 @@
 - https://github.com/Yelp/yelp-fusion/blob/master/fusion/python/sample.py
 - https://opensource.com/article/17/9/python-logging
 - http://ipv4.whatismyv6.com/
+- http://docs.sqlalchemy.org/en/latest/core/type_basics.html
+
+## How-To: Connect New Datasource
+
+1. if needed create a new PostgreSQL Table in ```init_db.py``` script in folder ``` main.database```
