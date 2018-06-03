@@ -29,6 +29,7 @@
 - https://opensource.com/article/17/9/python-logging
 - http://ipv4.whatismyv6.com/
 - http://docs.sqlalchemy.org/en/latest/core/type_basics.html
+- https://www.suche-postleitzahl.org/downloads
 
 ## How-To: Connect New Datasource
 

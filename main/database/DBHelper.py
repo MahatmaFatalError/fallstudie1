@@ -4,7 +4,7 @@ from google.cloud import datastore
 from pathlib import Path
 from sqlalchemy.orm import sessionmaker
 from config import constants
-
+from main.database.init_db import City, Restaurant
 import logging
 import sqlalchemy
 
@@ -33,7 +33,6 @@ class DatastoreHelper:
 
 
 class SqlHelper:
-
     con = None
     meta = None
     session = None
@@ -65,11 +64,15 @@ class SqlHelper:
 
     def insert(self, entry):
         self.session.add(entry)
+
+    def commit_session(self):
         self.session.commit()
+
+    def close_session(self):
+        self.session.close()
 
     def insert_all(self, entries):
         self.session.add_all(entries)
-        self.session.commit()
 
     def get_table_column_names(self, table_name):
         table = self.meta.tables[table_name]
@@ -78,12 +81,16 @@ class SqlHelper:
             table_names.append(column.key)
         return table_names
 
-    def select_all_entries_where(self, table_name, key, value):
-        results = self.meta.tables[table_name]
-        statement = results.select().where(getattr(results.c, key) == value)
-        return self.con.execute(statement)
+    def fetch_all(self, entity_name):
+        result = None
+        if entity_name == 'city':
+            result = self.session.query(City)
+        elif entity_name == 'restaurant':
+            result = self.session.query(Restaurant)
+        return result
 
-    def select_all(self, table_name):
-        results = self.meta.tables[table_name]
-        statement = results.select()
-        return self.con.execute(statement)
+    def fetch_city_by_name(self, name):
+        result = self.session.query(City).\
+            filter(City.name.like(name)).\
+            first()
+        return result

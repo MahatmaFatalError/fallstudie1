@@ -9,5 +9,5 @@ class Collector(object):
         pass
 
     @abstractmethod
-    def save(self, entity_name):
+    def _save(self, data):
         pass

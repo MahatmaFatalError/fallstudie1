@@ -2,6 +2,7 @@ from main.database.DBHelper import SqlHelper
 
 
 db = SqlHelper('fonethd')
-entries = db.select_all('city')
+db.create_session()
+entries = db.fetch_all('city')
 for row in entries:
-    print(row)
+    print(row.zip_codes)

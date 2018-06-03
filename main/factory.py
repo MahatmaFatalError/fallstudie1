@@ -1,8 +1,6 @@
 import logging
 from importlib import import_module
 from abc import ABCMeta, abstractmethod
-from main.collector.collector import Collector
-from main.transporter.transporter import Transporter
 
 logger = logging.getLogger(__name__)
 
