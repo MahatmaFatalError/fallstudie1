@@ -4,6 +4,7 @@ FACTORY_TRANSPORTER = 'transporter'
 CSV = 'csv'
 CSV_DELIMITER_COMMA = ','
 CSV_DELIMITER_SEMI = ';'
+DATASOURCE_YELP = 'yelp'
 
 
 # Yelp API constants
@@ -20,6 +21,7 @@ YELP_SEARCH_TERM = 'restaurants'
 GCP_ENTITY_LOCATION = 'THD_City'
 GCP_ENTITY_RESTAURANT = 'THD_Restaurant'
 GCP_ENTITY_PLZ_CITY= 'THD_PLZ_FOR_CITY'
+GCP_FETCH_LIMIT = 100
 
 # SQL Constants
 SQL_DATABASE_NAME = 'fonethd'

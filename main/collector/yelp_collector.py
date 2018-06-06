@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 import datetime
-import json
+import time
 
 import requests
+import logging
+from main.helper.exception import YelpError
+from google.api_core.exceptions import ServiceUnavailable
 from config import constants
 from main.collector.collector import Collector
-from urllib.error import HTTPError
 from urllib.parse import quote
-from main.database.DBHelper import SqlHelper, DatastoreHelper
-import logging
-
+from main.database.db_helper import SqlHelper, DatastoreHelper
+from urllib.error import HTTPError
 
 logger = logging.getLogger(__name__)
 
@@ -26,33 +27,48 @@ class YelpCollector(Collector):
         self.offset = None
         self.current_path = None
 
-    def _save(self, data):
-        db = DatastoreHelper()
-        attributes = {'path': self.current_path,
-                      'location': self.location,
-                      'offset': self.offset,
-                      'updated_at': datetime.datetime.now(),
-                      'content': data}
-        entity_id = str(self.current_path) + str(self.location) + str(self.offset)
-        logger.debug(entity_id)
-        db.create_or_update(constants.GCP_ENTITY_RESTAURANT, entity_id, attributes)
-
     def collect(self):
         db = SqlHelper(constants.SQL_DATABASE_NAME)
-        cities = db.select_all(constants.SQL_TABLE_CITY)
-        for city in cities:
-            self.location = str(city.zip_code) + ', DE'
-            logger.debug(self.location)
-            self.offset = 0
-            result = self._get_search(self.location, self.offset)
-            content = json.dumps(result)
-            self._save(content)
-            total = result['total']
-            logger.info(u'Found {0} Entries...'.format(total))
-            while self.offset < total and (self.offset + constants.YELP_SEARCH_LIMIT <= 1000):
-                result = self._get_search(self.location, self.offset)
-                self._save(result)
-                self.offset += constants.YELP_SEARCH_LIMIT + 1
+        db.create_session()
+        cities = db.fetch_all(constants.SQL_TABLE_CITY)
+        try:
+            for city in cities:
+                name = city.name
+                for zip_code in city.zip_codes:
+                    if not zip_code.requested:
+                        zip_completed = True
+                        self.location = str(zip_code.zip_code) + ', ' + str(name) + ', DE'
+                        logger.debug(self.location)
+                        self.offset = 0
+                        content = self._get_search(self.location, self.offset)
+                        if 'error' not in content:
+                            total = content['total']
+                            save_success = self._save(content)
+                            if save_success is False:
+                                zip_completed = False
+                            logger.info(u'Found {0} Entries...'.format(total))
+                            while self.offset < total\
+                                    and(self.offset + constants.YELP_SEARCH_LIMIT <= 1000)\
+                                    and save_success is True:
+                                content = self._get_search(self.location, self.offset)
+                                self.offset += constants.YELP_SEARCH_LIMIT + 1
+                                if 'error' not in content:
+                                    save_success = self._save(content)
+                                    if save_success is False:
+                                        zip_completed = False
+                                else:
+                                    raise YelpError(content['error']['code'], content['error']['description'])
+                        else:
+                            raise YelpError(content['error']['code'], content['error']['description'])
+                        if zip_completed is True:
+                            zip_code.requested = True
+                            db.commit_session()
+        except HTTPError as error:
+            logger.exception('Encountered HTTP error %s on %s:\nAbort program.', error.code, error.url)
+        except YelpError as err:
+            logger.exception(err)
+        finally:
+            db.close_session()
 
     def _get_search(self, location, offset):
         """Query the Search API by a search term and location.
@@ -62,13 +78,31 @@ class YelpCollector(Collector):
 
         url_params = {
             'term': constants.YELP_SEARCH_TERM,
-            'radius': constants.YELP_RADIUS,
             'limit': constants.YELP_SEARCH_LIMIT,
             'location': location.replace(' ', '+'),
             'offset': offset
         }
         logger.info(u'Querying {0}; offset {1}...'.format(location, self.offset))
         return self._request(constants.YELP_SEARCH_PATH, url_params=url_params)
+
+    def _save(self, data):
+        result = False
+        logger.info('Saving...')
+        db = DatastoreHelper()
+        attributes = {'path': self.current_path,
+                      'location': self.location,
+                      'offset': self.offset,
+                      'updated_at': datetime.datetime.now(),
+                      'content': data}
+        entity_id = str(self.current_path) + str(self.location) + str(self.offset)
+        try:
+            db.create_or_update(constants.GCP_ENTITY_RESTAURANT, entity_id, attributes)
+            result = True
+        except ServiceUnavailable:
+            logger.exception('Service unavailable when trying to save %s', entity_id)
+        except:
+            logger.exception('An Unknown Error occured')
+        return result
 
     def _get_business(self, business_id):
         """Query the Business API by a business ID.
@@ -107,4 +141,11 @@ class YelpCollector(Collector):
         logger.info(u'Querying {0} ...'.format(url))
 
         response = requests.request('GET', url, headers=self.headers, params=url_params)
+        logger.info(response.status_code)
+        error_codes = [502, 503]
+        while response.status_code in error_codes:
+            time.sleep(0.1)
+            logger.info(response.status_code)
+            response = requests.request('GET', url, headers=self.headers, params=url_params)
+            logger.info(response.status_code)
         return response.json()

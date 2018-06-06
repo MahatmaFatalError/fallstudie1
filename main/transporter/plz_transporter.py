@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
+import datetime
 import re
 from main.database.init_db import ZipCode
 from main.transporter.transporter import Transporter, logger
@@ -28,6 +29,8 @@ class PlzTransporter(Transporter):
                 for item in zip_codes:
                     zip_code = ZipCode()
                     zip_code.zip_code = item
+                    zip_code.requested = False
+                    zip_code.updated_at = datetime.datetime.now()
                     target_city.zip_codes.append(zip_code)
                 logger.info('Found {0} zip codes for {1}'.format(len(target_city.zip_codes), target_city.name))
                 entities.append(target_city)

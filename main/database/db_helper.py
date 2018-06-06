@@ -27,9 +27,9 @@ class DatastoreHelper:
         self.client.put(item)
         return item.key
 
-    def fetch_all_entities(self, entity_name):
+    def fetch_entity(self, entity_name, limit):
         query = self.client.query(kind=entity_name)
-        return list(query.fetch())
+        return list(query.fetch(limit=limit))
 
 
 class SqlHelper:

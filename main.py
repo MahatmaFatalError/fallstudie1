@@ -30,7 +30,7 @@ def collect_cities():
                                              constants.GCP_ENTITY_LOCATION,
                                              'data/staedte.csv',
                                              constants.CSV_DELIMITER_SEMI)
-    csv_collector.collect()
+    return csv_collector.collect()
 
 
 def collect_plz():
@@ -42,7 +42,11 @@ def collect_plz():
                                              constants.CSV_DELIMITER_COMMA,
                                              'utf-8',
                                              True)
-    plz_collector.collect()
+    return plz_collector.collect()
+
+def collect_restaurants():
+    yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR, 'yelp')
+    return yelp_collector.collect()
 
 
 def transport_plz(test_mode=False):
@@ -52,7 +56,7 @@ def transport_plz(test_mode=False):
                                                constants.GCP_ENTITY_PLZ_CITY,
                                                constants.SQL_TABLE_CITY,
                                                True)
-    plz_transporter.transport(test_mode)
+    return plz_transporter.transport(test_mode)
 
 
 def transport_cities(test_mode=False):
@@ -62,18 +66,25 @@ def transport_cities(test_mode=False):
                                                constants.GCP_ENTITY_LOCATION,
                                                constants.SQL_TABLE_CITY,
                                                False)
-    csv_transporter.transport(test_mode)
+    return csv_transporter.transport(test_mode)
 
 
-def collect_restaurants():
-    yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR, 'yelp')
-    yelp_collector.collect()
+def transport_restaurants(test_mode=False):
+    restaurant_transporter = EverythingFactory.create(constants.FACTORY_TRANSPORTER,
+                                               'restaurant',
+                                               constants.SQL_DATABASE_NAME,
+                                               constants.GCP_ENTITY_RESTAURANT,
+                                               constants.SQL_TABLE_RESTAURANT,
+                                               False)
+    return restaurant_transporter.transport(test_mode)
 
 
 if __name__ == '__main__':
     setup_logging()
-    # collect_plz()
-    # collect_cities()
-    # transport_cities()
-    transport_plz(test_mode=False)
-    # collect_restaurants()
+    # result = collect_plz()
+    # result = collect_cities()
+    # result = transport_cities(True)
+    # result = transport_plz()
+    # result = collect_restaurants()
+    result = transport_restaurants()
+    print(result)

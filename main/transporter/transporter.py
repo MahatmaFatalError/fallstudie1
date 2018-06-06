@@ -1,7 +1,11 @@
 import json
 from abc import ABC, abstractmethod
-from main.database.DBHelper import DatastoreHelper, logger, SqlHelper
+from sqlalchemy.exc import SQLAlchemyError
+
+from config import constants
+from main.database.db_helper import DatastoreHelper, logger, SqlHelper
 from main.helper import util
+from main.helper.result import Result
 
 
 # ... means "not-yet-written code"
@@ -24,24 +28,49 @@ class Transporter(ABC):
         self.target_db = SqlHelper(self.database)
 
     def transport(self, test_mode=False):
+        result = Result()
         logger.info('Starting transport...')
         self.target_db.create_session()
-        source_entities = self.source_db.fetch_all_entities(self.source_entity)
-        target_db_columns = self.target_db.get_table_column_names(self.target_table)
-        logger.debug(target_db_columns)
-        for message in source_entities:
-            content = message['content']
-            if self.compressed:
-                decompresed_content = util.decompress(content)
-                json_string = util.base64_to_string(decompresed_content)
-                target_content = json.loads(json_string)
-            else:
-                target_content = json.loads(content)
-            entities = self.map(target_content)
-            if not test_mode:
-                self.target_db.insert_all(entities)
-                self.target_db.commit_session()
-                self.target_db.close_session()
+        source_entities = self.source_db.fetch_entity(self.source_entity, constants.GCP_FETCH_LIMIT)
+        logger.info('Found %s Entries in Google Datastore', str(len(source_entities)))
+        if source_entities:
+            for item in source_entities:
+                if 'content' in item:
+                    content = item['content']
+                    logger.debug(content)
+                    if self.compressed:
+                        decompresed_content = util.decompress(content)
+                        json_string = util.base64_to_string(decompresed_content)
+                        target_content = json.loads(json_string)
+                    else:
+                        try:
+                            target_content = json.loads(content)
+                        except TypeError:
+                            logger.error('Cannot convert to JSON trying to map "as-is"')
+                            target_content = content
+                    entities = self.map(target_content)
+                    if not test_mode:
+                        if len(entities) > 0:
+                            try:
+                                self.target_db.insert_all(entities)
+                                self.target_db.commit_session()
+                                result.set_success(True)
+                            except SQLAlchemyError as err:
+                                result.set_success(False)
+                                result.set_message(err.code)
+                                logger.exception('An SQLAlchemyError occured')
+                            finally:
+                                self.target_db.close_session()
+                        else:
+                            result.set_success(False)
+                            result.set_message('There are no mapped entities that can be saved in database')
+                else:
+                    result.set_success(False)
+                    result.set_message('No "content" attribute found in entity from Google Datastore')
+        else:
+            result.set_success(False)
+            result.set_message(self.source_entity + ' could not be found in Google Datastore')
+        return result
 
     # maps target and source structure and returns a list of entities to save in db
     @abstractmethod

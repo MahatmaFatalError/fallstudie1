@@ -5,8 +5,9 @@ import datetime
 import json
 import logging
 from main.collector.collector import Collector
-from main.database.DBHelper import DatastoreHelper
+from main.database.db_helper import DatastoreHelper
 from main.helper import util
+from main.helper.result import Result
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +31,7 @@ class CsvCollector(Collector):
         self.compressed = compressed
 
     def collect(self):
+        result = Result()
         with open(self.filename, encoding=self.encoding) as data:
             csv_reader = csv.DictReader(data, delimiter=self.delimiter)
             column_names = csv_reader.fieldnames
@@ -42,9 +44,14 @@ class CsvCollector(Collector):
                 if item[name] != '':
                     self.data.append(item)
         logger.debug(self.data)
-        self._save(self.data)
+        success = self._save(self.data)
+        result.set_success(success)
+        if not success:
+            result.set_message('Could not save csv Data in Google Datastore')
+        return result
 
     def _save(self, data):
+        success = False
         db = DatastoreHelper()
         if self.compressed:
             json_content = json.dumps(data)
@@ -54,10 +61,7 @@ class CsvCollector(Collector):
         else:
             target_content = json.dumps(data)
         attributes = {'updatedAt': datetime.datetime.now(), 'content': target_content}
-        db.create_or_update(self.entity_name, self.entity_id, attributes)
-
-    def get_data(self):
-        return self.data
-
-    def set_filename(self, value):
-        self.filename = value
+        key = db.create_or_update(self.entity_name, self.entity_id, attributes)
+        if key:
+            success = True
+        return success
