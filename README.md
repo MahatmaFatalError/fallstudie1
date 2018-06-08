@@ -30,6 +30,10 @@
 - http://ipv4.whatismyv6.com/
 - http://docs.sqlalchemy.org/en/latest/core/type_basics.html
 - https://www.suche-postleitzahl.org/downloads
+- https://cloud.google.com/datastore/docs/concepts/queries
+- https://github.com/mstamy2/PyPDF2
+- Statistics Query Google Cloud Datastore
+    https://cloud.google.com/appengine/docs/standard/python/ndb/admin
 
 ## How-To: Connect New Datasource
 

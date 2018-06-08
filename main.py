@@ -86,5 +86,5 @@ if __name__ == '__main__':
     # result = transport_cities(True)
     # result = transport_plz()
     # result = collect_restaurants()
-    result = transport_restaurants()
+    result = transport_restaurants(False)
     print(result)

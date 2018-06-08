@@ -16,7 +16,6 @@ class DatastoreHelper:
     def __init__(self):
         root_path = Path(__file__).parents[2]
         final_path = root_path.joinpath('data/auth/BDCS1.json')
-        logger.debug(final_path)
         self.client = datastore.Client.from_service_account_json(final_path)
 
     def create_or_update(self, entity_name, unique_id, attributes=None):
@@ -27,9 +26,19 @@ class DatastoreHelper:
         self.client.put(item)
         return item.key
 
-    def fetch_entity(self, entity_name, limit):
+    def fetch_entity(self, entity_name, limit, offset):
+        logger.info('Fetching from Offset: %s with Limit: %s', str(offset), str(limit))
         query = self.client.query(kind=entity_name)
-        return list(query.fetch(limit=limit))
+        return list(query.fetch(limit=limit, offset=offset))
+
+    def set_transported(self, entity, value):
+        entity.transported = value
+        self.client.put(entity)
+
+    def get_total(self, entity_name):
+        query = self.client.query(kind=entity_name)
+        query.keys_only()
+        return len(list(query.fetch()))
 
 
 class SqlHelper:
@@ -62,8 +71,16 @@ class SqlHelper:
         # create a Session
         self.session = Session()
 
-    def insert(self, entry):
-        self.session.add(entry)
+    def insert(self, entity):
+        merged_entity = self.session.merge(entity)
+        id = merged_entity.id
+        return id
+
+    def fetch_restaurant_by_id(self, id):
+        result = self.session.query(Restaurant). \
+            filter(Restaurant.id == id ). \
+            first()
+        return result
 
     def commit_session(self):
         self.session.commit()
