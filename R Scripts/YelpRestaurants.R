@@ -30,3 +30,7 @@ plot(fit.t)
 
 library(effects)
 plot(effect("price_range", fit.lr))
+
+
+# disconnect from the database
+dbDisconnect(con)
