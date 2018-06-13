@@ -6,7 +6,8 @@ pg = dbDriver("PostgreSQL")
 con = dbConnect(pg, user="postgres", password="team123",
                 host="35.190.205.207", port=5432, dbname="fonethd")
 
-dtab = dbReadTable(con, "restaurant")
+## dtab = dbReadTable(con, "restaurant")
+dtab = dbGetQuery(con, "select * from restaurant where is_closed = false")
 summary(dtab)
 str(dtab)
 
