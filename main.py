@@ -44,6 +44,7 @@ def collect_plz():
                                              True)
     return plz_collector.collect()
 
+
 def collect_restaurants():
     yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR, 'yelp')
     return yelp_collector.collect()
@@ -77,6 +78,15 @@ def transport_restaurants(test_mode=False):
                                                constants.SQL_TABLE_RESTAURANT,
                                                False)
     return restaurant_transporter.transport(test_mode)
+
+
+def collect_kaufkraft():
+    yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
+                                              'kaufkraft'
+                                              'kaufkraft_for_germany',
+                                              constants.GCP_ENTITY_KAUFKRAFT,
+                                              )
+    return yelp_collector.collect()
 
 
 if __name__ == '__main__':

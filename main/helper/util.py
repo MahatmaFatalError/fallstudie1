@@ -20,3 +20,18 @@ def decompress(compressed_string):
     return zlib.decompress(compressed_string)
 
 
+def parse(string):
+    if ("," in string and "%" in string):
+        string = string.replace("%", "")
+        return float(string.replace(",", "."))
+    elif ("," in string and "." in string):
+        string = string.replace(".", "")
+        return float(string.replace(",", "."))
+    elif ("," in string):
+        return float(string.replace(",", "."))
+    elif "." in string:
+        return int(string.replace(".", ""))
+    else:
+        return ""
+
+
