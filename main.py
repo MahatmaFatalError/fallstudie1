@@ -44,6 +44,7 @@ def collect_plz():
                                              True)
     return plz_collector.collect()
 
+
 def collect_restaurants():
     yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR, 'yelp')
     return yelp_collector.collect()
@@ -85,6 +86,6 @@ if __name__ == '__main__':
     # result = collect_cities()
     # result = transport_cities(True)
     # result = transport_plz()
-    # result = collect_restaurants()
-    result = transport_restaurants(False)
+    result = collect_restaurants()
+    # result = transport_restaurants()
     print(result)

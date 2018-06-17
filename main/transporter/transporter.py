@@ -59,6 +59,7 @@ class Transporter(ABC):
                                         self.target_db.insert(entity)
                                     self.target_db.commit_session()
                                     result.set_success(True)
+                                    self.source_db.set_transported(item, True)
                                 except SQLAlchemyError as err:
                                     result.set_success(False)
                                     result.set_message(err.code)

@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 class RestaurantTransporter(Transporter):
 
     def map(self, source_content):
+        # TODO: map empty integers to 0
         logger.info('Starting Mapping for %s entries', source_content)
         entities = []
         key = 'businesses'
