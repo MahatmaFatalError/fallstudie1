@@ -1,6 +1,11 @@
 
 # only for testing purposes
+from config import constants
+from main.database.db_helper import DatastoreHelper
 
-from sqlalchemy import create_engine
+source_db = DatastoreHelper()
 
-engine = create_engine('postgresql+psycopg2://postgres:team123@localhost:5432/')
+total = source_db.get_total(constants.GCP_ENTITY_RESTAURANT)
+print(total)
+
+
