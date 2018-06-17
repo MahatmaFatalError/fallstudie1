@@ -44,6 +44,9 @@ class Restaurant(Base):
     transactions = relationship('RestaurantTransaction')
     street = Column(String)
     zip_code = Column(Integer)
+    country = Column(String)
+    state = Column(String)
+    city = Column(String)
     updated_at = Column(DateTime)
 
 

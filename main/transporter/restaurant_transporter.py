@@ -60,6 +60,12 @@ class RestaurantTransporter(Transporter):
                     location = business['location']
                     zip_code = location['zip_code']
                     street = location['address1']
+                    city = location['city']
+                    country = location['country']
+                    state = location['state']
+                    restaurant.city = city
+                    restaurant.country = country
+                    restaurant.state = state
                     restaurant.zip_code = zip_code
                     restaurant.street = street
                 logging.debug(restaurant)
