@@ -80,4 +80,4 @@ class Transporter(ABC):
     # maps target and source structure and returns a list of entities to save in db
     @abstractmethod
     def map(self, source_content):
-        ...
+        pass

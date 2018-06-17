@@ -42,6 +42,8 @@ class Restaurant(Base):
     latitude = Column(Numeric, nullable=False)
     food_categories = relationship('FoodCategory')
     transactions = relationship('RestaurantTransaction')
+    street = Column(String)
+    zip_code = Column(Integer)
     updated_at = Column(DateTime)
 
 

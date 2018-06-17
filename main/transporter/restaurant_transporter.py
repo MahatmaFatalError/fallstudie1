@@ -56,6 +56,12 @@ class RestaurantTransporter(Transporter):
                         transaction.updated_at = now
                         transaction.name = transaction_string
                         restaurant.transactions.append(transaction)
+                if 'location' in business:
+                    location = business['location']
+                    zip_code = location['zip_code']
+                    street = location['address1']
+                    restaurant.zip_code = zip_code
+                    restaurant.street = street
                 logging.debug(restaurant)
                 entities.append(restaurant)
         return entities
