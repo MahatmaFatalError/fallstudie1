@@ -21,6 +21,7 @@ YELP_SEARCH_TERM = 'restaurants'
 GCP_ENTITY_LOCATION = 'THD_City'
 GCP_ENTITY_RESTAURANT = 'THD_Restaurant'
 GCP_ENTITY_PLZ_CITY= 'THD_PLZ_FOR_CITY'
+GCP_ENTITY_KAUFKRAFT = 'THD_Kaufkraft'
 GCP_FETCH_LIMIT = 500
 
 # SQL Constants
@@ -36,3 +37,7 @@ SQL_TABLE_FOOD_CATEGORY = 'food_category'
 SQL_TABLE_RESTAURANT_TRANSACTION = 'restaurant_transaction'
 SQL_TABLE_REVIEW = 'review'
 SQL_TABLE_ZIP_CODE = 'zip_code'
+
+
+# PDF Reader
+PDF_PATH_KAUFKRAFT = 'C:/Users/Tobias/Desktop/Kaufkraft_Staedte_Landkreise.pdf'

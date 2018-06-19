@@ -26,7 +26,7 @@ class EverythingFactory(AbstractFactory):
                 logger.debug(module_name)
                 class_name = name.capitalize() + package.capitalize()
                 logger.debug(class_name)
-
+            logger.debug(package)
             module = import_module('.' + module_name, package='main.' + package)
             logger.debug(module)
             python_class = getattr(module, class_name)

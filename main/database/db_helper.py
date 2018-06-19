@@ -33,7 +33,7 @@ class DatastoreHelper:
         return result
 
     def set_transported(self, entity, value):
-        entity.transported = value
+        entity['transported'] = value
         self.client.put(entity)
 
     def get_total(self, entity_name):

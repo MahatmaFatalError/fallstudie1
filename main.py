@@ -44,6 +44,7 @@ def collect_plz():
                                              True)
     return plz_collector.collect()
 
+
 def collect_restaurants():
     yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR, 'yelp')
     return yelp_collector.collect()
@@ -79,6 +80,15 @@ def transport_restaurants(test_mode=False):
     return restaurant_transporter.transport(test_mode)
 
 
+def collect_kaufkraft():
+    yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
+                                              'kaufkraft',
+                                              'kaufkraft_for_germany',
+                                              constants.GCP_ENTITY_KAUFKRAFT,
+                                              )
+    return yelp_collector.collect()
+
+
 if __name__ == '__main__':
     setup_logging()
     # result = collect_plz()
@@ -86,5 +96,6 @@ if __name__ == '__main__':
     # result = transport_cities(True)
     # result = transport_plz()
     # result = collect_restaurants()
-    result = transport_restaurants(False)
+    # result = transport_restaurants()
+    result = collect_kaufkraft()
     print(result)
