@@ -12,14 +12,15 @@ from main.helper.util import parse
 
 logger = logging.getLogger(__name__)
 
+
 class KaufkraftCollector(Collector):
 
     pdf_path = None
     entity_name = None
     entity_id = None
 
-    def __init__(self, entity_id, entity_name):
-        self.pdf_path = constants.PDF_PATH_KAUFKRAFT
+    def __init__(self, entity_id, entity_name, path):
+        self.pdf_path = path
         self.entity_name = entity_name
         self.entity_id = entity_id
 
@@ -75,7 +76,7 @@ class KaufkraftCollector(Collector):
         # transform row from mio euro to euro
         df_result.growthrate_2016_2017_percentage_euro = df_result.growthrate_2016_2017_percentage_euro.apply(
             lambda x: x * 1000000)
-        result_json = pd.DataFrame(df_result).to_json(df_result)
+        result_json = df_result.to_json()
         success = self._save(result_json)
         result.set_success(success)
         return result

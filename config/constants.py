@@ -37,7 +37,3 @@ SQL_TABLE_FOOD_CATEGORY = 'food_category'
 SQL_TABLE_RESTAURANT_TRANSACTION = 'restaurant_transaction'
 SQL_TABLE_REVIEW = 'review'
 SQL_TABLE_ZIP_CODE = 'zip_code'
-
-
-# PDF Reader
-PDF_PATH_KAUFKRAFT = 'C:/Users/Tobias/Desktop/Kaufkraft_Staedte_Landkreise.pdf'

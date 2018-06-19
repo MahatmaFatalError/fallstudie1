@@ -85,6 +85,7 @@ def collect_kaufkraft():
                                               'kaufkraft',
                                               'kaufkraft_for_germany',
                                               constants.GCP_ENTITY_KAUFKRAFT,
+                                              'data/kaufkraft.pdf'
                                               )
     return yelp_collector.collect()
 
