@@ -15,6 +15,7 @@
  4. ``` pip install --upgrade google-cloud ```
  5. ``` pip install --upgrade sqlalchemy ```
  6. ``` pip install --upgrade psycopg2 ```
+ 7. ``` pip install --upgrade requests ```
 
 ## How-To: Start a Proxy for PostreSQL Connection (not working for JWEBER :-))
 1. ``` gcloud auth login ```

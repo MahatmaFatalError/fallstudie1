@@ -60,7 +60,7 @@ class CsvCollector(Collector):
             target_content = compressed_content
         else:
             target_content = json.dumps(data)
-        attributes = {'updatedAt': datetime.datetime.now(), 'content': target_content}
+        attributes = {'updatedAt': datetime.datetime.now(), 'content': target_content, 'transported': False}
         key = db.create_or_update(self.entity_name, self.entity_id, attributes)
         if key:
             success = True

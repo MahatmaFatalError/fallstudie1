@@ -37,7 +37,7 @@ class YelpCollector(Collector):
                 for zip_code in city.zip_codes:
                     if not zip_code.requested:
                         zip_completed = True
-                        self.location = str(zip_code.zip_code) + ', ' + str(name) + ', DE'
+                        self.location = str(zip_code.zip_code) + ', ' + str(name) + ', Deutschland'
                         logger.debug(self.location)
                         self.offset = 0
                         content = self._get_search(self.location, self.offset)
@@ -93,7 +93,8 @@ class YelpCollector(Collector):
                       'location': self.location,
                       'offset': self.offset,
                       'updated_at': datetime.datetime.now(),
-                      'content': data}
+                      'content': data,
+                      'transported': False}
         entity_id = str(self.current_path) + str(self.location) + str(self.offset)
         try:
             db.create_or_update(constants.GCP_ENTITY_RESTAURANT, entity_id, attributes)

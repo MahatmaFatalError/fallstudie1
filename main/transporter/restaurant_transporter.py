@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 class RestaurantTransporter(Transporter):
 
     def map(self, source_content):
+        # TODO: map empty integers to 0
         logger.info('Starting Mapping for %s entries', source_content)
         entities = []
         key = 'businesses'
@@ -56,6 +57,18 @@ class RestaurantTransporter(Transporter):
                         transaction.updated_at = now
                         transaction.name = transaction_string
                         restaurant.transactions.append(transaction)
+                if 'location' in business:
+                    location = business['location']
+                    zip_code = location['zip_code']
+                    street = location['address1']
+                    city = location['city']
+                    country = location['country']
+                    state = location['state']
+                    restaurant.city = city
+                    restaurant.country = country
+                    restaurant.state = state
+                    restaurant.zip_code = zip_code
+                    restaurant.street = street
                 logging.debug(restaurant)
                 entities.append(restaurant)
         return entities
