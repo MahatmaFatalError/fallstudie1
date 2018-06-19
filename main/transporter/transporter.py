@@ -56,7 +56,8 @@ class Transporter(ABC):
                             if len(entities) > 0:
                                 try:
                                     for entity in entities:
-                                        self.target_db.insert(entity)
+                                        if entity:
+                                            self.target_db.insert(entity)
                                     self.target_db.commit_session()
                                     result.set_success(True)
                                     self.source_db.set_transported(item, True)

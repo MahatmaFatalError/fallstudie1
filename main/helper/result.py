@@ -22,4 +22,4 @@ class Result:
         return self.message
 
     def __str__(self):
-        return 'Success: ' + str(self.success) + ', Message: ' + self.message
+        return 'Success: ' + str(self.success) + ', Message: ' + str(self.message)

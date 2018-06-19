@@ -90,6 +90,17 @@ def collect_kaufkraft():
     return yelp_collector.collect()
 
 
+def transport_kaufkraft(test_mode=False):
+    kaufkraft_transporter = EverythingFactory.create(constants.FACTORY_TRANSPORTER,
+                                               'kaufkraft',
+                                               constants.SQL_DATABASE_NAME,
+                                               constants.GCP_ENTITY_KAUFKRAFT,
+                                               constants.SQL_TABLE_BUYING_POWER,
+                                               False)
+
+    return kaufkraft_transporter.transport(test_mode)
+
+
 if __name__ == '__main__':
     setup_logging()
     # result = collect_plz()
@@ -98,5 +109,6 @@ if __name__ == '__main__':
     # result = transport_plz()
     # result = collect_restaurants()
     # result = transport_restaurants()
-    result = collect_kaufkraft()
+    # result = collect_kaufkraft()
+    result = transport_kaufkraft()
     print(result)

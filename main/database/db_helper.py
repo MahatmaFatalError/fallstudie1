@@ -112,3 +112,4 @@ class SqlHelper:
             filter(City.name.like(name)).\
             first()
         return result
+

@@ -76,7 +76,7 @@ class KaufkraftCollector(Collector):
         # transform row from mio euro to euro
         df_result.growthrate_2016_2017_percentage_euro = df_result.growthrate_2016_2017_percentage_euro.apply(
             lambda x: x * 1000000)
-        result_json = df_result.to_json()
+        result_json = df_result.to_json(orient='records')
         success = self._save(result_json)
         result.set_success(success)
         return result
