@@ -82,7 +82,7 @@ def transport_restaurants(test_mode=False):
 
 def collect_kaufkraft():
     yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
-                                              'kaufkraft'
+                                              'kaufkraft',
                                               'kaufkraft_for_germany',
                                               constants.GCP_ENTITY_KAUFKRAFT,
                                               )
@@ -95,6 +95,7 @@ if __name__ == '__main__':
     # result = collect_cities()
     # result = transport_cities(True)
     # result = transport_plz()
-    result = collect_restaurants()
+    # result = collect_restaurants()
     # result = transport_restaurants()
+    result = collect_kaufkraft()
     print(result)
