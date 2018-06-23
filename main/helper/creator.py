@@ -43,7 +43,6 @@ class Creator:
     def create_rent_collector(self):
         rent_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
                                                   'rent',
-                                                  'rent_for_german_cities',
                                                   constants.GCP_ENTITY_RENT,
                                                   False,
                                                   'data/rent.json'

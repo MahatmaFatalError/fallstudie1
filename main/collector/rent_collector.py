@@ -16,12 +16,11 @@ class RentCollector(Collector):
     entity_id = None
     filename = None
 
-    def __init__(self, entity_id, entity_name, compressed, filepath):
+    def __init__(self, entity_name, compressed, filepath):
         super(RentCollector, self).__init__(
             entity_name=entity_name,
             compressed=compressed
         )
-        self.entity_id = entity_id
         self.filename = filepath
 
     def run(self):
@@ -41,9 +40,11 @@ class RentCollector(Collector):
             feature_length = len(features)
             success_count = 0
             for item in features:
-                success = self._save(item)
-                if success:
-                    success_count += 1
+                if 'properties' in item:
+                    city = item['properties']
+                    success = self._save(city)
+                    if success:
+                        success_count += 1
             if feature_length == success_count:
                 success = True
         return success
@@ -51,6 +52,7 @@ class RentCollector(Collector):
     def _save(self, data):
         success = False
         db = DatastoreHelper()
+        entity_id = data['schluessel']
         if self.compressed:
             json_content = json.dumps(data)
             base64_content = util.string_to_base64(json_content)
@@ -58,9 +60,8 @@ class RentCollector(Collector):
             target_content = compressed_content
         else:
             target_content = json.dumps(data)
-        logger.debug(target_content)
         attributes = {'updatedAt': datetime.datetime.now(), 'content': target_content, 'transported': False}
-        key = db.create_or_update(self.entity_name, self.entity_id, attributes)
+        key = db.create_or_update(self.entity_name, entity_id, attributes)
         if key:
             success = True
         return success
