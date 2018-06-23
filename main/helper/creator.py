@@ -24,6 +24,7 @@ class Creator:
                                                  True)
         return plz_collector
 
+    @staticmethod
     def create_restaurant_collector(self):
         yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
                                                   'yelp',

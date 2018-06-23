@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import re
-from main.transporter.transporter import Transporter, logger
+from main.transporter.transporter import Transporter
 
 
 class RentTransporter(Transporter):

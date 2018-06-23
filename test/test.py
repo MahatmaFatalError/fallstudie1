@@ -1,4 +1,3 @@
-
 # only for testing purposes
 from config import constants
 from main.database.db_helper import DatastoreHelper

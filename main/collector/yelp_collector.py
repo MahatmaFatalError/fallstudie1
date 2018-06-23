@@ -41,7 +41,6 @@ class YelpCollector(Collector):
                     if not zip_code.requested:
                         zip_completed = True
                         self.location = str(zip_code.zip_code) + ', ' + str(name) + ', Deutschland'
-                        logger.debug(self.location)
                         self.offset = 0
                         content = self._get_search(self.location, self.offset)
                         if 'error' not in content:
@@ -90,7 +89,7 @@ class YelpCollector(Collector):
 
     def _save(self, data):
         result = False
-        logger.info('Saving...')
+        logger.info('Saving Restaurants...')
         db = DatastoreHelper()
         attributes = {'path': self.current_path,
                       'location': self.location,
@@ -145,11 +144,11 @@ class YelpCollector(Collector):
         logger.info(u'Querying {0} ...'.format(url))
 
         response = requests.request('GET', url, headers=self.headers, params=url_params)
-        logger.info(response.status_code)
+        logger.info('HTTP Code: {0}'.format(response.status_code))
         error_codes = [502, 503]
         while response.status_code in error_codes:
             time.sleep(0.1)
-            logger.info(response.status_code)
+            logger.info('HTTP Code: {0}'.format(response.status_code))
             response = requests.request('GET', url, headers=self.headers, params=url_params)
-            logger.info(response.status_code)
+            logger.info('HTTP Code: {0}'.format(response.status_code))
         return response.json()

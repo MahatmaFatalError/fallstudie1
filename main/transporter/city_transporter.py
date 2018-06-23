@@ -3,16 +3,14 @@
 import datetime
 
 from main.database.init_db import City
-from main.transporter.transporter import Transporter, logger
+from main.transporter.transporter import Transporter
 
 
 class CityTransporter(Transporter):
 
     def map(self, source_content):
-        logger.info(source_content)
         entities = []
         for item in source_content:
-            logger.info(item)
             target_entity = City()
             target_entity.id = item['Lfd. Nr.']
             # split additional "Stadt" Prefix from name cell

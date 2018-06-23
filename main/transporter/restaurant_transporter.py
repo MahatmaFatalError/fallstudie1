@@ -13,14 +13,12 @@ logger = logging.getLogger(__name__)
 class RestaurantTransporter(Transporter):
 
     def map(self, source_content):
-        logger.info('Starting Mapping for %s entries', source_content)
         entities = []
         key = 'businesses'
         now = datetime.datetime.now()
         if key in source_content:
             businesses = source_content[key]
             for business in businesses:
-                logger.debug(business)
                 restaurant = Restaurant()
                 restaurant.id = business['id']
                 restaurant.updated_at = now
@@ -42,7 +40,6 @@ class RestaurantTransporter(Transporter):
                 if 'categories' in business:
                     categories = business['categories']
                     for category_entity in categories:
-                        logger.debug(category_entity)
                         category = FoodCategory()
                         category.name = category_entity['title']
                         category.alias = category_entity['alias']
@@ -52,7 +49,6 @@ class RestaurantTransporter(Transporter):
                 if 'transactions' in business:
                     transactions = business['transactions']
                     for transaction_string in transactions:
-                        logger.debug(transaction_string)
                         transaction = RestaurantTransaction()
                         transaction.restaurant_id = restaurant.id
                         transaction.updated_at = now
@@ -72,6 +68,5 @@ class RestaurantTransporter(Transporter):
                     restaurant.state = state
                     restaurant.zip_code = zip_code
                     restaurant.street = street
-                logging.debug(restaurant)
                 entities.append(restaurant)
         return entities

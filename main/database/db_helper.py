@@ -59,7 +59,6 @@ class SqlHelper:
         url = 'postgresql://{}:{}@{}:{}/{}'
         url = url.format(user, password, host, port, db)
         # url = 'postgresql+psycopg2://{}:{}@/{}?host=/cloudsql/ace-ripsaw-200308:europe-west1:t3am-thd' # for AppEngine
-        logger.debug(url)
         # The return value of create_engine() is our connection object
         self.con = sqlalchemy.create_engine(url, client_encoding='utf8')
 

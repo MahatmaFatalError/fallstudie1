@@ -25,7 +25,8 @@ class Transporter(ABC, threading.Thread):
 
     def __init__(self, database, source_entity, target_table, compressed, test_mode):
         super(Transporter, self).__init__()
-        logger.info('Creating Transporter from {0} to {1}'.format(source_entity, target_table))
+        logger.info('Creating Transporter from Datastore Entity: {0} to Postgres Table: {1}'
+                    .format(source_entity, target_table))
         self.database = database
         self.source_entity = source_entity
         self.target_table = target_table
@@ -56,7 +57,6 @@ class Transporter(ABC, threading.Thread):
                             try:
                                 target_content = json.loads(content)
                             except TypeError:
-                                logger.info('Cannot convert to JSON; trying to map "as-is"')
                                 target_content = content
                         entities = self.map(target_content)
                         if not self.test_mode:

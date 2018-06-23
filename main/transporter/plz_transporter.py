@@ -1,10 +1,13 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import datetime
+import logging
 import re
 from main.database.init_db import ZipCode
-from main.transporter.transporter import Transporter, logger
+from main.transporter.transporter import Transporter
 from collections import defaultdict
+
+logger = logging.getLogger(__name__)
 
 
 class PlzTransporter(Transporter):

@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import re
-from main.transporter.transporter import Transporter, logger
+from main.transporter.transporter import Transporter
 
 
 class KaufkraftTransporter(Transporter):
@@ -31,7 +31,6 @@ class KaufkraftTransporter(Transporter):
             if city_object_db:
                 buying_power = item['buyingpower_2017_euro_a_head']
                 city_object_db.buying_power = buying_power
-                logger.debug(city_object_db)
             entities.append(city_object_db)
         return entities
 

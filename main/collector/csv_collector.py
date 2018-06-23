@@ -35,7 +35,6 @@ class CsvCollector(Collector):
         with open(self.filename, encoding=self.encoding) as data:
             csv_reader = csv.DictReader(data, delimiter=self.delimiter)
             column_names = csv_reader.fieldnames
-            logger.debug(column_names)
             for row in csv_reader:
                 item = {}
                 for name in column_names:
@@ -43,7 +42,6 @@ class CsvCollector(Collector):
                     item[name] = attribute
                 if item[name] != '':
                     self.data.append(item)
-        logger.debug(self.data)
         success = self._save(self.data)
         result.set_success(success)
         if not success:
