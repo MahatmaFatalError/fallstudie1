@@ -20,8 +20,9 @@ YELP_SEARCH_TERM = 'restaurants'
 # GCP constants
 GCP_ENTITY_LOCATION = 'THD_City'
 GCP_ENTITY_RESTAURANT = 'THD_Restaurant'
-GCP_ENTITY_PLZ_CITY= 'THD_PLZ_FOR_CITY'
+GCP_ENTITY_PLZ_CITY= 'THD_Plz_for_City'
 GCP_ENTITY_KAUFKRAFT = 'THD_Kaufkraft'
+GCP_ENTITY_RENT = 'THD_Rent'
 GCP_FETCH_LIMIT = 500
 
 # SQL Constants
@@ -38,3 +39,4 @@ SQL_TABLE_RESTAURANT_TRANSACTION = 'restaurant_transaction'
 SQL_TABLE_REVIEW = 'review'
 SQL_TABLE_ZIP_CODE = 'zip_code'
 SQL_TABLE_BUYING_POWER = 'buying_power'
+SQL_TABLE_rent = 'buying_power'

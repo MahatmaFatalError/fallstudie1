@@ -56,7 +56,7 @@ class Transporter(ABC, threading.Thread):
                             try:
                                 target_content = json.loads(content)
                             except TypeError:
-                                logger.error('Cannot convert to JSON; trying to map "as-is"')
+                                logger.info('Cannot convert to JSON; trying to map "as-is"')
                                 target_content = content
                         entities = self.map(target_content)
                         if not self.test_mode:

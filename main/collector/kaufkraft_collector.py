@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
 import logging
-from config import constants
 from main.collector.collector import Collector
 import pandas as pd
 import numpy as np
@@ -16,13 +15,13 @@ logger = logging.getLogger(__name__)
 class KaufkraftCollector(Collector):
 
     pdf_path = None
-    entity_name = None
     entity_id = None
 
-    def __init__(self, entity_id, entity_name, path):
-        super(KaufkraftCollector, self).__init__()
+    def __init__(self, entity_id, entity_name, compressed, path):
+        super(KaufkraftCollector, self).__init__(
+            entity_name=entity_name,
+            compressed=compressed)
         self.pdf_path = path
-        self.entity_name = entity_name
         self.entity_id = entity_id
 
     def _save(self, data):
@@ -62,16 +61,16 @@ class KaufkraftCollector(Collector):
 
         # parse and rename rest of columns
         df_values = df.iloc[:, 1:].applymap(parse).rename(columns={1: "pop_2016",
-                                                              2: "buyingpower_2016_buyingpowerindex",
-                                                              3: "pop_forecast_2017",
-                                                              4: "pop_forecast_2017_permille",
-                                                              5: "households_forecast_2017",
-                                                              6: "buyingpower_2017_euro",
-                                                              7: "buyingpower_2017_permille",
-                                                              8: "buyingpower_2017_euro_a_head",
-                                                              9: "buyingpower_2017_buyingpowerindex",
-                                                              10: "growthrate_2016_2017_percentage_euro",
-                                                              11: "growthrate_2016_2017_percentage_euro_a_head"})
+                                                                   2: "buyingpower_2016_buyingpowerindex",
+                                                                   3: "pop_forecast_2017",
+                                                                   4: "pop_forecast_2017_permille",
+                                                                   5: "households_forecast_2017",
+                                                                   6: "buyingpower_2017_euro",
+                                                                   7: "buyingpower_2017_permille",
+                                                                   8: "buyingpower_2017_euro_a_head",
+                                                                   9: "buyingpower_2017_buyingpowerindex",
+                                                                   10: "growthrate_2016_2017_percentage_euro",
+                                                                   11: "growthrate_2016_2017_percentage_euro_a_head"})
         # match both dataframe df_city and df_values together
         df_result = pd.concat([df_city, df_values], axis=1)
         # transform row from mio euro to euro
@@ -81,6 +80,3 @@ class KaufkraftCollector(Collector):
         success = self._save(result_json)
         result.set_success(success)
         logger.info(result)
-
-
-

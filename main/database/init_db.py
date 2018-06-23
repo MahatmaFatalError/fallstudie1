@@ -18,6 +18,7 @@ class City(Base):
     zip_codes = relationship('ZipCode')
     updated_at = Column(DateTime)
     buying_power = Column(Numeric)
+    rent = Column(Numeric)
 
     def __str__(self):
         return 'id: {0}, name: {1}, updated at: {2} buying power: {3}'\

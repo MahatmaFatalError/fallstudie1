@@ -17,8 +17,11 @@ logger = logging.getLogger(__name__)
 
 class YelpCollector(Collector):
 
-    def __init__(self):
-        Collector.__init__(self)
+    def __init__(self, entity_name, compressed):
+        super(YelpCollector, self).__init__(
+            entity_name=entity_name,
+            compressed=compressed
+        )
         self.host = constants.YELP_API_HOST
         self.headers = {
             'Authorization': 'Bearer %s' % constants.YELP_API_KEY,
@@ -97,7 +100,7 @@ class YelpCollector(Collector):
                       'transported': False}
         entity_id = str(self.current_path) + str(self.location) + str(self.offset)
         try:
-            db.create_or_update(constants.GCP_ENTITY_RESTAURANT, entity_id, attributes)
+            db.create_or_update(self.entity_name, entity_id, attributes)
             result = True
         except ServiceUnavailable:
             logger.exception('Service unavailable when trying to save %s', entity_id)
