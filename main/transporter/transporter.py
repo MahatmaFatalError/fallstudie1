@@ -48,13 +48,16 @@ class Transporter(ABC, threading.Thread):
                             target_content = json.loads(content)
                         except TypeError:
                             target_content = content
+                        logger.info('Starting mapping...')
                         entities = self.map(target_content)
                         if not self.test_mode:
                             if len(entities) > 0:
                                 try:
                                     for entity in entities:
                                         if entity:
+                                            logger.info('Saving in Database...')
                                             self.target_db.insert(entity)
+                                    logger.info('Commiting DB entries')
                                     self.target_db.commit_session()
                                     result.set_success(True)
                                     self.source_db.set_transported(item, True)

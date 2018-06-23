@@ -16,8 +16,6 @@ def main():
     stopper = threading.Event()
     action = None
     test_mode = None
-    transporter = None
-    collector = None
 
     util.setup_logging()
 
