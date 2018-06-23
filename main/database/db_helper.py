@@ -37,8 +37,10 @@ class DatastoreHelper:
         entity['transported'] = value
         self.client.put(entity)
 
-    def get_total(self, entity_name):
+    def get_total(self, entity_name, only_not_yet_transported):
         query = self.client.query(kind=entity_name)
+        if only_not_yet_transported:
+            query.add_filter('transported', '=', False)
         query.keys_only()
         return len(list(query.fetch()))
 

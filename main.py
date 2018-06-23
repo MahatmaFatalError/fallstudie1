@@ -68,18 +68,17 @@ def main():
         except AttributeError:
             logger.warning('Transporter {0} not found'.format(transporter_method))
 
-            number_threads = len(threads)
-            if number_threads > 0:
-                logger.info('Created {0} new Thread(s)'.format(str(number_threads)))
-                handler = SignalHandler(stopper, threads)
-                signal.signal(signal.SIGINT, handler)
-
-                if collector is not None:
-                    logger.info('Starting {0} collector'.format(action))
-                    collector.start()
-                if transporter is not None:
-                    logger.info('Starting {0} transporter'.format(action))
-                    transporter.start()
+        number_threads = len(threads)
+        logger.info('Created {0} new Thread(s)'.format(str(number_threads)))
+        if number_threads > 0:
+            handler = SignalHandler(stopper, threads)
+            signal.signal(signal.SIGINT, handler)
+            if collector is not None:
+                logger.info('Starting {0} collector'.format(action))
+                collector.start()
+            if transporter is not None:
+                logger.info('Starting {0} transporter'.format(action))
+                transporter.start()
 
 
 if __name__ == '__main__':

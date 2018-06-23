@@ -38,7 +38,7 @@ class Transporter(ABC, threading.Thread):
         result = Result()
         logger.info('Starting transport...')
         self.target_db.create_session()
-        total = self.source_db.get_total(self.source_entity)
+        total = self.source_db.get_total(self.source_entity, only_not_yet_transported=True)
         logger.info('Found a total of %s Entries in Google Datastore', str(total))
         offset = 0
         while offset < total:
