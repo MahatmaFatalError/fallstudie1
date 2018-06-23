@@ -20,6 +20,7 @@ class KaufkraftCollector(Collector):
     entity_id = None
 
     def __init__(self, entity_id, entity_name, path):
+        super(KaufkraftCollector, self).__init__()
         self.pdf_path = path
         self.entity_name = entity_name
         self.entity_id = entity_id
@@ -33,14 +34,14 @@ class KaufkraftCollector(Collector):
             success = True
         return success
 
-    def collect(self):
+    def run(self):
         result = Result()
         pdf_file_obj = open(self.pdf_path, "rb")
-        pdfReader = PyPDF2.PdfFileReader(pdf_file_obj)
+        pdf_reader = PyPDF2.PdfFileReader(pdf_file_obj)
         content = ""
-        numPages = pdfReader.getNumPages()
-        for x in range(numPages):
-            content += pdfReader.getPage(x).extractText()
+        num_pages = pdf_reader.getNumPages()
+        for x in range(num_pages):
+            content += pdf_reader.getPage(x).extractText()
         last = "© Michael Bauer Research GmbH, Nürnberg \nTelefon: 0911 / 28 707 020\nE-Mail: info@mb-research.de\n"
         content = content.replace(last, "")
         content = content[:-1]  # delete last \n
@@ -79,7 +80,7 @@ class KaufkraftCollector(Collector):
         result_json = df_result.to_json(orient='records')
         success = self._save(result_json)
         result.set_success(success)
-        return result
+        logger.info(result)
 
 
 

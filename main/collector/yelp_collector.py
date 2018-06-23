@@ -27,7 +27,7 @@ class YelpCollector(Collector):
         self.offset = None
         self.current_path = None
 
-    def collect(self):
+    def run(self):
         db = SqlHelper(constants.SQL_DATABASE_NAME)
         db.create_session()
         cities = db.fetch_all(constants.SQL_TABLE_CITY)

@@ -1,24 +1,30 @@
 import json
+import logging
+import threading
 from abc import ABC, abstractmethod
 from sqlalchemy.exc import SQLAlchemyError
 
 from config import constants
-from main.database.db_helper import DatastoreHelper, logger, SqlHelper
+from main.database.db_helper import DatastoreHelper, SqlHelper
 from main.helper import util
 from main.helper.result import Result
+
+logger = logging.getLogger(__name__)
 
 
 # ... means "not-yet-written code"
 # Abstract Transporter Class
-class Transporter(ABC):
+class Transporter(ABC, threading.Thread):
     database = None
     source_entity = None
     target_entity = None
     compressed = None
     source_db = None
     target_db = None
+    test_mode = None
 
-    def __init__(self, database, source_entity, target_table, compressed):
+    def __init__(self, database, source_entity, target_table, compressed, test_mode):
+        super(Transporter, self).__init__()
         logger.info('Creating Transporter from {0} to {1}'.format(source_entity, target_table))
         self.database = database
         self.source_entity = source_entity
@@ -26,8 +32,9 @@ class Transporter(ABC):
         self.compressed = compressed
         self.source_db = DatastoreHelper()
         self.target_db = SqlHelper(self.database)
+        self.test_mode = test_mode
 
-    def transport(self, test_mode=False):
+    def run(self):
         result = Result()
         logger.info('Starting transport...')
         self.target_db.create_session()
@@ -52,7 +59,7 @@ class Transporter(ABC):
                                 logger.error('Cannot convert to JSON; trying to map "as-is"')
                                 target_content = content
                         entities = self.map(target_content)
-                        if not test_mode:
+                        if not self.test_mode:
                             if len(entities) > 0:
                                 try:
                                     for entity in entities:
@@ -77,7 +84,7 @@ class Transporter(ABC):
                 result.set_success(False)
                 result.set_message(self.source_entity + ' could not be found in Google Datastore')
             offset += constants.GCP_FETCH_LIMIT
-        return result
+        logger.info(result)
 
     # maps target and source structure and returns a list of entities to save in db
     @abstractmethod

@@ -1,11 +1,11 @@
-from abc import ABCMeta, abstractmethod
+import threading
+from abc import ABC, abstractmethod
 
 
-class Collector(object):
-    __metaclass__ = ABCMeta
+class Collector(ABC, threading.Thread):
 
     @abstractmethod
-    def collect(self):
+    def run(self):
         pass
 
     @abstractmethod

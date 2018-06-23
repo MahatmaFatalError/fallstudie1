@@ -20,7 +20,8 @@ class City(Base):
     buying_power = Column(Numeric)
 
     def __str__(self):
-        return 'id: {0}, name: {1}, buying power: {2}'.format(self.id, self.name, self.buying_power)
+        return 'id: {0}, name: {1}, updated at: {2} buying power: {3}'\
+            .format(self.id, self.name, self.updated_at, self.buying_power)
 
 
 class ZipCode(Base):
@@ -30,6 +31,10 @@ class ZipCode(Base):
     zip_code = Column(Integer, primary_key=True)
     requested = Column(Boolean, default=False)
     updated_at = Column(DateTime)
+
+    def __str__(self):
+        return 'city id: {0}, zip code: {1}, requested: {2}, updated_at: {3}'\
+            .format(self.city_id, self.zip_code, self.requested, self.updated_at)
 
 
 class Restaurant(Base):

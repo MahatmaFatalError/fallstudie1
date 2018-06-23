@@ -13,7 +13,6 @@ logger = logging.getLogger(__name__)
 class RestaurantTransporter(Transporter):
 
     def map(self, source_content):
-        # TODO: map empty integers to 0
         logger.info('Starting Mapping for %s entries', source_content)
         entities = []
         key = 'businesses'
@@ -37,7 +36,9 @@ class RestaurantTransporter(Transporter):
                 if 'rating' in business:
                     restaurant.rating = business['rating']
                 if 'review_count' in business:
-                    restaurant.review_count = business['review_count']
+                    review_count = business['review_count']
+                    if not review_count:
+                        restaurant.review_count = 0
                 if 'categories' in business:
                     categories = business['categories']
                     for category_entity in categories:
@@ -60,6 +61,8 @@ class RestaurantTransporter(Transporter):
                 if 'location' in business:
                     location = business['location']
                     zip_code = location['zip_code']
+                    if not zip_code:
+                        zip_code = 0
                     street = location['address1']
                     city = location['city']
                     country = location['country']

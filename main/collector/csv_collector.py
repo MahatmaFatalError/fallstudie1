@@ -30,7 +30,7 @@ class CsvCollector(Collector):
         self.encoding = encoding
         self.compressed = compressed
 
-    def collect(self):
+    def run(self):
         result = Result()
         with open(self.filename, encoding=self.encoding) as data:
             csv_reader = csv.DictReader(data, delimiter=self.delimiter)
@@ -48,7 +48,7 @@ class CsvCollector(Collector):
         result.set_success(success)
         if not success:
             result.set_message('Could not save csv Data in Google Datastore')
-        return result
+        logger.info(result)
 
     def _save(self, data):
         success = False
