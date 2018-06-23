@@ -7,7 +7,7 @@ con = dbConnect(pg, user="postgres", password="team123",
                 host="35.190.205.207", port=5432, dbname="fonethd")
 
 ## create view restaurants_in_germany as (
-##  select r.*, c.name as category from restaurant r inner join food_category c on r.id = c.restaurant_id
+##  select r.*, c.name as category, city.population_sqkm, city.buying_power from restaurant r inner join food_category c on r.id = c.restaurant_id inner join city on r.city = city.name
 ##  where city is not null)
 
 ## dtab = dbReadTable(con, "restaurant")
@@ -32,7 +32,7 @@ stateCat = factor(dtab$state)
 dtab$state = stateCat
 
 ## linear Regression
-fit.lr <- lm(rating ~ city + state + review_count + category , data=dtab ) #+ price_range
+fit.lr <- lm(rating ~ city + state + review_count + category + buying_power, data=dtab ) #+ price_range
 summary(fit.lr)
 
 ## tree
