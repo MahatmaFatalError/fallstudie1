@@ -1,34 +1,17 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-
+from main.helper import util
 from main.helper.SignalHandler import SignalHandler
 from main.helper.creator import Creator
-import os
 import threading
-import json
-import logging.config
 import logging
 import signal
 
 logger = logging.getLogger(__name__)
 
-def setup_logging(default_path='config/logging.json', default_level=logging.INFO, env_key='LOG_CFG'):
-    """Setup logging configuration"""
-
-    path = default_path
-    value = os.getenv(env_key, None)
-    if value:
-        path = value
-    if os.path.exists(path):
-        with open(path, 'rt') as f:
-            config = json.load(f)
-        logging.config.dictConfig(config)
-    else:
-        logging.basicConfig(level=default_level)
-
 
 def main():
-    setup_logging()
+    util.setup_logging()
     action_number = int(input("What do you want to collect and transport? (1)city, (2)plz, (3)restaurant, (4)kaufkraft."
                               " Answer by type in the number."))
     test_mode_number = int(input("Execution in test mode?. 1(yes), (2)no."
@@ -51,10 +34,13 @@ def main():
     elif test_mode_number == 2:
         test_mode = False
 
+    logger.debug(action)
+    logger.debug(test_mode)
+
     threads = list()
     stopper = threading.Event()
 
-    if action and test_mode:
+    if action is not None and test_mode is not None:
         collector_method = 'create_' + action + '_collector'
         transporter_method = 'create_' + action + '_transporter'
 
