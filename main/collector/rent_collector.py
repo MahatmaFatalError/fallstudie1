@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 
 class RentCollector(Collector):
 
-    entity_id = None
     filename = None
 
     def __init__(self, entity_name, filepath):
@@ -48,6 +47,7 @@ class RentCollector(Collector):
         return success
 
     def _save(self, data):
+        logger.info('Saving {} in Datastore...'.format(self.entity_name))
         success = False
         db = DatastoreHelper()
         entity_id = data['schluessel']

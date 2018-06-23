@@ -47,6 +47,7 @@ class CsvCollector(Collector):
         logger.info(result)
 
     def _save(self, data):
+        logger.info('Saving {} in Datastore...'.format(self.entity_name))
         success = False
         db = DatastoreHelper()
         target_content = json.dumps(data)

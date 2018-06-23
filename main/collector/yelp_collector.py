@@ -87,8 +87,8 @@ class YelpCollector(Collector):
         return self._request(constants.YELP_SEARCH_PATH, url_params=url_params)
 
     def _save(self, data):
+        logger.info('Saving {} in Datastore...'.format(self.entity_name))
         result = False
-        logger.info('Saving Restaurants...')
         db = DatastoreHelper()
         attributes = {'path': self.current_path,
                       'location': self.location,

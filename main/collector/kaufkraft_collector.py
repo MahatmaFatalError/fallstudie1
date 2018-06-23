@@ -24,6 +24,7 @@ class KaufkraftCollector(Collector):
         self.entity_id = entity_id
 
     def _save(self, data):
+        logger.info('Saving {} in Datastore...'.format(self.entity_name))
         success = False
         db = DatastoreHelper()
         attributes = {'updatedAt': datetime.datetime.now(), 'content': data, 'transported': False}
