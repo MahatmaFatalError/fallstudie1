@@ -11,7 +11,6 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-
     creator = Creator()
     threads = list()
     stopper = threading.Event()
@@ -21,7 +20,11 @@ def main():
     collector = None
 
     util.setup_logging()
-    action_number = int(input("What do you want to collect and transport?"
+
+    collect_or_transport = int(input("Do you want to (1)collect, (2)transport or (3)both?"
+                                     " Answer by type in the number."))
+
+    action_number = int(input("What do you want to collect/transport?"
                               "(1)city,"
                               "(2)plz,"
                               "(3)restaurant,"
@@ -56,14 +59,14 @@ def main():
 
         try:
             collector = getattr(creator, collector_method)()
-            if collector:
+            if collector and (collect_or_transport == 1 or collect_or_transport == 3):
                 threads.append(collector)
         except AttributeError:
             logger.warning('Collector {0} not found'.format(collector_method))
 
         try:
             transporter = getattr(creator, transporter_method)(test_mode)
-            if transporter:
+            if transporter and (collect_or_transport == 2 or collect_or_transport == 3):
                 threads.append(transporter)
         except AttributeError:
             logger.warning('Transporter {0} not found'.format(transporter_method))
@@ -73,16 +76,11 @@ def main():
         if number_threads > 0:
             handler = SignalHandler(stopper, threads)
             signal.signal(signal.SIGINT, handler)
-            if collector is not None:
-                logger.info('Starting {0} collector'.format(action))
-                collector.start()
-            if transporter is not None:
-                logger.info('Starting {0} transporter'.format(action))
-                transporter.start()
+            for thread in threads:
+                thread_name = type(thread).__name__
+                logger.info('Starting Thread: {0}'.format(thread_name))
+                thread.start()
 
 
 if __name__ == '__main__':
     main()
-
-
-
