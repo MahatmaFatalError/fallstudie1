@@ -44,7 +44,8 @@
     -  http://docs.sqlalchemy.org/en/latest/core/type_basics.html
 2. Create a new collector. Inherits from ```Collector``` class. Implement at least ```_save()``` and ```collect()``` methods
 3. Create a new transporter. Inherit from ```Transporter``` class. Implement only ```map()``` method
-4. Create new methods in ```main.py```. For naming conventions and logic of these methods,  please take a look at already defined methods.
+4. Create new methods in ```main.helper.creator.py```. For naming conventions and logic of these methods,  please take a look at already defined methods.
+5. Update ```main()``` in ```main.py``` accordingly.
 5. If you need to write some new methods for Database access (Google Datastore or PostgreSQL) please add them in the corresponding class of script ```db_helper.py```
 6. Custom Exceptions must be created in script ```exception.py```
 7. Please put methods with no relation to to Collector or Transporter into ```util.py```
