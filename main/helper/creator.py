@@ -4,7 +4,8 @@ from config import constants
 
 class Creator:
 
-    def create_city_collector(self):
+    @staticmethod
+    def create_city_collector():
         city_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
                                                   constants.CSV,
                                                   'german_cities',
@@ -13,7 +14,8 @@ class Creator:
                                                   constants.CSV_DELIMITER_SEMI)
         return city_collector
 
-    def create_plz_collector(self):
+    @staticmethod
+    def create_plz_collector():
         plz_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
                                                  constants.CSV,
                                                  'german_plz_for_cities',
@@ -25,14 +27,15 @@ class Creator:
         return plz_collector
 
     @staticmethod
-    def create_restaurant_collector(self):
+    def create_restaurant_collector():
         yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
                                                   'yelp',
                                                   constants.GCP_ENTITY_RESTAURANT,
                                                   False)
         return yelp_collector
 
-    def create_kaufkraft_collector(self):
+    @staticmethod
+    def create_kaufkraft_collector():
         kaufkraft_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
                                                        'kaufkraft',
                                                        'kaufkraft_for_germany',
@@ -41,7 +44,8 @@ class Creator:
                                                        )
         return kaufkraft_collector
 
-    def create_rent_collector(self):
+    @staticmethod
+    def create_rent_collector():
         rent_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
                                                   'rent',
                                                   constants.GCP_ENTITY_RENT,
@@ -50,7 +54,8 @@ class Creator:
                                                   )
         return rent_collector
 
-    def create_plz_transporter(self, test_mode):
+    @staticmethod
+    def create_plz_transporter(test_mode):
         plz_transporter = EverythingFactory.create(constants.FACTORY_TRANSPORTER,
                                                    'plz',
                                                    constants.SQL_DATABASE_NAME,
@@ -60,7 +65,8 @@ class Creator:
                                                    test_mode)
         return plz_transporter
 
-    def create_city_transporter(self, test_mode):
+    @staticmethod
+    def create_city_transporter(test_mode):
         csv_transporter = EverythingFactory.create(constants.FACTORY_TRANSPORTER,
                                                    'city',
                                                    constants.SQL_DATABASE_NAME,
@@ -70,7 +76,8 @@ class Creator:
                                                    test_mode)
         return csv_transporter
 
-    def create_restaurant_transporter(self, test_mode):
+    @staticmethod
+    def create_restaurant_transporter(test_mode):
         restaurant_transporter = EverythingFactory.create(constants.FACTORY_TRANSPORTER,
                                                           'restaurant',
                                                           constants.SQL_DATABASE_NAME,
@@ -80,7 +87,8 @@ class Creator:
                                                           test_mode)
         return restaurant_transporter
 
-    def create_kaufkraft_transporter(self, test_mode):
+    @staticmethod
+    def create_kaufkraft_transporter(test_mode):
         kaufkraft_transporter = EverythingFactory.create(constants.FACTORY_TRANSPORTER,
                                                          'kaufkraft',
                                                          constants.SQL_DATABASE_NAME,
