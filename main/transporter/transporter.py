@@ -18,19 +18,15 @@ class Transporter(ABC, threading.Thread):
     database = None
     source_entity = None
     target_entity = None
-    compressed = None
     source_db = None
-    target_db = None
     test_mode = None
 
-    def __init__(self, database, source_entity, target_table, compressed, test_mode):
+    def __init__(self, database, source_entity, test_mode):
         super(Transporter, self).__init__()
-        logger.info('Creating Transporter from Datastore Entity: {0} to Postgres Table: {1}'
-                    .format(source_entity, target_table))
+        logger.info('Creating Transporter for Datastore Entity: {0}'
+                    .format(source_entity))
         self.database = database
         self.source_entity = source_entity
-        self.target_table = target_table
-        self.compressed = compressed
         self.source_db = DatastoreHelper()
         self.target_db = SqlHelper(self.database)
         self.test_mode = test_mode
@@ -48,16 +44,10 @@ class Transporter(ABC, threading.Thread):
                 for item in source_entities:
                     if 'content' in item:
                         content = item['content']
-                        logger.debug(content)
-                        if self.compressed:
-                            decompresed_content = util.decompress(content)
-                            json_string = util.base64_to_string(decompresed_content)
-                            target_content = json.loads(json_string)
-                        else:
-                            try:
-                                target_content = json.loads(content)
-                            except TypeError:
-                                target_content = content
+                        try:
+                            target_content = json.loads(content)
+                        except TypeError:
+                            target_content = content
                         entities = self.map(target_content)
                         if not self.test_mode:
                             if len(entities) > 0:

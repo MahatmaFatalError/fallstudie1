@@ -17,10 +17,9 @@ logger = logging.getLogger(__name__)
 
 class YelpCollector(Collector):
 
-    def __init__(self, entity_name, compressed):
+    def __init__(self, entity_name):
         super(YelpCollector, self).__init__(
-            entity_name=entity_name,
-            compressed=compressed
+            entity_name=entity_name
         )
         self.host = constants.YELP_API_HOST
         self.headers = {
@@ -49,8 +48,8 @@ class YelpCollector(Collector):
                             if save_success is False:
                                 zip_completed = False
                             logger.info(u'Found {0} Entries...'.format(total))
-                            while self.offset < total\
-                                    and(self.offset + constants.YELP_SEARCH_LIMIT <= 1000)\
+                            while self.offset < total \
+                                    and (self.offset + constants.YELP_SEARCH_LIMIT <= 1000) \
                                     and save_success is True:
                                 content = self._get_search(self.location, self.offset)
                                 self.offset += constants.YELP_SEARCH_LIMIT + 1

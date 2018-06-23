@@ -17,10 +17,9 @@ class KaufkraftCollector(Collector):
     pdf_path = None
     entity_id = None
 
-    def __init__(self, entity_id, entity_name, compressed, path):
+    def __init__(self, entity_id, entity_name, path):
         super(KaufkraftCollector, self).__init__(
-            entity_name=entity_name,
-            compressed=compressed)
+            entity_name=entity_name)
         self.pdf_path = path
         self.entity_id = entity_id
 
