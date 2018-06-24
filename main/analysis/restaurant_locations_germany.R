@@ -37,17 +37,17 @@ foodCat = factor(dtab$category)
 dtab$category = foodCat
 
 cityCat = factor(dtab$city)
-#dtab$city = cityCat
+dtab$city = cityCat
 stateCat = factor(dtab$state)
 dtab$state = stateCat
 
 ## linear Regression
-fit.lr <- lm(rating ~ ., data=dtab ) #+ price_range
+fit.lr <- lm(rating ~ price_range + state + review_count + buying_power + population_sqkm + category, data=dtab )
 summary(fit.lr)
 
 ## tree
 library(partykit)
-fit.t <- ctree(rating ~ price_range + city + review_count + category, data=dtab)
+fit.t <- ctree(rating ~ price_range + state + review_count + buying_power + population_sqkm, data=dtab)
 plot(fit.t)
 
 
