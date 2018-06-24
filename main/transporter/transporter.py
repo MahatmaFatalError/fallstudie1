@@ -32,6 +32,7 @@ class Transporter(ABC, threading.Thread):
         self.test_mode = test_mode
 
     def run(self):
+        # TODO: only map if it is in germany; check lon, for null value; logger.debug(city), or serch for zip_code in db
         result = Result()
         logger.info('Starting transport...')
         self.target_db.create_session()
@@ -59,8 +60,8 @@ class Transporter(ABC, threading.Thread):
                                             self.target_db.insert(entity)
                                     logger.info('Commiting DB entries')
                                     self.target_db.commit_session()
-                                    result.set_success(True)
                                     self.source_db.set_transported(item, True)
+                                    result.set_success(True)
                                 except SQLAlchemyError as err:
                                     result.set_success(False)
                                     result.set_message(err.code)
@@ -74,7 +75,7 @@ class Transporter(ABC, threading.Thread):
                         result.set_success(False)
                         result.set_message('No "content" attribute found in entity from Google Datastore')
             else:
-                result.set_success(False)
+                result.set_success(True)
                 result.set_message(self.source_entity + ' could not be found in Google Datastore')
             offset += constants.GCP_FETCH_LIMIT
         logger.info(result)
