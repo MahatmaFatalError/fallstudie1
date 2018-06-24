@@ -27,7 +27,7 @@ class DatastoreHelper:
         return item.key
 
     def fetch_entity(self, entity_name, limit, offset):
-        logger.info('Fetching from Offset: %s with Limit: %s', str(offset), str(limit))
+        logger.info('Fetching from offset: %s with limit: %s', str(offset), str(limit))
         query = self.client.query(kind=entity_name)
         query.add_filter('transported', '=', False)
         result = list(query.fetch(limit=limit, offset=offset))
