@@ -90,10 +90,9 @@ class RestaurantTransporter(Transporter):
                                         restaurant.state = state
                                 entities.append(restaurant)
                             else:
-                                logger.info("Datatsore zip Code doesn't match Restaurant zip code -->"
-                                            " skipping this entity")
+                                logger.info("zip doesn't match --> skip")
                         else:
-                            logger.info("Restaurant doesn't have a zip code --> skipping this entity")
+                            logger.info("no zip code --> skip")
                     else:
-                        logger.info("Restaurant doesn't have a location --> skipping this entity")
+                        logger.info("no location --> skip")
         return entities
