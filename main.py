@@ -14,34 +14,35 @@ def main():
     creator = Creator()
     threads = list()
     stopper = threading.Event()
-    action = None
     test_mode = None
+
+    collect_or_transport = int(input("What do you want to do?\n"
+                                     "(1)collect\n"
+                                     "(2)transport\n"
+                                     "(3)both\n"
+                                     "Answer by type in the number."))
+
+    choices = {1: 'city', 2: 'plz', 3: 'restaurant', 4: 'kaufkraft', 5: 'rent'}
+
+    action_string = 'What do you want to collect/transport?\n'
+
+    for key in choices.keys():
+        choice = '({0}){1}\n'.format(str(key), choices[key])
+        action_string += choice
+
+    action_string += "Answer by type in the number."
 
     util.setup_logging()
 
-    collect_or_transport = int(input("Do you want to (1)collect, (2)transport or (3)both?"
-                                     " Answer by type in the number."))
+    action_number = int(input(action_string))
+    test_mode_number = int(input("Execution in test mode?\n"
+                                 "(1)yes\n"
+                                 "(2)no\n"
+                                 "Answer by type in the number."))
 
-    action_number = int(input("What do you want to collect/transport?"
-                              "(1)city,"
-                              "(2)plz,"
-                              "(3)restaurant,"
-                              "(4)kaufkraft,"
-                              "{5}rent."
-                              " Answer by type in the number."))
-    test_mode_number = int(input("Execution in test mode?. 1(yes), (2)no."
-                                 " Answer by type in the number."))
+    action = choices[action_number]
 
-    if action_number == 1:
-        action = 'city'
-    elif action_number == 2:
-        action = 'plz'
-    elif action_number == 3:
-        action = 'restaurant'
-    elif action_number == 4:
-        action = 'kaufkraft'
-    elif action_number == 5:
-        action = 'rent'
+    logger.debug(action)
 
     if test_mode_number == 1:
         test_mode = True
