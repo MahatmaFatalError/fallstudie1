@@ -42,8 +42,8 @@ class Transporter(ABC, threading.Thread):
             result = self._transport(offset)
             results.append(result)
             offset += constants.GCP_FETCH_LIMIT
-            # i dont know why but google datastore doesn't allow a offset greater than 2000
-            if offset == 2000:
+            # i dont know why but google datastore doesn't allow a offset greater than 2500
+            if offset == 2500:
                 logger.info('Resetting offset...')
                 offset = 0
                 total = self.source_db.get_total(self.source_entity, only_not_yet_transported=True)
