@@ -70,7 +70,6 @@ class Transporter(ABC, threading.Thread):
                                     self.target_db.insert(entity)
                             logger.info('Commiting DB entries')
                             self.target_db.commit_session()
-                            self.source_db.set_transported(datastore_entity, True)
                             result.set_success(True)
                             result.set_message('Fetched entries from offset {0} with limit {1}'
                                                .format(str(offset), str(limit)))
@@ -81,8 +80,12 @@ class Transporter(ABC, threading.Thread):
                         finally:
                             self.target_db.close_session()
                     else:
-                        result.set_success(False)
+                        result.set_success(True)
                         result.set_message('There are no mapped entities that can be saved in database')
+                    self.source_db.set_transported(datastore_entity, True)
+                else:
+                    result.set_success(True)
+                    result.set_message('Test Mode active')
             else:
                 result.set_success(False)
                 result.set_message('No "content" attribute found in entity from Google Datastore')
