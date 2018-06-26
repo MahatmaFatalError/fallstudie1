@@ -76,13 +76,26 @@ class SqlHelper:
 
     def insert(self, entity):
         merged_entity = self.session.merge(entity)
-        id = merged_entity.id
-        return id
+        entity_id = merged_entity.id
+        return entity_id
 
     def fetch_restaurant_by_id(self, id):
         result = self.session.query(Restaurant). \
             filter(Restaurant.id == id ). \
             first()
+        return result
+
+    def find_restaurant_by_long_lat(self, long, lat):
+        result = self.session.query(Restaurant). \
+            filter(Restaurant.longitude == long). \
+            filter(Restaurant.latitude == lat).all()
+        return result
+
+    def delete_restaurant_by_long_lat(self, long, lat):
+        result = self.session.query(Restaurant). \
+            filter(Restaurant.longitude == long). \
+            filter(Restaurant.latitude == lat). \
+            delete()
         return result
 
     def commit_session(self):
