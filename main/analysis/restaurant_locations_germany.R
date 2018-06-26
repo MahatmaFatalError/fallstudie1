@@ -53,6 +53,11 @@ plot(fit.t)
 
 library(effects)
 plot(effect("price_range", fit.lr))
+plot(effect("category", fit.lr))
+plot(effect("state", fit.lr))
+plot(effect("buying_power", fit.lr))
+plot(effect("population_sqkm", fit.lr))
+
 
 
 # disconnect from the database
