@@ -53,3 +53,7 @@
 9. It is very important to keep the naming convention for collector and transporter. <br>
 <b>Filename</b>: ```'<any_string>_collector|transporter``` e.g.: ```plz_collector.py``` <br>
 <b>Classname</b>: same as filename but in camel case starting with a capital letter  e.g.: ```PlzCollector```
+
+## Cleaning
+
+Protocol in ```main/cleaning/cleaning.md```
