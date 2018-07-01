@@ -17,6 +17,7 @@ Fetching these restaurants from yelp always resulted in a 404 or 403 HTTP Error.
 --> Address could not be retrieved.
 
 # 3. ```price_range``` cleaning
+Take a look at ```price_range.py``` script.
 
 # 4.  ```country``` cleaning
 ```sql
@@ -27,3 +28,7 @@ DELETE FROM public.restaurant WHERE country != 'DE'
 Only a few restaurants have null values within attribute ```street```.
 <br>
 Leave them --> ```street``` is not really important for us.
+
+# 6.  ```price_range_calculated``` Table cleaning
+
+<b>TODO...</br>

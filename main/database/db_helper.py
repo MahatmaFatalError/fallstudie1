@@ -76,7 +76,13 @@ class SqlHelper:
 
     def insert(self, entity):
         merged_entity = self.session.merge(entity)
-        entity_id = merged_entity.id
+        try:
+            entity_id = merged_entity.id
+        except AttributeError:
+            try:
+                entity_id = merged_entity.restaurant_id
+            except AttributeError:
+                entity_id = merged_entity.city_id
         return entity_id
 
     def fetch_restaurant_by_id(self, id):

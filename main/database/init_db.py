@@ -84,9 +84,9 @@ class PriceRangeCalculated(Base):
 
     restaurant_id = Column(String, ForeignKey(constants.SQL_TABLE_RESTAURANT + '.id'), primary_key=True,
                            autoincrement=False)
-    price_range = Column(String(5))
+    price_range = Column(String(5), primary_key=True)
 
 
 # db = SqlHelper(constants.SQL_DATABASE_NAME)
-# # engine = db.get_connection()
-# # Base.metadata.create_all(engine)
+# engine = db.get_connection()
+# Base.metadata.create_all(engine)
