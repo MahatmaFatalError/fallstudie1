@@ -1,0 +1,1 @@
+UPDATE restaurant SET review_count WHERE review_count is null

@@ -29,7 +29,7 @@ class Creator:
     @staticmethod
     def create_restaurant_collector():
         yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
-                                                  'yelp',
+                                                  'restaurant',
                                                   constants.GCP_ENTITY_RESTAURANT,
                                                   )
         return yelp_collector

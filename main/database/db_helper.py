@@ -122,6 +122,22 @@ class SqlHelper:
             result = self.session.query(Restaurant)
         return result
 
+    def fetch_entity_where(self, class_name, fetch_all, **kwargs):
+        mod = __import__('main.database.init_db', fromlist=[class_name])
+        entity_class = getattr(mod, class_name)
+        query = self.session.query(entity_class)
+
+        if kwargs is not None:
+            for key, value in kwargs.items():
+                attribute = getattr(entity_class, key)
+                query = query.filter(attribute == value)
+
+        if fetch_all:
+            result = query.all()
+        else:
+            result = query.first()
+        return result
+
     def fetch_city_by_name(self, name):
         result = self.session.query(City).\
             filter(City.name.like(name)).\
