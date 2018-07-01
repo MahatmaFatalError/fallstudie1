@@ -56,4 +56,4 @@
 
 ## Cleaning
 
-Protocol in ```main/cleaning/cleaning.md```
+Protocol in [```main/cleaning/cleaning.md```](main/cleaning/cleaning.md)
