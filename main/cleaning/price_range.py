@@ -9,7 +9,7 @@ from main.helper.yelp import YelpHelper
 logger = logging.getLogger(__name__)
 
 
-def main():
+def check_price_range_availability_and_update():
     yelp_helper = YelpHelper()
     restaurants = []
     util.setup_logging()
@@ -50,4 +50,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    check_price_range_availability_and_update()
