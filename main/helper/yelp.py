@@ -21,18 +21,21 @@ class YelpHelper:
             'location': location.replace(' ', '+'),
             'offset': offset
         }
-        logger.info(u'Querying {0}; offset {1}...'.format(location, offset))
         return self._request(constants.YELP_SEARCH_PATH, url_params=url_params)
 
-    def get_business(self, business_id):
+    def get_business(self, business_id, offset = 0):
         """Query the Business API by a business ID.
         Args:
             business_id (str): The ID of the business to query.
+            offset (int): offset for search url
         Returns:
             dict: The JSON response from the request.
         """
+        url_params = {
+            'offset': offset
+        }
         business_path = constants.YELP_BUSINESS_PATH.replace('{id}', business_id)
-        return self._request(business_path)
+        return self._request(business_path, url_params=url_params)
 
     def get_reviews(self, business_id):
         """Query the Review API by a business ID.

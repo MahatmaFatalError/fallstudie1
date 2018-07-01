@@ -63,7 +63,8 @@ class Restaurant(Base):
 class FoodCategory(Base):
     __tablename__ = constants.SQL_TABLE_FOOD_CATEGORY
 
-    restaurant_id = Column(String, ForeignKey(constants.SQL_TABLE_RESTAURANT + '.id'), primary_key=True, autoincrement=False)
+    restaurant_id = Column(String, ForeignKey(constants.SQL_TABLE_RESTAURANT + '.id'), primary_key=True,
+                           autoincrement=False)
     alias = Column(String, primary_key=True)
     name = Column(String, primary_key=True)
     updated_at = Column(DateTime)
@@ -72,11 +73,20 @@ class FoodCategory(Base):
 class RestaurantTransaction(Base):
     __tablename__ = constants.SQL_TABLE_RESTAURANT_TRANSACTION
 
-    restaurant_id = Column(String, ForeignKey(constants.SQL_TABLE_RESTAURANT + '.id'), primary_key=True, autoincrement=False)
+    restaurant_id = Column(String, ForeignKey(constants.SQL_TABLE_RESTAURANT + '.id'), primary_key=True,
+                           autoincrement=False)
     name = Column(String, primary_key=True)
     updated_at = Column(DateTime)
 
 
+class PriceRangeCalculated(Base):
+    __tablename__ = constants.SQL_TABLE_PRICE_RANGE
+
+    restaurant_id = Column(String, ForeignKey(constants.SQL_TABLE_RESTAURANT + '.id'), primary_key=True,
+                           autoincrement=False)
+    price_range = Column(String(5))
+
+
 # db = SqlHelper(constants.SQL_DATABASE_NAME)
-# engine = db.get_connection()
-# Base.metadata.create_all(engine)
+# # engine = db.get_connection()
+# # Base.metadata.create_all(engine)

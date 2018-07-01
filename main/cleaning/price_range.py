@@ -49,5 +49,23 @@ def check_price_range_availability_and_update():
         db.close_session()
 
 
+def fill_price_range_with_modus_of_city():
+    yelp_helper = YelpHelper()
+    restaurants = []
+    util.setup_logging()
+
+    not_available_count = 0
+
+    db = SqlHelper(constants.SQL_DATABASE_NAME)
+    db.create_session()
+
+    result = db.fetch_entity_where('Restaurant', True, price_range=None)
+    logger.info('Found {0} restaurants'.format(len(result)))
+
+    for restaurant in restaurants:
+        city = restaurant.city
+
+
 if __name__ == '__main__':
     check_price_range_availability_and_update()
+    # fill_price_range_with_modus_of_city()
