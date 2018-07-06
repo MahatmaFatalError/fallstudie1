@@ -30,5 +30,12 @@ Only a few restaurants have null values within attribute ```street```.
 Leave them --> ```street``` is not really important for us.
 
 # 6.  ```price_range_calculated``` Table cleaning
-
-<b>TODO...</br>
+```sql
+UPDATE public.price_range_calculated
+	SET price_range = '€€'
+	WHERE price_range = '-1';
+	
+UPDATE public.price_range_calculated
+	SET price_range = '€€'
+	WHERE price_range = '-2';
+```
