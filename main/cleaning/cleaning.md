@@ -39,3 +39,6 @@ UPDATE public.price_range_calculated
 	SET price_range = '€€'
 	WHERE price_range = '-2';
 ```
+
+# 7. ```buying_power``` cleaning
+Take a look at ```buying_power.py``` script.
