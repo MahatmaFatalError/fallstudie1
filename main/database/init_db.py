@@ -87,6 +87,13 @@ class PriceRangeCalculated(Base):
     price_range = Column(String(5), primary_key=True)
 
 
+class BuyingPowerCalculated(Base):
+    __tablename__ = constants.SQL_TABLE_BUYING_POWER
+
+    city_id = Column(Integer, ForeignKey(constants.SQL_TABLE_CITY + '.id'), primary_key=True,
+                           autoincrement=False)
+    buying_power = Column(Numeric, primary_key=True)
+
 # db = SqlHelper(constants.SQL_DATABASE_NAME)
 # engine = db.get_connection()
 # Base.metadata.create_all(engine)
