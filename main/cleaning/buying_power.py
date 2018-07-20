@@ -1,5 +1,4 @@
 import logging
-from statistics import mode, StatisticsError
 
 from config import constants
 from main.database.db_helper import SqlHelper
@@ -9,6 +8,7 @@ from main.database.db_helper import DatastoreHelper
 import json
 
 logger = logging.getLogger(__name__)
+
 
 def get_germany_buying_power_average():
     source_db = DatastoreHelper()

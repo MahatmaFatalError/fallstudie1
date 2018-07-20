@@ -128,7 +128,7 @@ class SqlHelper:
             result = self.session.query(Restaurant)
         return result
 
-    def fetch_entity_where(self, class_name, fetch_all, **kwargs):
+    def fetch_entity_where(self, class_name, fetch_all, negated, **kwargs):
         mod = __import__('main.database.init_db', fromlist=[class_name])
         entity_class = getattr(mod, class_name)
         query = self.session.query(entity_class)
@@ -136,7 +136,10 @@ class SqlHelper:
         if kwargs is not None:
             for key, value in kwargs.items():
                 attribute = getattr(entity_class, key)
-                query = query.filter(attribute == value)
+                if negated:
+                    query = query.filter(attribute != value)
+                else:
+                    query = query.filter(attribute == value)
 
         if fetch_all:
             result = query.all()

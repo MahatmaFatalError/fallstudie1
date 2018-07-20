@@ -94,6 +94,14 @@ class BuyingPowerCalculated(Base):
                            autoincrement=False)
     buying_power = Column(Numeric, primary_key=True)
 
+
+class RentAvgCalculated(Base):
+    __tablename__ = constants.SQL_TABLE_RENT_AVG
+
+    city_id = Column(Integer, ForeignKey(constants.SQL_TABLE_CITY + '.id'), primary_key=True,
+                           autoincrement=False)
+    rent_avg = Column(Numeric, primary_key=True)
+
 # db = SqlHelper(constants.SQL_DATABASE_NAME)
 # engine = db.get_connection()
 # Base.metadata.create_all(engine)

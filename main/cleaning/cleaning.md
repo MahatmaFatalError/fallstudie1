@@ -42,3 +42,6 @@ UPDATE public.price_range_calculated
 
 # 7. ```buying_power``` cleaning
 Take a look at ```buying_power.py``` script.
+
+# 8. ```rent_avg``` cleaning
+Take a look at ```rent_avg.py``` script.
