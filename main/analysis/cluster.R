@@ -19,12 +19,13 @@ dtab$category3 = factor(dtab$category3)
 categoriesToCluster <- dtab[,12:14]
 
 require(cluster)
-fit1 <- agnes(categoriesToCluster, method="ward") 
-fit2 <- agnes(categoriesToCluster, method="average") 
-fit3 <- agnes(categoriesToCluster, method="single") 
-fit4 <- agnes(categoriesToCluster, method="complete")
+#fit1 <- agnes(categoriesToCluster, method="ward") 
+#fit2 <- agnes(categoriesToCluster, method="average") 
+#fit3 <- agnes(categoriesToCluster, method="single") 
+#fit4 <- agnes(categoriesToCluster, method="complete")
 
-gower.dist <- daisy(categoriesToCluster, metric = c("gower"))
+# https://medium.com/@anastasia.reusova/hierarchical-clustering-on-categorical-data-in-r-a27e578f2995
+gower.dist <- daisy(categoriesToCluster, metric = c("gower")) ## memory limitation
 
 divisive.clust <- diana(as.matrix(gower.dist), 
                         diss = TRUE, keep.diss = TRUE)
@@ -35,13 +36,16 @@ plot(aggl.clust.c,
      main = "Agglomerative, complete linkages")
 
 
+
+# https://dabblingwithdata.wordpress.com/2016/10/10/clustering-categorical-data-with-r/
+
 install.packages("klaR")
 library(klaR)
-cluster.results <-kmodes(categoriesToCluster, 6, iter.max = 10, weighted = FALSE ) #don't use the record ID as a clustering variable!
+cluster.results <-kmodes(categoriesToCluster, 6, iter.max = 10, weighted = FALSE ) ## Fehler in x[[jj]][iseq] <- vjj : Ersetzung hat Länge 0
 
 install.packages("cba")
 library(cba)
-cluster.results <-rockCluster(as.matrix(categoriesToCluster), 6 )
+cluster.results <-rockCluster(as.matrix(categoriesToCluster), 6 ) ## whole R session crashes
 cluster.output <- cbind(categoriesToCluster,cluster.results$cl)
 
 
