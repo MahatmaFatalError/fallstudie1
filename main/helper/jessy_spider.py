@@ -40,21 +40,39 @@ class RestaurantSpider:
         self._scrape_restaurants()
         self._scrape_restaurant_urls()
         self._scrape_menu_urls()
-        self._build_menu_items_json()
+        self._build_menu_items()
 
-    def _build_menu_items_json(self):
+    def _build_menu_items(self):
         restaurants = []
 
         for urls in self.menu_urls:
+            # all entries belonging to the same restaurant
             restaurant = {
                 'id': None,
                 'address': None,
+                'categories': None,
+                'services': None,
+                'seats': None,
                 'menu': []
             }
+            # get restaurant id
+            first_restaurant_url = self.get_restaurant_url(urls[0])
+            first_restaurant_tree = self.helper.scrape_page(first_restaurant_url)
+            restaurant_id = self.read_restaurtant_id(first_restaurant_url)
+            restaurant['id'] = restaurant_id
+            # get categories
+            categories = self.read_categories(first_restaurant_tree)
+            if categories:
+                restaurant['categories'] = categories
+            # get services
+            services = self.read_services(first_restaurant_tree)
+            if services:
+                restaurant['services'] = services
+            # get seats
+            seats = self.read_seats(first_restaurant_tree)
+            if seats:
+                restaurant['seats'] = seats
             for url in urls:
-                if not restaurant['id']:
-                    restaurant_id = self.read_restaurtant_id(url)
-                    restaurant['id'] = restaurant_id
                 menu_tree = self.helper.scrape_page(url)
                 if not restaurant['address']:
                     address = self.read_address(menu_tree)
@@ -79,7 +97,6 @@ class RestaurantSpider:
         self.result = all_restaurants
 
     def get_result_as_json(self):
-        print(self.result)
         return json.dumps(self.result, ensure_ascii=False)
 
     def get_result(self):
@@ -89,7 +106,7 @@ class RestaurantSpider:
         for restaurant_url in self.restaurant_urls:
             search_url = restaurant_url + '/speisekarte'
             restaurant_tree = self.helper.scrape_page(search_url)
-            menu_urls = self.get_menus(restaurant_tree)
+            menu_urls = self.read_menus(restaurant_tree)
             if menu_urls:
                 self.menu_urls.append(menu_urls)
 
@@ -111,6 +128,35 @@ class RestaurantSpider:
             for result in search_results:
                 restaurant_url = result.get('target-link')
                 self.restaurant_urls.append(restaurant_url)
+
+    @staticmethod
+    def read_categories(tree):
+        categories = tree.xpath('//a[@itemprop="servesCuisine"]/text()')
+        cleaned_categories = []
+        for cat in categories:
+            cleaned_categories.append(cat.strip())
+        return cleaned_categories
+
+    @staticmethod
+    def read_services(tree):
+        categories = tree.xpath('//span[@class="badge badge-light mr-1 mb-1"]/text()')
+        return categories
+
+    @staticmethod
+    def read_seats(tree):
+        seats = []
+        texts = tree.xpath('//div[@class="col-12 col-sm-6 col-md-4 mb-5"]/p[2]/text()')
+
+        for text in texts:
+            if text.find('Sitzplätze') != -1:
+                seat = str(text).strip()
+                seats.append(seat)
+
+        return seats
+
+    @staticmethod
+    def get_restaurant_url(menu_url):
+        return '/'.join(menu_url.split('/')[:-2])
 
     @staticmethod
     def read_menu_category(restaurant_url):
@@ -139,7 +185,7 @@ class RestaurantSpider:
         return items
 
     @staticmethod
-    def get_menus(tree):
+    def read_menus(tree):
         menu_urls = tree.xpath('//div[@class="card no-border"]/div/div/a/@href')
         return menu_urls
 
@@ -168,8 +214,8 @@ if __name__ == '__main__':
     spider = RestaurantSpider(city_name)
     helper = SpiderHelper()
 
-    # tree = helper.scrape_page('https://www.speisekarte.de/schopfheim/restaurant/restaurant_hermes/speisekarte/1483436-vorspeisen_kalt_und_warm')
-    # print(spider.read_menu_items(tree))
+    # tree = helper.scrape_page('https://www.speisekarte.de/schopfheim/restaurant/hotel_andis_steakhuesli')
+    # print(spider.read_categories(tree))
 
     spider.run()
     result = spider.get_result_as_json()
