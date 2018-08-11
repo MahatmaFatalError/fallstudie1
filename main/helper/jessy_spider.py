@@ -26,7 +26,7 @@ class SpiderHelper:
         return result
 
 
-class RestaurantSpider:
+class SpeisekarteSpider:
 
     def __init__(self, city):
         self.base_url = 'https://www.speisekarte.de'
@@ -35,12 +35,32 @@ class RestaurantSpider:
         self.restaurant_urls = []
         self.restaurant_trees = []
         self.menu_urls = []
+        self.city_id = None
+        self.result = None
 
     def run(self):
-        self._scrape_restaurants()
-        self._scrape_restaurant_urls()
-        self._scrape_menu_urls()
-        self._build_menu_items()
+        self._create_city_id()
+        if self._is_city_available():
+            self._scrape_restaurants()
+            self._scrape_restaurant_urls()
+            self._scrape_menu_urls()
+            self._build_menu_items()
+        else:
+            message = 'City {0} is not available'.format(self.city)
+            self.result = {
+                'message': message
+            }
+
+
+    def _create_city_id(self):
+        self.city_id = self.city.lower().strip().replace(' ', '-')
+
+    def _is_city_available(self):
+        city_url_template = '/{city_name}/restaurants'
+        city_url = self.base_url + city_url_template.replace('{city_name}', self.city_id)
+        tree = self.helper.scrape_page(city_url)
+        has_fourzerofour = self.helper.has_xpath('//div[@class="row mt-5 justify-content-center"]/div/h1/text()', tree)
+        return not has_fourzerofour
 
     def _build_menu_items(self):
         restaurants = []
@@ -102,6 +122,9 @@ class RestaurantSpider:
     def get_result(self):
         return self.result
 
+    def get_city_id(self):
+        return self.city_id
+
     def _scrape_menu_urls(self):
         for restaurant_url in self.restaurant_urls:
             search_url = restaurant_url + '/speisekarte'
@@ -114,12 +137,12 @@ class RestaurantSpider:
         restaurant_url_template = '/{city_name}/restaurants?page={page_number}'
         page_number = 1
 
-        search_url = self.base_url + restaurant_url_template.format(city_name=self.city, page_number=page_number)
+        search_url = self.base_url + restaurant_url_template.format(city_name=self.city_id, page_number=page_number)
         tree = self.helper.scrape_page(search_url)
         while self.helper.has_xpath('//div[@class="search-result"]', tree):
             self.restaurant_trees.append(tree)
             page_number += 1
-            search_url = self.base_url + restaurant_url_template.format(city_name=self.city, page_number=page_number)
+            search_url = self.base_url + restaurant_url_template.format(city_name=self.city_id, page_number=page_number)
             tree = self.helper.scrape_page(search_url)
 
     def _scrape_restaurant_urls(self):
@@ -178,10 +201,21 @@ class RestaurantSpider:
     @staticmethod
     def read_menu_items(tree):
         items = []
-        menu_items = tree.xpath('//div[@class="menu-entry-filter"]/div/div/span/text()')
-        for item in menu_items:
-            if item:
-                items.append(item.strip())
+        menu_items_span = tree.xpath('//div[@class="menu-entry-filter"]/div/div/span/text()')
+        # menu_items_span_subtext = tree.xpath('//div[@class="menu-entry-filter"]/div/div/text()')
+        menu_items_a = tree.xpath('//div[@class="menu-entry-filter"]/div/div/span/a/text()')
+        for item_span in menu_items_span:
+            text = item_span.strip()
+            if text:
+                items.append(text)
+        for item_a in menu_items_a:
+            text = item_a.strip()
+            if text:
+                items.append(text)
+        # for span_subtext in menu_items_span_subtext:
+        #     print('Subtext:')
+        #     print(span_subtext.strip())
+
         return items
 
     @staticmethod
@@ -210,12 +244,8 @@ class RestaurantSpider:
 if __name__ == '__main__':
     util.setup_logging()
 
-    city_name = 'schopfheim'
-    spider = RestaurantSpider(city_name)
-    helper = SpiderHelper()
-
-    # tree = helper.scrape_page('https://www.speisekarte.de/schopfheim/restaurant/hotel_andis_steakhuesli')
-    # print(spider.read_categories(tree))
+    city_name = 'Schopfheim'
+    spider = SpeisekarteSpider(city_name)
 
     spider.run()
     result = spider.get_result_as_json()
