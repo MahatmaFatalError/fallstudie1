@@ -1,4 +1,6 @@
 
+#library(ggplot2)
+#library(dplyr)
 library('RPostgreSQL')
 
 ## connect to db
@@ -10,9 +12,11 @@ con = dbConnect(pg, user="postgres", password="team123",
 dtab = dbGetQuery(con, "select * from restaurants_final")
 summary(dtab)
 str(dtab)
+hist(dtab$buying_power)
 
-
-
+# categorize buying power into groups
+dtab$buying_power_groups <- cut(dtab$buying_power, breaks=c(-Inf, 20000, 24000, 28000, Inf), labels=c("low","middle", "upper middle","high"))
+plot(dtab$buying_power_groups)
 
 ## crunch character data to factors
 priceCat = factor(dtab$price_range)
@@ -35,9 +39,8 @@ stateCat = factor(dtab$state)
 dtab$state = stateCat
 
 ## linear Regression
-#fit.lr <- lm(rating ~ price_range + state + review_count + buying_power + population_sqkm + category, data=dtab )
-fit.lr <- lm(cbind(price_range,state,review_count,buying_power,
-                   population_sqkm, category) ~ rating, data=dtab )
+fit.lr <- lm(rating ~ price_range + review_count + state + population_sqkm + buying_power_groups, data=dtab )
+#fit.lr <- lm(cbind(price_range,state,review_count,buying_power, population_sqkm, rent_avg) ~ rating, data=dtab )
 summary(fit.lr)
 
 ## tree
