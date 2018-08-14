@@ -6,47 +6,53 @@ pg = dbDriver("PostgreSQL")
 con = dbConnect(pg, user="postgres", password="team123",
                 host="35.190.205.207", port=5432, dbname="fonethd")
 
-## dtab = dbReadTable(con, "restaurant")
-dtab = dbGetQuery(con, "select * from restaurants_final")
-summary(dtab)
-str(dtab)
+##### hclust for binary matrix
 
-## crunch character data to factors
-dtab$category1 = factor(dtab$category1)
-dtab$category2 = factor(dtab$category2)
-dtab$category3 = factor(dtab$category3)
+data = dbGetQuery(con, "select * from restaurants_categories_flatter") # 68.734 rows
+summary(data)
 
-categoriesToCluster <- dtab[,12:14]
+categoriesToCluster <- data[,-1]   # get rid of id
+#categoriesToCluster <- na.omit(categoriesToCluster)
+str(categoriesToCluster)
+summary(categoriesToCluster)
+d1 <- replace(categoriesToCluster, is.na(categoriesToCluster), FALSE)
+d1 <- d1[0:10000,] # limit due to memory consumption
 
 require(cluster)
-#fit1 <- agnes(categoriesToCluster, method="ward") 
-#fit2 <- agnes(categoriesToCluster, method="average") 
-#fit3 <- agnes(categoriesToCluster, method="single") 
-#fit4 <- agnes(categoriesToCluster, method="complete")
+#install.packages("ade4")
+library(ade4)
 
-# https://medium.com/@anastasia.reusova/hierarchical-clustering-on-categorical-data-in-r-a27e578f2995
-gower.dist <- daisy(categoriesToCluster, metric = c("gower")) ## memory limitation
+## distances
+binary.dist.1 <- dist.binary(as.matrix(1 * (d1 > 0)), method=1 )
+binary.dist.2 <- dist.binary(as.matrix(1 * (d1 > 0)), method=2 )
+binary.dist.3 <- dist.binary(as.matrix(1 * (d1 > 0)), method=3 )
+binary.dist.4 <- dist.binary(as.matrix(1 * (d1 > 0)), method=4 )
+binary.dist.5 <- dist.binary(as.matrix(1 * (d1 > 0)), method=5 )
+binary.dist.6 <- dist.binary(as.matrix(1 * (d1 > 0)), method=6 )
+binary.dist.7 <- dist.binary(as.matrix(1 * (d1 > 0)), method=7 )
+binary.dist.8 <- dist.binary(as.matrix(1 * (d1 > 0)), method=8 )
+binary.dist.9 <- dist.binary(as.matrix(1 * (d1 > 0)), method=9 )
+binary.dist.10 <- dist.binary(as.matrix(1 * (d1 > 0)), method=10 )
 
-divisive.clust <- diana(as.matrix(gower.dist), 
-                        diss = TRUE, keep.diss = TRUE)
-plot(divisive.clust, main = "Divisive")
+distance = dist(d1, method = "binary")
 
-aggl.clust.c <- hclust(gower.dist, method = "complete")
-plot(aggl.clust.c,
-     main = "Agglomerative, complete linkages")
+## clustering 
+hc = hclust(distance)
+hc.centroid = hclust(binary.dist1, method="centroid")
+hc.ward <- hclust(binary.dist.10, method="ward.D")
+plot(hc)
+plot(hc.ward)
 
 
-
-# https://dabblingwithdata.wordpress.com/2016/10/10/clustering-categorical-data-with-r/
-
-install.packages("klaR")
-library(klaR)
-cluster.results <-kmodes(categoriesToCluster, 6, iter.max = 10, weighted = FALSE ) ## Fehler in x[[jj]][iseq] <- vjj : Ersetzung hat Länge 0
-
-install.packages("cba")
-library(cba)
-cluster.results <-rockCluster(as.matrix(categoriesToCluster), 6 ) ## whole R session crashes
-cluster.output <- cbind(categoriesToCluster,cluster.results$cl)
+## groups
+group <- cutree(hc.ward, k = 10)
+plot(group)
+plot(hc.ward, labels=group, xlab="")
+data$group <- group # error replacement has 10000 rows, data has 68734
+data.limited <- data[0:10000,] 
+data.limited$group <- group
+head(data.limited)
+#cluster.means = aggregate(data,by=list(cutree(hc.simplemathing, k = 10)), mean)
 
 
 # disconnect from the database
