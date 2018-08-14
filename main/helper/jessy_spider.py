@@ -1,9 +1,9 @@
 from lxml import html
 import requests
 import logging
-import json
 
 from main.helper import util
+from main.helper.result import Result
 
 logger = logging.getLogger(__name__)
 
@@ -12,9 +12,14 @@ class SpiderHelper:
 
     @staticmethod
     def scrape_page(page_url):
+        tree = None
         logger.info('Scraping {0} ...'.format(page_url))
-        page = requests.get(page_url)
-        tree = html.fromstring(page.content)
+        request = requests.get(page_url)
+        logger.info('Request Status Code: {0}'.format(request.status_code))
+        if request.status_code == requests.codes.ok:
+            tree = html.fromstring(request.content)
+        else:
+            logger.error(request.text)
         return tree
 
     @staticmethod
@@ -36,30 +41,42 @@ class SpeisekarteSpider:
         self.restaurant_trees = []
         self.menu_urls = []
         self.city_id = None
-        self.result = None
+        self.result = Result()
+        self.content = None
 
     def run(self):
-        self._create_city_id()
-        if self._is_city_available():
-            self._scrape_restaurants()
-            self._scrape_restaurant_urls()
-            self._scrape_menu_urls()
-            self._build_menu_items()
-        else:
-            message = 'City {0} is not available'.format(self.city)
-            self.result = {
-                'message': message
-            }
-
+        try:
+            self._create_city_id()
+            is_available = self._is_city_available()
+            logger.debug(is_available)
+            if is_available:
+                logger.debug('City is available. Spider running for city {0}'.format(self.city))
+                self._scrape_restaurants()
+                self._scrape_restaurant_urls()
+                self._scrape_menu_urls()
+                self._build_menu_items()
+                self.result.set_data(self.content)
+                self.result.set_success(True)
+            else:
+                self.result.set_success(False)
+                message = 'City {0} is not available'.format(self.city)
+                self.result.set_message(message)
+        except:
+            self.result.set_success(False)
+            # TODO Exceptions????
 
     def _create_city_id(self):
         self.city_id = self.city.lower().strip().replace(' ', '-')
+        logger.debug('City ID: {0}'.format(self.city_id))
 
     def _is_city_available(self):
+        has_fourzerofour = True
         city_url_template = '/{city_name}/restaurants'
         city_url = self.base_url + city_url_template.replace('{city_name}', self.city_id)
         tree = self.helper.scrape_page(city_url)
-        has_fourzerofour = self.helper.has_xpath('//div[@class="row mt-5 justify-content-center"]/div/h1/text()', tree)
+        if tree is not None:
+            has_fourzerofour = self.helper.has_xpath('//div[@class="row mt-5 justify-content-center"]/div/h1/text()',
+                                                     tree)
         return not has_fourzerofour
 
     def _build_menu_items(self):
@@ -68,56 +85,59 @@ class SpeisekarteSpider:
         for urls in self.menu_urls:
             # all entries belonging to the same restaurant
             restaurant = {
-                'id': None,
-                'address': None,
-                'categories': None,
-                'services': None,
-                'seats': None,
-                'menu': []
+                "id": None,
+                "address": None,
+                "categories": None,
+                "services": None,
+                "seats": None,
+                "favourite_items": None,
+                "menu": []
             }
             # get restaurant id
             first_restaurant_url = self.get_restaurant_url(urls[0])
-            first_restaurant_tree = self.helper.scrape_page(first_restaurant_url)
+            restaurant_tree = self.helper.scrape_page(first_restaurant_url)
             restaurant_id = self.read_restaurtant_id(first_restaurant_url)
             restaurant['id'] = restaurant_id
             # get categories
-            categories = self.read_categories(first_restaurant_tree)
+            categories = self.read_categories(restaurant_tree)
             if categories:
                 restaurant['categories'] = categories
             # get services
-            services = self.read_services(first_restaurant_tree)
+            services = self.read_services(restaurant_tree)
             if services:
                 restaurant['services'] = services
             # get seats
-            seats = self.read_seats(first_restaurant_tree)
+            seats = self.read_seats(restaurant_tree)
             if seats:
                 restaurant['seats'] = seats
+            # get favouritem items
+            favourite_items = self.read_favourite_items(restaurant_tree)
+            if favourite_items:
+                restaurant['favourite_items'] = favourite_items
             for url in urls:
                 menu_tree = self.helper.scrape_page(url)
-                if not restaurant['address']:
-                    address = self.read_address(menu_tree)
-                    if address:
-                        restaurant['address'] = address
-                menu_items = self.read_menu_items(menu_tree)
-                if menu_items:
-                    category_id, category = self.read_menu_category(url)
-                    menu_category = {
-                        'id': category_id,
-                        'category': category,
-                        'menu_items': menu_items
-                    }
-                    restaurant['menu'].append(menu_category)
+                if menu_tree:
+                    if not restaurant['address']:
+                        address = self.read_address(menu_tree)
+                        if address:
+                            restaurant['address'] = address
+                    menu_items = self.read_menu_items(menu_tree)
+                    if menu_items:
+                        category_id, category = self.read_menu_category(url)
+                        menu_category = {
+                            "id": category_id,
+                            "category": category,
+                            "menu_items": menu_items
+                        }
+                        restaurant['menu'].append(menu_category)
 
             restaurants.append(restaurant)
 
         all_restaurants = {
-            'total': len(restaurants),
-            'restaurants': restaurants
+            "total": len(restaurants),
+            "restaurants": restaurants
         }
-        self.result = all_restaurants
-
-    def get_result_as_json(self):
-        return json.dumps(self.result, ensure_ascii=False)
+        self.content = all_restaurants
 
     def get_result(self):
         return self.result
@@ -151,6 +171,16 @@ class SpeisekarteSpider:
             for result in search_results:
                 restaurant_url = result.get('target-link')
                 self.restaurant_urls.append(restaurant_url)
+
+    @staticmethod
+    def read_favourite_items(tree):
+        favourite_items = SpeisekarteSpider.read_menu_items(tree)
+        cleaned_items = []
+        search_string = 'finden'
+        for item in favourite_items:
+            if item.find(search_string) == -1:
+                cleaned_items.append(item.strip())
+        return cleaned_items
 
     @staticmethod
     def read_categories(tree):
@@ -244,9 +274,13 @@ class SpeisekarteSpider:
 if __name__ == '__main__':
     util.setup_logging()
 
-    city_name = 'Schopfheim'
+    city_name = 'berlin'
     spider = SpeisekarteSpider(city_name)
+    helper = SpiderHelper()
 
-    spider.run()
-    result = spider.get_result_as_json()
-    print(result)
+    # tree = helper.scrape_page('https://www.speisekarte.de/mannheim/restaurant/friedrichsfelder_hof')
+    # print(spider.read_favourite_items(tree))
+
+    # spider.run()
+    # result = spider.get_result()
+    # print(result)

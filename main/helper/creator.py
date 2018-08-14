@@ -22,17 +22,22 @@ class Creator:
                                                  constants.GCP_ENTITY_PLZ_CITY,
                                                  'data/plz_ort.csv',
                                                  constants.CSV_DELIMITER_COMMA,
-                                                 'utf-8',
-                                                 )
+                                                 'utf-8')
         return plz_collector
 
     @staticmethod
     def create_restaurant_collector():
         yelp_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
                                                   'restaurant',
-                                                  constants.GCP_ENTITY_RESTAURANT,
-                                                  )
+                                                  constants.GCP_ENTITY_RESTAURANT)
         return yelp_collector
+
+    @staticmethod
+    def create_speisekarte_collector():
+        speisekarte_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
+                                                         'speisekarte',
+                                                         constants.GCP_ENTITY_SPEISEKARTE)
+        return speisekarte_collector
 
     @staticmethod
     def create_kaufkraft_collector():
@@ -40,8 +45,7 @@ class Creator:
                                                        'kaufkraft',
                                                        'kaufkraft_for_germany',
                                                        constants.GCP_ENTITY_KAUFKRAFT,
-                                                       'data/kaufkraft.pdf'
-                                                       )
+                                                       'data/kaufkraft.pdf')
         return kaufkraft_collector
 
     @staticmethod
@@ -49,8 +53,7 @@ class Creator:
         rent_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
                                                   'rent',
                                                   constants.GCP_ENTITY_RENT,
-                                                  'data/rent.json'
-                                                  )
+                                                  'data/rent.json')
         return rent_collector
 
     @staticmethod

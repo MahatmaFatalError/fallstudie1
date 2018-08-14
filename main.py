@@ -22,7 +22,7 @@ def main():
                                      "(3)both\n"
                                      "Answer by type in the number."))
 
-    choices = {1: 'city', 2: 'plz', 3: 'restaurant', 4: 'kaufkraft', 5: 'rent'}
+    choices = {1: 'city', 2: 'plz', 3: 'restaurant', 4: 'kaufkraft', 5: 'rent', 6: 'speisekarte'}
 
     action_string = 'What do you want to collect/transport?\n'
 
