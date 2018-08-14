@@ -63,7 +63,7 @@ class SpeisekarteCollector(Collector):
         db = DatastoreHelper()
         attributes = {"updatedAt": datetime.datetime.now(), "content": restaurant, "transported": False}
         restaurant_id = restaurant['id']
-        entity_id = self.city + '_' + restaurant_id
+        entity_id = self.city + '$' + restaurant_id
         try:
             db.create_or_update(self.entity_name, entity_id, attributes)
             result = True
