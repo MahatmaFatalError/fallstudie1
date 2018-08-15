@@ -18,7 +18,7 @@ class SpiderHelper:
         logger.info('Request Status Code: {0}'.format(request.status_code))
         if request.status_code == requests.codes.ok:
             tree = html.fromstring(request.content)
-        else:
+        elif request.status_code != 410:
             logger.error(request.text)
         return tree
 
