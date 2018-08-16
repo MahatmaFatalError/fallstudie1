@@ -8,11 +8,12 @@
 ## Prerequistes
  1. Python 3.6
     - https://www.python.org/downloads/
+    - 64 bit for review.py script
  2. Google Cloud SDK (with bundled Python)
     - https://cloud.google.com/sdk/docs/?hl=de
  3. pip (should be included in python install bundle)
     - https://pip.pypa.io/en/stable/installing/
- 4. ``` pip install --upgrade google-cloud ```
+ 4. ``` pip install --upgrade google-cloud-datastore ```
  5. ``` pip install --upgrade sqlalchemy ```
  6. ``` pip install --upgrade psycopg2 ```
  7. ``` pip install --upgrade requests ```

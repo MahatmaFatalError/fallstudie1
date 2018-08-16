@@ -45,3 +45,6 @@ Take a look at ```buying_power.py``` script.
 
 # 8. ```rent_avg``` cleaning
 Take a look at ```rent_avg.py``` script.
+
+# 8. ```review_count``` cleaning
+Take a look at ```review_count.py``` script.
