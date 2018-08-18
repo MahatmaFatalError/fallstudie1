@@ -1,0 +1,174 @@
+% Document type and used packages
+
+%\documentclass{svjour3}                     % onecolumn (standard format)
+%\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+%\documentclass[smallextended]{svjour3}      % onecolumn (second format)
+%\documentclass[twocolumn]{svjour3}          % twocolumn
+
+\documentclass[runningheads, a4paper]{llncs}
+
+% \RequirePackage{fix-cm} %used in springer template svjour3
+% \smartqed  % flush right qed marks, e.g. at end of proof %used in springer template svjour3
+
+% Pakete einbinden, die benötigt werden
+\usepackage[utf8]{inputenc}       % Dateien in UTF-8 benutzen
+\usepackage[T1]{fontenc}          % Zeichenkodierung
+\usepackage{graphicx}             % Bilder einbinden
+\usepackage[ngerman]{babel}       % Deutsch unterstützen
+\usepackage{xcolor}               % Color support
+\usepackage{amsfonts}             % Mathematische Zeichensätze
+\usepackage{amssymb}              % Mathematische Symbole
+\usepackage{float}                % Fließende Objekte (Tabellen, Grafiken etc.)
+\usepackage{booktabs}             % Korrekter Tabellensatz
+\usepackage[printonlyused]{acronym}   % Abkürzungsverzeichnis [nur verwendete Abkürzugen]
+\usepackage{makeidx}              % Sachregister
+\usepackage{fancyhdr}             % Schönere Überschriften
+\usepackage{listings}             % Source Code listings
+\usepackage{listingsutf8}         % Listings in UTF8
+\usepackage[absolute]{textpos}	  % Absolute Textpositionen (für Deckblatt)
+\usepackage{calc}                 % Berechnung von Positionen
+\usepackage{blindtext}            % Blindtexte
+\usepackage[bottom=40mm,left=35mm,right=35mm,top=30mm]{geometry} % Ränder ändern
+% \usepackage[backend=bibtex,style=splncs03]{biblatex} %usage not possiblöe with .bst files
+\usepackage{setspace}             % Abstände korrigieren
+\usepackage{ifthen}               % Logische Bedingungen mit ifthenelse
+\usepackage{scrhack}              % Get rid of tocbasic warnings
+\usepackage[pagebackref=false]{hyperref}  % Hyperlinks
+% \usepackage[all]{hypcap}          % Korrekte Verlinkung von Floats
+\usepackage{pdflscape}            % Querformat für große Bilder
+\usepackage[autostyle=true,german=quotes]{csquotes} % einheitliche Anführungszeichen
+\usepackage{pifont}               %  Haken und Kreuze als Symbole bei der Nummerierung
+\usepackage{graphics}
+\usepackage{wrapfig}              % Grafiken umfließen den Text
+%\usepackage{caption}
+\usepackage[listings,skins]{tcolorbox}
+\usepackage{multicol}
+\usepackage{rotating}
+\usepackage{tikz}
+\usepackage{eurosym}         % correct usage of euro symbol http://www.theiling.de/eurosym.html.en
+% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
+
+% Farben definieren
+\definecolor{linkblue}{RGB}{0, 0, 100}
+\definecolor{linkblack}{RGB}{0, 0, 0}
+\definecolor{comment}{RGB}{63, 127, 95}
+\definecolor{darkgreen}{RGB}{14, 144, 102}
+\definecolor{darkblue}{RGB}{0,0,168}
+\definecolor{darkred}{RGB}{128,0,0}
+\definecolor{javadoccomment}{RGB}{0,0,240}
+
+% Einstellungen für das Hyperlink-Paket
+\hypersetup{
+    colorlinks=true,      % Farbige links verwenden
+%    allcolors=linkblue,
+    linktoc=all,          % Links im Inhaltsverzeichnis
+    linkcolor=linkblack,  % Querverweise
+    citecolor=linkblack,  % Literaturangaben
+	filecolor=linkblack,  % Dateilinks
+	urlcolor	=linkblack    % URLs
+}
+
+% Einstellungen für Quelltexte
+\lstset{
+      xleftmargin=0.2cm,
+      basicstyle=\footnotesize\ttfamily,
+      keywordstyle=\color{darkgreen},
+      identifierstyle=\color{darkblue},
+      commentstyle=\color{comment},
+      stringstyle=\color{darkred},
+      tabsize=2,
+      lineskip={2pt},
+      columns=flexible,
+      inputencoding=utf8,
+      captionpos=b,
+      breakautoindent=true,
+	    breakindent=2em,
+	    breaklines=true,
+	    prebreak=,
+	    postbreak=,
+      numbers=left,
+      numberstyle=\tiny,
+      showspaces=false,      % Keine Leerzeichensymbole
+      showtabs=false,        % Keine Tabsymbole
+      showstringspaces=false,% Leerzeichen in Strings
+      morecomment=[s][\color{javadoccomment}]{/**}{*/},
+      literate={Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1
+}
+
+\urlstyle{same}
+
+% Index erzeugen
+\makeindex
+
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+
+% Einfacher Font-Wechsel über dieses Makro
+\newcommand{\changefont}[3]{
+\fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
+
+% Eigenes Makro für Bilder
+\newcommand{\bild}[5]{
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=#5\textwidth]{#1}
+  \caption[#2]{#2\protect\footnotemark}
+  \label{fig:#3}
+\end{figure}
+\footnotetext{#4}
+}
+
+\newcommand{\bildhochkant}[4]{
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[height=0.4\textheight]{#1}
+  \caption[#2]{#2\protect\footnotemark}
+  \label{fig:#3}
+\end{figure}
+\footnotetext{#4}
+}
+
+\newcommand{\bildquadrat}[4]{
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.560\textwidth,height=0.35\textheight]{#1}
+  \caption[#2]{#2\protect\footnotemark}
+  \label{fig:#3}
+\end{figure}
+\footnotetext{#4}
+}
+
+\newcommand{\bildWOCite}[4]{
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=#4\textwidth]{#1}
+		\caption[#2]{#2\protect}
+		\label{fig:#3}
+	\end{figure}
+}
+
+% Wo liegt der Sourcecode?
+\newcommand{\srcloc}{code/}
+
+\newcommand{\textitbf}[1]{\textit{\textbf{#1}}}
+
+\lstset{basicstyle=\ttfamily,breaklines=true}
+\newcommand{\shellcmd}[1]{\lstinline!\$#1!}
+
+\newcommand{\sql}[1]{\lstinline[language=SQL]{#1}}
+
+% Wo sind die Bilder?
+\graphicspath{{bilder/}}
+
+% Makros für typographisch korrekte Abkürzungen
+\newcommand{\zb}[0]{z.\,B.}
+\newcommand{\dahe}[0]{d.\,h.}
+\newcommand{\ua}[0]{u.\,a.}
+
+%diverse Variablen um das Schreiben einfacher zu gestalten
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\autoref*{#1} - \textit{\nameref*{#1}}}}
+
+% format text like code
+\newcommand{\code}[1]{\texttt{#1}}
+
+\newcommand{\bd}[0]{Big Data}
+\newcommand{\os}[0]{Open-Source}

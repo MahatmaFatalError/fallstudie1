@@ -1,0 +1,58 @@
+% Preambel mit Einstellungen importieren
+\input{config/preambel}
+
+% Dokumenteninfos importieren
+\input{config/docinfo.tex}
+
+\begin{document}
+%\frontmatter
+
+% Römische Ziffern für die "Front-Matter"
+%\setcounter{page}{0}
+%\changefont{ptm}{m}{n}  %Times New Roman für den Fließtext
+%\renewcommand{\rmdefault}{ptm}
+
+% Titelblatt
+\input{config/titelblatt}
+
+% Arabische Zahlen für den Hauptteil
+%\mainmatter
+
+% ------------------------------------------------------------------
+% Hauptteil der Arbeit
+\input{kapitel/introduction}
+\input{kapitel/synthesis}
+\input{kapitel/material}
+\input{kapitel/results}
+\input{kapitel/discussion}
+
+% ------------------------------------------------------------------
+
+\label{lastpage}
+
+% Neue Seite
+\cleardoublepage
+\phantomsection
+
+% Backmatter mit normalem Zeilenabstand setzen
+%\backmatter
+%\singlespacing
+
+% Römische Ziffern für die "Back-Matter", fortlaufend mit frontmatter
+%\pagenumbering{roman}
+%\setcounter{page}{\value{frontmatterpage}}
+
+% Abkürzungsverzeichnis
+%\input{config/abkuerzungen}
+
+% Acknowledgement
+\input{kapitel/acknowledgement}
+
+% Quellenverzeichnis erzeugen
+\bibliographystyle{splncs04}
+\bibliography{config/literatur}   % BibTeX-Datei mit Literaturquellen einbinden
+
+% Appendix Chapter
+\input{kapitel/appendix}
+
+\end{document}
