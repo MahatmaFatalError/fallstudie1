@@ -5,14 +5,23 @@ from main.helper import util
 
 logger = logging.getLogger(__name__)
 
+data_excerpt = []
+
 
 def run(filename):
-    with open(filename) as fd:
-        for line in fd:
-            json_string = '[' + line + ']'
-            json_dict = json.loads(json_string)
-            df = pd.DataFrame.from_dict(json_dict, orient='columns')
-            print(df['text'])
+    create_excerpt(filename)
+    df = pd.DataFrame.from_dict(data_excerpt, orient='columns')
+    print(df.describe())
+
+
+def create_excerpt(filename):
+    with open(filename) as file:
+        for index, line in enumerate(file):
+            if index == 5:
+                break
+            else:
+                data_excerpt.append(line)
+        file.close()
 
 
 if __name__ == '__main__':

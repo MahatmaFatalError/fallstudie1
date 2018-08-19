@@ -19,6 +19,7 @@
  7. ``` pip install --upgrade requests ```
  8. ``` pip install --upgrade pandas ```
  9. ``` pip install --upgrade PyPDF2 ```
+ 10. ``` pip install --upgrade nltk ```
 
 ## How-To: Start a Proxy for PostreSQL Connection (not working for JWEBER :-))
 1. ``` gcloud auth login ```
