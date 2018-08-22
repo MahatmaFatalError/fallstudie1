@@ -8,36 +8,39 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from collections import defaultdict
 from nltk.stem import SnowballStemmer
 
+from main.helper.yelp import YelpHelper
+
 logger = logging.getLogger(__name__)
 
 # If you want to, change things here! #
 data_excerpt = []
-reviews = None
-excerpt_size = 10
+excerpt_size = 10000
 language = 'english'
-filename = 'yelp_academic_dataset_review_sample.json'
-top_words = defaultdict(float)
+filename = 'yelp_academic_dataset_review.json'
+reviews = None
 #####################################
 
 
 def run():
+    # TODO: improve algorithm with tagging etc?
     create_excerpt()
-    write_json_file()
+    # enrich_with_category() # TODO: TEST!
+    # write_json_file()
     create_df()
-    analyze()
-    # TODO: improve algorithm with tagging etc. and add categories
+    one_star_reviews = reviews[reviews.stars == 1]
+    five_star_reviews = reviews[reviews.stars == 5]
+    logger.info('Analyzing 1-Star Reviews')
+    analyze(one_star_reviews)
+    logger.info('Analyzing 5-Star Reviews')
+    analyze(five_star_reviews)
 
 
-def analyze():
-    global reviews, top_words
+def analyze(reviews_to_analyze):
+    top_words = defaultdict(float)
 
-    reviews['length'] = reviews['text'].apply(len)
+    bow_transformer = CountVectorizer(analyzer=text_process).fit(reviews_to_analyze['text'])
 
-    reviews['text_token'] = reviews['text'].apply(text_process)
-
-    bow_transformer = CountVectorizer(analyzer=text_process).fit(reviews['text'])
-
-    review_bow = bow_transformer.transform(reviews['text'])
+    review_bow = bow_transformer.transform(reviews_to_analyze['text'])
 
     logger.info('Shape of Sparse Matrix: {0}'.format(review_bow.shape))
     logger.info('Amount of Non-Zero occurences: {0}'.format(review_bow.nnz))
@@ -50,7 +53,8 @@ def analyze():
 
     feature_names = bow_transformer.get_feature_names()
 
-    for index in range(excerpt_size):
+    rows, columns = reviews_to_analyze.shape
+    for index in range(rows):
         feature_index = review_tfidf[index, :].nonzero()[1]
         tfidf_scores = zip(feature_index, [review_tfidf[index, x] for x in feature_index])
         top5_scores_sorted_by_tfidf = sorted(tfidf_scores, key=lambda tup: tup[1], reverse=True)[:5]
@@ -108,6 +112,31 @@ def create_excerpt():
                 data_excerpt.append(json_line)
 
 
+def enrich_with_category():
+    global data_excerpt
+
+    yelp = YelpHelper()
+
+    for review in data_excerpt:
+        category_tupel = ()
+        business_id = review['business_id']
+        result, status_code = yelp.get_business(business_id, 0)
+        status_codes = [403, 404]
+        if status_code not in status_codes:
+            if 'error' not in result:
+                categories = result['categories']
+                if categories is not None:
+                    for category in categories:
+                        cat_title = category['title']
+                        title_tuple = (cat_title, )
+                        category_tupel += title_tuple
+                    review['category'] = category_tupel
+                    logger.info('Added Category: {0}'.format(category_tupel))
+            else:
+                logger.error('{0}: {1}'.format(result['error']['code'], result['error']['description']))
+                break
+
+
 def create_df():
     global reviews
 
@@ -117,5 +146,4 @@ def create_df():
 
 if __name__ == '__main__':
     util.setup_logging()
-
     run()

@@ -21,6 +21,7 @@
  9. ``` pip install --upgrade PyPDF2 ```
  10. ``` pip install --upgrade nltk ```
  11. ``` pip install --upgrade sklearn ```
+ 12. ``` pip install --upgrade fuzzywuzzy ```
 
 ## How-To: Start a Proxy for PostreSQL Connection (not working for JWEBER :-))
 1. ``` gcloud auth login ```
