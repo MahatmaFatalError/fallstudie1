@@ -6,13 +6,14 @@ from main.helper import util
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from collections import defaultdict
+from nltk.stem import SnowballStemmer
 
 logger = logging.getLogger(__name__)
 
-# If you want to change things here #
+# If you want to, change things here! #
 data_excerpt = []
 reviews = None
-excerpt_size = 100
+excerpt_size = 10
 language = 'english'
 filename = 'yelp_academic_dataset_review_sample.json'
 top_words = defaultdict(float)
@@ -24,7 +25,7 @@ def run():
     write_json_file()
     create_df()
     analyze()
-    # TODO: improve algorithm with stemming, tagging etc. and add categories
+    # TODO: improve algorithm with tagging etc. and add categories
 
 
 def analyze():
@@ -80,13 +81,18 @@ def text_process(mess):
     # Check characters to see if they are in punctuation
     global language
 
-    nopunc = [char for char in mess if char not in string.punctuation]
+    no_punc = [char for char in mess if char not in string.punctuation]
 
     # Join the characters again to form the string.
-    nopunc = ''.join(nopunc)
+    no_punc = ''.join(no_punc)
 
     # Now just remove any stopwords
-    return [word for word in nopunc.split() if word.lower() not in stopwords.words(language)]
+    no_stopwords = [word for word in no_punc.split() if word.lower() not in stopwords.words(language)]
+    # Stem it
+    stemmer = SnowballStemmer(language)
+    stemmed_words = [stemmer.stem(word) for word in no_stopwords]
+    result = stemmed_words
+    return result
 
 
 def create_excerpt():
