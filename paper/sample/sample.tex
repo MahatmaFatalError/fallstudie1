@@ -1,0 +1,87 @@
+\subsection{Data Retrieval mit Jupyter}\label{subsec:jupyter}
+Das Jupyter Notebook bietet die Möglichkeit mit \textit{Magic-Commands} direkt aus dem Notebook heraus
+eine Verbindung mit der Datenbank aufzubauen und \ac{SQL} Statements abzusetzen.
+
+Einfache Tabellen werden direkt in Jupyter visualisiert wohingegen komplexere Visualisierungen wie \zb{}
+Balkendiagramme oder Geo Plots mit Python Bibliotheken dargestellt werden müssen.
+\\
+Für die Darstellung in Jupyter werden dann sog. \textit{Widgets} installiert und aktiviert.
+
+Folgende Python Bibliotheken wurden installiert um \ac{SQL} Statements in Jupyter ausführen und visualisieren zu können.
+\begin{itemize}
+  \item \code{ipython-sql}
+  \item \code{sqlalchemy} (wird von ipython-sql benötigt)
+  \item \code{bokeh}
+  \item \code{gmaps}
+\end{itemize}
+
+Mit \code{ipython-sql} werden \ac{SQL} \textit{Magic-Command} in Jupyter aktiviert.
+
+\code{ipython-sql} nutzt \code{sqlalchemy} um sich mit der Datenbank zu verbinden.
+Ein abgesetztes \ac{SQL} Statement lässt sich entweder direkt in Jupyter ausgeben
+oder einer beliebigen Variable zuordnen die dann weiterverarbeitet werden kann.
+
+\fullref{fig:jupyterEins} zeigt ein \ac{SQL} Statemement mit \textit{Magic-Command}
+Das Resultat wird direkt in einem Jupyter Notebook als Tabelle gerendert.
+
+\fullref{fig:jupyterZwei} zeigt die Zuweisung eines Resultates zur Variable \code{works}.
+
+\bild{jupyter_1.png}{direkte \ac{SQL} Ausgabe in Jupyter}{jupyterEins}{\autocite{MagicExample}}{0.75}
+
+\bild{jupyter_2.png}{Zuweisung der \ac{SQL} Ausgabe einer Variable}{jupyterZwei}{\autocite{MagicExample}}{0.75}
+
+ \code{bokeh} ist eine Python Bibliothek um viele Arten der Visualisierung umzusetzen
+ wie \zb{} Balkendiagramme, Scatter Plots, Geo Maps oder Zeitreihen.
+
+ Die Visualisierung von Geo Daten erfolgt mit der Bibliothek \code{gmaps}.\\
+ Diese greift auf die Karten von Google Maps zu erlaubt es die Geo Daten in einem Layer über einen
+ beliebigen Kartenausschnitt zu legen.\\
+ Der Vorteil von \code{gmaps} gegenüber \code{bokeh} ist
+ zum einen die Nutzung des Kartenmaterials von Google aber auch die interaktive Nutzung
+ des Kartenauschnitts mit \zb{} Google StreetView.
+
+Folgende Fragestellungen wurden im Rahmen von Data Retrieval beantwortet.
+
+\begin{enumerate}
+  \item Zeige alle Beschwerdetypen die häufiger als 400 aber seltener als 8000 Mal gemeldet wurden?
+  \item Wie lautet die Beschreibung der häufig vorkommenden Service Requests?
+  \item An welchen Orten von New York City wurden Service Request vom Typ 'Noise - Residential' abgesetzt?
+  \item Wieviele Service Requests sind im Jahr 2017 eingegangen? Gruppiert nach Tag und Sortiert nach dem Erstellungsdatum.
+  \item Wie lange wurde eine Art von Service Request im Durschnitt bearbeitet? Wie lange war die minimale und maximale Bearbeitungszeit?
+\end{enumerate}
+
+Nachfolgender Abschnitt listet die \ac{SQL} Statements zu jeder Fragestellung sowie ein dazugehöriges Beispiel.
+
+\textbf{zu 1.}
+\newline
+\sql{SELECT complaint\_type, COUNT(complaint\_type) FROM service\_request GROUP BY complaint\_type HAVING COUNT(complaint\_type) > 400 AND COUNT(complaint\_type) < 8000}
+
+\bildhochkant{select_1.png}{Tabelle mit allen Beschwerdetypen}{srt}{eigene Darstellung}
+
+\textbf{zu 2.}
+\newline
+\sql{SELECT descriptor, COUNT(descriptor) FROM service\_request  WHERE descriptor IS NOT NULL GROUP BY descriptor ORDER BY count DESC}
+
+\bild{select_2.png}{Auszug aus den meisten Service Requests}{toprequests}{eigene Darstellung}{0.75}
+
+\textbf{zu 3.}
+\newline
+\sql{SELECT longitude, latitude FROM service\_request WHERE complaint\_type = 'Noise - Residential' and latitude IS NOT NULL and longitude IS NOT NULL}
+
+\bild{select_3.png}{Heatmap der Lärmquellen in New York}{rnnyc}{eigene Darstellung}{0.75}
+
+\textbf{zu 4.}
+\newline
+\sql{SELECT date\_trunc('day', created\_date) AS dd, COUNT(created\_date) as daily\_sum FROM service\_request where EXTRACT(year from created\_date) = '2017' GROUP BY dd ORDER BY date\_trunc('day', created\_date)}
+
+\bild{select_4.png}{Timeline aller Service Requests in 2017}{sr2017}{eigene Darstellung}{0.75}
+
+\textbf{zu 5.}
+\newline
+\sql{SELECT AVG(closed\_date - created\_date) AS avg\_duration, MIN(closed\_date - created\_date) AS min\_duration, MAX(closed\_date - created\_date) AS max\_duration, complaint\_type FROM service\_request
+where created\_date IS NOT NULL and closed\_date IS NOT NULL
+GROUP BY complaint\_type
+HAVING MAX(closed\_date - created\_date) < INTERVAL '365 days' and MIN(closed\_date - created\_date) > '00:00:00'
+ORDER BY avg\_duration asc}
+
+\bild{select_5.png}{Lageparameter zur Bearbeitungsdauer von Service Requests}{lparam}{eigene Darstellung}{0.75}
