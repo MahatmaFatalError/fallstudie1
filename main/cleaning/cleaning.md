@@ -24,6 +24,15 @@ Take a look at ```price_range.py``` script.
 DELETE FROM public.restaurant WHERE country != 'DE'
 ```
 
+## 4.1  "Frankfurt" harmonization
+```sql
+update restaurant set city = 'Frankfurt am Main'
+where city = 'Frankfurt' and state = 'HE'
+
+update restaurant set city = 'Frankfurt am Main'
+where city = 'Frankfurt Am Main' and state = 'HE'
+```
+
 # 5.  ```street``` cleaning
 Only a few restaurants have null values within attribute ```street```.
 <br>
@@ -34,14 +43,23 @@ Leave them --> ```street``` is not really important for us.
 UPDATE public.price_range_calculated
 	SET price_range = '€€'
 	WHERE price_range = '-1';
-	
+
 UPDATE public.price_range_calculated
 	SET price_range = '€€'
 	WHERE price_range = '-2';
+
+COALESCE(restaurant.price_range, pr.price_range) AS price_range_cleaned
+ FROM restaurant
+   LEFT JOIN price_range_calculated pr ON pr.restaurant_id::text = restaurant.id::text;
 ```
 
 # 7. ```buying_power``` cleaning
 Take a look at ```buying_power.py``` script.
+```sql
+COALESCE(city.buying_power, bp.buying_power) AS buying_power_cleaned
+	FROM city
+		LEFT JOIN buying_power_calculated bp ON bp.city_id = city.id;
+```
 
 # 8. ```rent_avg``` cleaning
 Take a look at ```rent_avg.py``` script.
