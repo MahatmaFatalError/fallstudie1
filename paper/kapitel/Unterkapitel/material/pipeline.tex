@@ -11,8 +11,7 @@ For collecting the yelp data we used the yelp API. Therefor we wrote a script wi
 %code einfügen
 
 \label{subsec:Data Storage}
-As a storage for the datasets the Google Cloud Platform was used. Before that it is necessary to configure it first. You have to create a GCP-Project and a bucket as a container, where all the data can be put it. All mentioned data were collected in the so called Datastore which is a NoSQL document database. 
-From there it was possible to create a postgreSQL istance with the fully-managed relational database service, the Google Cloud SQL.
+As a storage for the datasets the Google Cloud Platform was used. Before that, it is necessary to configure it first. You have to create a GCP-Project and then put the collected data in the Google Cloud Datastore which is a NoSQL document database. From there, it was possible to create a postgreSQL istance with Cloud SQL, the fully-managed relational database service of Google Cloud. For setting up a connection a proxy or current ip address is required.
 
 \label{subsec:Data cleaning}
 The collected datasets in the Datastore were not messy, but there was still a lot of cleaning activities to do. The yelp data itself had some inconsistencies. The price\_range and the review\_count columns had a lot of empty values. The price range was filled with the average value of \euro\euro. 
