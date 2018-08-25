@@ -14,9 +14,11 @@ summary(dtab)
 str(dtab)
 hist(dtab$buying_power)
 
-# categorize buying power into groups
+
+# categorize buying power into opgroups
 dtab$buying_power_groups <- cut(dtab$buying_power, breaks=c(-Inf, 20000, 24000, 28000, Inf), labels=c("low","middle", "upper middle","high"))
 plot(dtab$buying_power_groups)
+
 
 ## crunch character data to factors
 priceCat = factor(dtab$price_range)
@@ -35,8 +37,8 @@ dtab$category3 = factor(dtab$category3)
 
 cityCat = factor(dtab$city)
 dtab$city = cityCat
-stateCat = factor(dtab$state)
-dtab$state = stateCat
+dtab$state = factor(dtab$state)
+plot(dtab$state)
 
 ## linear Regression
 fit.lr <- lm(rating ~ price_range + review_count + state + population_sqkm + buying_power_groups, data=dtab )

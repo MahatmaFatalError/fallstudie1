@@ -1,13 +1,26 @@
 \subsection{Data Processing Pipeline}
 \label{subsec:pipeline}
-
 In the following its about the data processing pipeline.
-Data sources. First of all, there was a discussion about the key figures, that can help to analyze all about restaurants. In a brainstorming session we came to the conclu-sion to get at least one review online platform, e. g. yelp, tripadvisor, google or face-book. After a quick check we have chosen to get the yelp data for Germanys restau-rants.
+
+\label{subsec:Data sources}
+First of all, there was a discussion about the key figures, that can help to analyze all about restaurants. In a brainstorming session we came to the conclu-sion to get at least one review online platform, e. g. yelp, tripadvisor, google or face-book. After a quick check we have chosen to get the yelp data for Germanys restau-rants.
 Furthermore we have found other key figures, that can have significant influence on the restaurant data. We found a CSV-File which includes all kind of cities in Germany with their population. On top we found CSV-Files for buying power and rent average for Germanys cities.
-Data Ingestion. For collecting the yelp data we used the yelp API. Therefor we wrote a script with python. In the following you can some code:
-Data Storage. As a storage we used the Google Gloud Platform. All mentioned files were collected in the so called Datastore. Then we set up a PostgreSQL instance. It was necessary to put your ip-address for authorization.
-Data Cleaning. The was a lot of cleaning activities to do. Not all cities from the yelp data were mentioned in the City CSV.
-The buying power CSV did not include all Cities from the City CSV. Therefor we used the average value of the buying power to fill the empty entries.
-The price range column from the yelp data had also a lot of empty fields. Those we filled with the average value of \euro\euro.
-Others…
-Data Analysis. Pseudocode von Algorithmus vorstellen, step by step.
+
+\label{subsec:Data Ingestion}
+For collecting the yelp data we used the yelp API. Therefor we wrote a script with python. In the following you can some code:
+%code einfügen
+
+\label{subsec:Data Storage}
+As a storage for the datasets the Google Cloud Platform was used. Before that it is necessary to configure it first. You have to create a GCP-Project and a bucket as a container, where all the data can be put it. All mentioned data were collected in the so called Datastore which is a NoSQL document database. 
+From there it was possible to create a postgreSQL istance with the fully-managed relational database service, the Google Cloud SQL.
+
+\label{subsec:Data cleaning}
+The collected datasets in the Datastore were not messy, but there was still a lot of cleaning activities to do. The yelp data itself had some inconsistencies. The price\_range and the review\_count columns had a lot of empty values. The price range was filled with the average value of \euro\euro. 
+The column review\_count ...%vorgehen?
+
+Moreover the data from yelp certainly did not match exactly with the other datasets. The buying power dataset did not include all the cities, that were listed in yelp. To solve this problem the empty values were filled with the average value of Germany. The same problem occured with the rent average dataset which was solved the same way.
+
+\label{subsec:Data analysis}
+%Pseudocode von Algorithmus vorstellen, step by step
+%R Skript für Clusteranalyse
+%Regressionen
