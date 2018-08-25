@@ -3,8 +3,12 @@
 In the following its about the data processing pipeline.
 
 \label{subsec:Data sources}
-First of all, there was a discussion about the key figures, that can help to analyze all about restaurants. In a brainstorming session we came to the conclu-sion to get at least one review online platform, e. g. yelp, tripadvisor, google or face-book. After a quick check we have chosen to get the yelp data for Germanys restau-rants.
-Furthermore we have found other key figures, that can have significant influence on the restaurant data. We found a CSV-File which includes all kind of cities in Germany with their population. On top we found CSV-Files for buying power and rent average for Germanys cities.
+As mentioned previously, a lot of various key figures were collected for the following data analysis relating to the restaurant business. The main data source with helpful key figures should be at least from one restaurant online review website. In this case the online platform of yelp was chosen. Yelp offers an api for delevopers to collect specific data of Germany's restaurants like name, rating or the exact location with longitudes and lattitudes.   
+
+In addition to this some other datasets relating to Germany's cities were used for the data analysis:
+CSV file with the population and the area
+CSV file for the buying power 
+CSV file with the rent average
 
 \label{subsec:Data Ingestion}
 For collecting the yelp data we used the yelp API. Therefor we wrote a script with python. In the following you can some code:
