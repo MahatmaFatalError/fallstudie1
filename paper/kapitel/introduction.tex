@@ -1,9 +1,10 @@
 \section{Introduction}
 \label{sec:introduction}
+%Allgemeine Einführung in das Thema
+Nowadays lots of people want to realize their dream to start an own business - mostly its associated with a own restaurant. But a own restaurant business is not for everyone because you have to deal with a lot of different requirements. First of all, a well-conceived concept is absolutely necessary. Therefor you have to ask yourself several types of questions: What kind of food should you offer? What kind of people should address the restaurant? How should the restaurant look like? Where should it be located? All these factors should be well-matched to have a unique feature as a restaurant and to be competitive.
+%Überleitung zur Use Case Beschreibung und die Fragestellung
+Investors called SCHULPS are holding different restaurants all over the world and now they want to start a restaurant business somewhere in Germany with a budget of \EUR{650,000}.  As the existing restaurant types of the investors do not have a determined idea due to the different countries and cultures they are open minded for a random concept in Germany. This implies, that criterias like the location, the size or the menu of the restaurant can be chosen freely. The only requirement which is specified is that the monthly sales should be around \EUR{40,000}. The purpose of the thesis is to create a good and clear concept for a new restaurant business, especially to find a good location for opening a restaurant in Germany based on different facts as well as reaching the mentioned financial specifications of the investors. 
+%Überleitung zu den Lösungsansätzen
+The first step for answering these questions was to collect some data from a restaurant online platform. A very popular one is obviously yelp. The yelp website offers an API which was connected with python scripts to collect the restaurant data, e.g. name, rating, location and so on. There were some other important key figures that help to find an appropiate location, especially the dataset with all of Germany's cities and its population as well as the datasets including the buying power and the rent average for industrial buildings. All the collected data were stored in the Google Cloud Platform with the help of python scripts, more precisely in it's Datastore which is a NoSQL document database. From there it was possible to create a postgreSQL istance with the fully-managed relational database service, the so called Google Cloud SQL. For a significant analysis of the raw datasets it was necessary to clean it thoroughly. This was made with the help of python scripts and different datebase queries. The idea was to fit a statistical model for the mentioned key figures to find out the best cities for starting a restaurant business in Germany. For the financial aspects it was used a benchmark of Germany's catering industry which included lots of different key figures like the number of guests per day or the average consumption per guest as well as the revenues and expenses in detail. 
+to be continued...
 
-
-Einführung in das Thema\cite{NYCOpenData}
-
-Problemstellung / Fragestellung
-
-Lösungswege
