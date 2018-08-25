@@ -21,12 +21,13 @@
  9. ``` pip install --upgrade PyPDF2 ```
  10. ``` pip install --upgrade nltk ```
  11. ``` pip install --upgrade sklearn ```
-
-## How-To: Start a Proxy for PostreSQL Connection (not working for JWEBER :-))
-1. ``` gcloud auth login ```
-2. ``` gcloud auth application-default login ```
-3. ``` cd <folder with cloud_sql_proxy.exe> ```
-3. ``` cloud_sql_proxy -instances=ace-ripsaw-200308:europe-west1:t3am-thd=tcp:5432 ```
+ 12. Tree Tagger
+     - [Installation Guide](http://www.smo.uhi.ac.uk/~oduibhin/oideasra/interfaces/winttinterface.htm)
+ 13. ``` pip install --upgrade treetaggerwrapper ```
+     - [Usage Guide](https://treetaggerwrapper.readthedocs.io/en/latest/)
+     - [List of POS Tags (Deutsch)](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/stts_guide.pdf)
+     - [List of POS Tags (English)](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/Penn-Treebank-Tagset.pdf)
+ 14. ``` pip install --upgrade fuzzywuzzy ```
 
 ## Useful Links
 - https://www.yelp.de/developers/documentation/v3/business_search
