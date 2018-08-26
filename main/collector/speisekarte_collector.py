@@ -61,7 +61,8 @@ class SpeisekarteCollector(Collector):
         logger.info('Saving {} in Datastore...'.format(self.entity_name))
         result = False
         db = DatastoreHelper()
-        attributes = {"updatedAt": datetime.datetime.now(), "content": restaurant, "transported": False}
+        zip_code = restaurant['address']['zip_code']
+        attributes = {"updatedAt": datetime.datetime.now(), "zip_code": zip_code, "content": restaurant, "transported": False}
         restaurant_id = restaurant['id']
         entity_id = self.city + '$' + restaurant_id
         try:

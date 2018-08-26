@@ -54,7 +54,7 @@ class Transporter(ABC, threading.Thread):
     def _transport(self, offset):
         result = Result()
         limit = constants.GCP_FETCH_LIMIT
-        source_entities = self.source_db.fetch_entity(self.source_entity, limit, offset)
+        source_entities = self.source_db.fetch_entity(self.source_entity, limit, offset, '=', transported=False)
         if source_entities:
             for datastore_entity in source_entities:
                 logger.info('Starting mapping...')
