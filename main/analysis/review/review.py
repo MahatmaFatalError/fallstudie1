@@ -2,25 +2,31 @@ import json
 import logging
 import string
 import pandas as pd
+import treetaggerwrapper
+
+from main.analysis.review.word import Word
 from main.helper import util
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from collections import defaultdict
 from nltk.stem import SnowballStemmer
-import treetaggerwrapper
+
 
 from main.helper.yelp import YelpHelper
 
 logger = logging.getLogger(__name__)
+reviews = None
+data_excerpt = []
 
 # If you want to, change things here! #
-data_excerpt = []
 excerpt_size = 1000
+top_how_much = 100
 language = 'english'
-filename = 'yelp_academic_dataset_review_sample.json'
-reviews = None
+source_file_name = 'yelp_academic_dataset_review_sample.json'
 tree_tagger_dir = '../../../data/tree_tagger'
-reversed_result = False  # True = absteigend
+reversed_result = True  # True = absteigend
+cumulated = True
+stemming = True
 #####################################
 
 
@@ -37,8 +43,11 @@ def run():
     analyze(five_star_reviews, '5-Star Reviews')
 
 
-def analyze(reviews_to_analyze, file_name):
-    top_words = defaultdict(float)
+def analyze(reviews_to_analyze, result_file_name):
+    global cumulated
+
+    top_words_cum = defaultdict(float)  # cumulated words
+    top_words = {}
 
     bow_transformer = CountVectorizer(analyzer=text_process).fit(reviews_to_analyze['text'])
 
@@ -61,25 +70,37 @@ def analyze(reviews_to_analyze, file_name):
         tfidf_scores = zip(feature_index, [review_tfidf[index, x] for x in feature_index])
         top5_scores_sorted_by_tfidf = sorted(tfidf_scores, key=lambda tup: tup[1], reverse=reversed_result)[:5]
         for w, s in [(feature_names[i], s) for (i, s) in top5_scores_sorted_by_tfidf]:
-            top_words[w] += s
+            top_words_cum[w] += s
+            top_words[Word(w)] = s
 
-    write_result(top_words, file_name)
+    if cumulated:
+        write_result(top_words_cum, result_file_name)
+    else:
+        write_result(top_words, result_file_name)
 
 
 def write_result(result, file_name):
-    if reversed_result:
-        title = file_name + '_reversed'
-    else:
-        title = file_name
+    global top_how_much
+    global cumulated
+    global excerpt_size
+    global stemming
 
+    top_how_much_string = str(top_how_much)
+    title = file_name + '_top_' + top_how_much_string + '_of_' + str(excerpt_size)
+    if reversed_result:
+        title += '_reversed'
+    if cumulated:
+        title += '_cumulated'
+    if stemming:
+        title += '_stemmed'
     title += '.txt'
 
-    with open(title, 'w') as result_file:
+    with open('result/' + title, 'w') as result_file:
         result_file.write(file_name)
         result_file.write('\n')
-        result_file.write('------------------------ TOP 10 ----------------------------------')
+        result_file.write('------------------------ TOP ' + top_how_much_string + ' ----------------------------------')
         result_file.write('\n')
-        result_sorted_by_tfidf = sorted(result.items(), key=lambda tup: tup[1], reverse=reversed_result)[:10]
+        result_sorted_by_tfidf = sorted(result.items(), key=lambda tup: tup[1], reverse=reversed_result)[:top_how_much]
         for word, score in result_sorted_by_tfidf:
             result_file.write('{0} - {1}'.format(word, score))
             result_file.write('\n')
@@ -96,6 +117,7 @@ def write_json_file():
 
 def text_process(mess):
     global language
+    global stemming
 
     # Remove punctutation
     no_punc = [char for char in mess if char not in string.punctuation]
@@ -111,18 +133,19 @@ def text_process(mess):
     # Remove unwanted tags
     extracted_tags = extract_tags(tagged_words)
 
-    # Stem it
-    # stemmer = SnowballStemmer(language)
-    # stemmed_words = [stemmer.stem(word) for word in tagged_words]
-
-    result = extracted_tags
+    if stemming:
+        # Stem it
+        stemmer = SnowballStemmer(language)
+        result = [stemmer.stem(word) for word in extracted_tags]
+    else:
+        result = extracted_tags
     return result
 
 
 def create_excerpt():
     global data_excerpt
 
-    with open(filename, 'r') as file:
+    with open(source_file_name, 'r') as file:
         for index, line in enumerate(file):
             if index == excerpt_size:
                 break
@@ -196,6 +219,8 @@ def extract_tags(tags):
         'RBR',
         'NNS',
         'NN',
+        'NP',
+        'NPS'
     ]
     if language == 'german':
         useful_tags = usefult_tags_german
