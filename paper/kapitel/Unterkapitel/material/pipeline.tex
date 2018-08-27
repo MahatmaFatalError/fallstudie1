@@ -2,24 +2,32 @@
 \label{subsec:pipeline}
 In the following its about the data processing pipeline.
 
+\paragraph{Data sources}
 \label{subsec:Data sources}
-First of all, there was a discussion about the key figures, that can help to analyze all about restaurants. In a brainstorming session we came to the conclu-sion to get at least one review online platform, e. g. yelp, tripadvisor, google or face-book. After a quick check we have chosen to get the yelp data for Germanys restau-rants.
-Furthermore we have found other key figures, that can have significant influence on the restaurant data. We found a CSV-File which includes all kind of cities in Germany with their population. On top we found CSV-Files for buying power and rent average for Germanys cities.
+As mentioned previously, a lot of various key figures were collected for the following data analysis relating to the restaurant business. The main data source with helpful key figures should be at least from one restaurant online review website. In this case the online platform of yelp was chosen. Yelp offers an api for delevopers to collect specific data of Germany's restaurants like name, rating or the exact location with longitudes and lattitudes.
+In addition to this some other datasets relating to Germany's cities were used for the data analysis:
+\begin{itemize}
+\item CSV file with the population and the area
+\item CSV file for the buying power
+\item CSV file with the rent average
+\end{itemize}
 
-\label{subsec:Data Ingestion}
+\paragraph{Data ingestion}
+\label{subsec:Data ingestion}
 For collecting the yelp data we used the yelp API. Therefor we wrote a script with python. In the following you can some code:
 %code einfügen
 
-\label{subsec:Data Storage}
-As a storage for the datasets the Google Cloud Platform was used. Before that it is necessary to configure it first. You have to create a GCP-Project and a bucket as a container, where all the data can be put it. All mentioned data were collected in the so called Datastore which is a NoSQL document database. 
-From there it was possible to create a postgreSQL istance with the fully-managed relational database service, the Google Cloud SQL.
+\paragraph{Data storage}
+\label{subsec:Data storage}
+As a storage for the datasets the Google Cloud Platform was used. Before that, it is necessary to configure it first. You have to create a GCP-Project and then put the collected data in the Google Cloud Datastore which is a NoSQL document database. From there, it was possible to create a postgreSQL istance with Cloud SQL, the fully-managed relational database service of Google Cloud. For setting up a connection a proxy or current ip address is required.
 
+\paragraph{Data cleaning}
 \label{subsec:Data cleaning}
-The collected datasets in the Datastore were not messy, but there was still a lot of cleaning activities to do. The yelp data itself had some inconsistencies. The price\_range and the review\_count columns had a lot of empty values. The price range was filled with the average value of \euro\euro. 
-The column review\_count ...%vorgehen?
+The collected datasets in the Datastore were not messy, but there was still a lot of cleaning activities to do. The yelp data itself had some inconsistencies. Especially the columns price\_range and review\_count had a lot of empty values. The price\_range was filled with the average value of \euro\euro. For the column review\_count ...%vorgehen?
 
-Moreover the data from yelp certainly did not match exactly with the other datasets. The buying power dataset did not include all the cities, that were listed in yelp. To solve this problem the empty values were filled with the average value of Germany. The same problem occured with the rent average dataset which was solved the same way.
+Moreover the data from yelp obviously did not match exactly with the other datasets. The buying power dataset did not include all the cities, that were listed in yelp. To solve this problem the empty values were filled with the average value of Germany. The same problem occured with the rent average dataset which was solved the same way.
 
+\paragraph{Data analysis}
 \label{subsec:Data analysis}
 %Pseudocode von Algorithmus vorstellen, step by step
 %R Skript für Clusteranalyse
