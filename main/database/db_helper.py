@@ -27,6 +27,14 @@ class DatastoreHelper:
         return item.key
 
     def fetch_entity(self, entity_name, limit, offset, operator, **kwargs,):
+        """
+        :param entity_name: name of the entity
+        :param limit: limit to fetch from datastore
+        :param offset: offset
+        :param operator: filter operator (=, <, <=, >, >=)
+        :param kwargs: filter key and values
+        :return: the fetched datatsore entity
+        """
         logger.info('Fetching from offset: %s with limit: %s', str(offset), str(limit))
         query = self.client.query(kind=entity_name)
         if kwargs is not None:
