@@ -1,5 +1,5 @@
 library('RPostgreSQL')
-install.packages("DMwR")
+#install.packages("DMwR")
 library(DMwR)
 library(dplyr)
 
@@ -20,7 +20,8 @@ dtab = dbGetQuery(con, "select
                   sum(review_count) sum_review_count,
                   sum(review_count) / count(id) reviewcounts_per_restaurant,
                   max(buying_power) bp,
-                  max(size_sqkm) size_sqkm
+                  max(size_sqkm) size_sqkm,
+                  max(population_sqkm) population_sqkm
                   from restaurants_in_germany
                   where review_count >= 9
                   group by city
@@ -31,9 +32,10 @@ str(dtab)
 dtab$z_restaurants_per_sqkm <- SoftMax(dtab$restaurants_per_sqkm)
 dtab$z_reviewcounts_per_restaurant <- SoftMax(dtab$reviewcounts_per_restaurant)
 dtab$z_avg_rating <- SoftMax(dtab$avg_rating)
+dtab$z_population_sqkm <- SoftMax(dtab$population_sqkm)
 
 #dtab$potential <- (0.2 * dtab$z_restaurants_per_sqkm) * (0.2 * dtab$z_reviewcounts_per_restaurant) * (0.6 * dtab$z_avg_rating)
-dtab$potential <- (dtab$z_restaurants_per_sqkm) * (dtab$z_reviewcounts_per_restaurant) * (dtab$z_avg_rating)
+dtab$potential <- (dtab$z_population_sqkm * dtab$z_restaurants_per_sqkm) * (dtab$z_reviewcounts_per_restaurant) * (dtab$z_avg_rating)
 
 View(arrange(dtab, desc(potential)))
 
