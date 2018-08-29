@@ -35,7 +35,7 @@ dtab$z_avg_rating <- SoftMax(dtab$avg_rating)
 dtab$z_population_sqkm <- SoftMax(dtab$population_sqkm)
 
 #dtab$potential <- (0.2 * dtab$z_restaurants_per_sqkm) * (0.2 * dtab$z_reviewcounts_per_restaurant) * (0.6 * dtab$z_avg_rating)
-dtab$potential <- (dtab$z_population_sqkm * dtab$z_restaurants_per_sqkm) * (dtab$z_reviewcounts_per_restaurant) * (dtab$z_avg_rating)
+dtab$potential <- dtab$z_population_sqkm * (1-dtab$z_restaurants_per_sqkm) * (dtab$z_reviewcounts_per_restaurant) * (dtab$z_avg_rating)
 
 View(arrange(dtab, desc(potential)))
 
