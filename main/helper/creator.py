@@ -57,6 +57,14 @@ class Creator:
         return rent_collector
 
     @staticmethod
+    def create_immoscout_collector():
+        immoscout_collector = EverythingFactory.create(constants.FACTORY_COLLECTOR,
+                                                       'immoscout',
+                                                       'immoscout_top_cities',
+                                                       constants.GCP_ENTITY_IMMOSCOUT)
+        return immoscout_collector
+
+    @staticmethod
     def create_plz_transporter(test_mode):
         plz_transporter = EverythingFactory.create(constants.FACTORY_TRANSPORTER,
                                                    'plz',
@@ -100,3 +108,13 @@ class Creator:
                                                          constants.GCP_ENTITY_RENT,
                                                          test_mode)
         return kaufkraft_transporter
+
+    @staticmethod
+    def create_immoscout_transporter(test_mode):
+        immoscout_transporter = EverythingFactory.create(constants.FACTORY_TRANSPORTER,
+                                                         'immoscout',
+                                                         constants.SQL_DATABASE_NAME,
+                                                         constants.GCP_ENTITY_IMMOSCOUT,
+                                                         test_mode)
+        return immoscout_transporter
+
