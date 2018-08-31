@@ -14,7 +14,7 @@ def get_germany_buying_power_average():
     source_db = DatastoreHelper()
     buying_power_average = None
 
-    source_entities = source_db.fetch_entity(constants.GCP_ENTITY_KAUFKRAFT, 1, 0)
+    source_entities = source_db.fetch_entity(constants.GCP_ENTITY_KAUFKRAFT, 1, 0, '=', transported=False)
     if source_entities:
         for datastore_entity in source_entities:
             if 'content' in datastore_entity:

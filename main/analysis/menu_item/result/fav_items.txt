@@ -1,0 +1,536 @@
+{
+    "68161": {
+        "spanisch": {
+            "fritura de pescado": 1,
+            "sardinas a la plancha": 1,
+            "chuletas de cordero": 1
+        },
+        "mexikanisch": {
+            "burrito juan": 1,
+            "unsere empfehlung: chilaquiles statt reis & bohnen": 1,
+            "helado frito": 1
+        },
+        "französisch": {
+            "gourmet frühstück für 2 personen": 1,
+            "gefüllte krautwickel mit grumbeerpüree": 1,
+            "grumbeersupp mit dampfnudel": 1
+        },
+        "brasilianisch": {
+            "bisteca de carneiro c / manteiga de ervas": 1,
+            "bife com batata-frita": 1,
+            "frango a passarinho": 1
+        },
+        "asiatisch": {
+            "gebratener reis": 1,
+            "4 st. mixed dim sum": 1,
+            "potstickers": 1
+        },
+        "italienisch": {
+            "gemischter salat": 1,
+            "carpaccio di salmone  frischer lachs mit lauch": 1,
+            "hausgemachtes vanilleeis mit waldbeeren": 1
+        },
+        "Burger Restaurant": {
+            "filet": 1,
+            "entrcôte": 1,
+            "dänischer milchreis": 1
+        },
+        "Gourmet": {
+            "emmas lunch": 1,
+            "topfenknödel": 1,
+            "zander": 1
+        },
+        "international": {
+            "quinoa-salat": 1,
+            "blattsalat": 1,
+            "pastrami sandwich": 1
+        },
+        "japanisch": {
+            "kappa maki": 1,
+            "sushiplatte sakula": 1,
+            "sushi-partyplatte": 1
+        },
+        "vegetarisches Restaurant": {
+            "kuchen / torten": 1,
+            "kartoffelpuffer": 1,
+            "trinkschokolade": 1
+        },
+        "undefined": {
+            "\"gamberini\" - gegrillte garnelen in scharfer marinade": 1,
+            "\"hot gauchos\" - scharfe rindfleischstreifen": 1,
+            "yakitori sate - hähnchenspieße": 1
+        },
+        "deutsch": {
+            "sahne": 1,
+            "kugel eis": 1,
+            "profiteroles": 1
+        },
+        "indisch": {
+            "chicken wings (6 stck)": 1,
+            "cheese pakora": 1,
+            "tandoori chicken": 1
+        },
+        "Steakhouse": {
+            "schlagsahne": 1,
+            "vanillesauce": 1,
+            "große kugel eis": 1
+        },
+        "regional": {
+            "pfälzer saumagen": 1,
+            "putensteak": 1,
+            "cordon bleu": 1
+        },
+        "thailändisch": {
+            "kiaw-wan-pak": 1,
+            "muh-phad-prik-kimau": 1,
+            "nuea-savan": 1
+        },
+        "türkisch": {
+            "börek blätterteig": 1,
+            "türkische pizza": 2
+        },
+        "mediterrane Küche": {
+            "lammkarree mit zucchini-oliventürmchen": 1,
+            "filet vom rind mit kartoffelsäckchen und pfifferlingen": 1,
+            "geschmolzene troffie mit basilikumpesto und kalbsleber": 1
+        },
+        "Pizzeria": {
+            "fragole al pepe": 1,
+            "gelato alla vaniglia con lamponi caldi": 1,
+            "gamberoni alla griglia": 1
+        },
+        "Bistro": {
+            "pasta bolognese": 1,
+            "classic  tomaten, zwiebeln, oliven, pepperoni, olivenöl, kräuter": 1,
+            "provence  spitzpaprika, pepperoni, zwiebel, oliven, kräuter": 1
+        },
+        "Sushi Restaurant": {
+            "avocado 8 stück": 1,
+            "spicy tsuna 2 stück": 1,
+            "hiya-yakko": 1
+        },
+        "amerikanisch": {
+            "wonderwheel": 1,
+            "tijuana imperial im brioche bun": 1,
+            "ben & jerry's": 1
+        }
+    },
+    "68165": {
+        "thailändisch": {
+            "lagavoulin": 1,
+            "glenmorange": 1,
+            "glenlivet": 1
+        },
+        "mediterrane Küche": {
+            "pappardelle": 1,
+            "bunte blattsalate": 1,
+            "basso frühstück": 1
+        },
+        "regional": {
+            "gebratenes zanderfilet": 1,
+            "käseauswahl i grissini i trauben": 1,
+            "latte macchiato-törtchen i waldbeerragout": 1
+        },
+        "deutsch": {
+            "kurpfälzer pfännchen": 1,
+            "kombination": 1,
+            "rumpsteak": 1
+        },
+        "amerikanisch": {
+            "wrap deiner wahl": 1,
+            "muffin my schoko": 1,
+            "muffin my deepblueberry": 1
+        },
+        "persisch": {
+            "cake bastani": 1,
+            "shole zard": 1,
+            "makhlut": 1
+        },
+        "Café": {
+            "apfelstrudel": 1,
+            "iced latte macchiato": 1,
+            "sanfter engel": 1
+        },
+        "undefined": {
+            "le special": 1,
+            "quiche lorraine": 1,
+            "chilli con carne": 1
+        },
+        "chinesisch": {
+            "88. halbe ente knusprig gebacken mit 8 kostbarkeiten in scharfer knoblauchsoße": 1,
+            "60. rindfleisch mit tomaten": 1,
+            "m14. knusprige ente peking art": 1
+        },
+        "Gourmet": {
+            "unser kleines menü": 1,
+            "menü ii": 1,
+            "menü  i": 1
+        },
+        "österreichisch": {
+            "rumpsteak": 1,
+            "unser menü": 1,
+            "marinierter thunfisch": 1
+        },
+        "international": {
+            "ratatouille": 1,
+            "warmer apfelstrudel mit vanilleeis und sahne": 1,
+            "mousse au chocolat": 1
+        },
+        "vietnamesisch": {
+            "bánh cuon": 1,
+            "canh chua tôm": 1,
+            "chuoi nuong": 1
+        },
+        "asiatisch": {
+            "fish jalfraise": 1,
+            "chilli chicken massala": 1,
+            "papadam, 2 stück, mit dips": 1
+        },
+        "italienisch": {
+            "antipasto  für 2 personen": 1,
+            "panna cotta": 1,
+            "menü 1": 1
+        },
+        "Pasta Restaurant": {
+            "bruschetta": 1,
+            "tiramisu": 1,
+            "crema di funghi mit fusilli": 1
+        }
+    },
+    "68167": {
+        "türkisch": {
+            "izgara köfte": 1,
+            "hindi sis": 1,
+            "tavus sis": 1
+        },
+        "italienisch": {
+            "pizza tomatensoße, käse, frische champignons, salami": 1,
+            "pizza tomatensoße, käse, zwiebeln, salami": 1,
+            "pizza tomatensoße, käse, zwiebeln": 1
+        },
+        "Café": {
+            "b16 — la garde": 1,
+            "b13 — menton": 1,
+            "b3 — st. tropez": 1
+        },
+        "deutsch": {
+            "unsere leckeres „bieramisu“": 1,
+            "wurstsalat": 1,
+            "dienstag gibt‘s haxen!": 1
+        },
+        "regional": {
+            "zanderfilet": 1,
+            "rumpsteak": 1,
+            "haus burger vom rind": 1
+        },
+        "Pizzeria": {
+            "pizza constantine": 1,
+            "pizza oran": 1,
+            "pizza monte carlo": 1
+        },
+        "international": {
+            "putengeschnetzeltes": 1,
+            "pikante reispfanne": 1,
+            "mediterraner kartoffeltopf": 1
+        }
+    },
+    "68169": {
+        "deutsch": {
+            "jägerschnitzel": 1,
+            "großer italienischer salat": 1,
+            "handkäs' mit musik": 1
+        },
+        "italienisch": {
+            "pizza 41": 1,
+            "pizza 40": 1,
+            "pizza 39": 1
+        },
+        "regional": {
+            "tagesessen 2": 1,
+            "freitag": 1,
+            "donnerstag": 1
+        },
+        "spanisch": {
+            "plato variado de pesca  a la plancha": 1,
+            "boquerones fritos": 1,
+            "croquetas de bacalao": 1
+        },
+        "griechisch": {
+            "seezunge": 1,
+            "kalamarakia": 1,
+            "suzukakia spezial": 1
+        }
+    },
+    "68199": {
+        "griechisch": {
+            "tiramisu": 1,
+            "pita": 1,
+            "akropolis pizza": 1
+        },
+        "regional": {
+            "rumpsteak vom amerikanischen weiderind": 1,
+            "schokoladen – whisky parfait": 1,
+            "kokosmousse an feinem fruchtsalat": 1
+        },
+        "mediterrane Küche": {
+            "fischplatte -kreta-": 1,
+            "limandenfilet": 1,
+            "grillteller \"mediterrane\"": 1
+        },
+        "französisch": {
+            "galette complete": 1,
+            "galette": 1,
+            "\"choix d’entrées provençales\"": 1
+        },
+        "international": {
+            "nieren „tiroler art“": 1,
+            "saure nieren": 1,
+            "½ hähnchen": 1
+        },
+        "italienisch": {
+            "pizza quattro formaggi": 1,
+            "pizza maargherita": 1,
+            "pizza salami": 1
+        },
+        "undefined": {
+            "grillfleischstreifen auf gemischter salatplatte": 1,
+            "wurstsalat": 1,
+            "garnelenspieß": 1
+        },
+        "Molekularküche": {
+            "momentaufnahme": 1,
+            "brick in the wall": 1,
+            "affinierter käse von   bernard antony": 1
+        },
+        "deutsch": {
+            "grillhaxe": 1,
+            "ochsenspieß vom argent.roastbeef": 1,
+            "das rittelmahl": 1
+        }
+    },
+    "68219": {
+        "griechisch": {
+            "\" grill teller \"": 1,
+            "\" pangasius filet\"": 1,
+            "\"2 hacksteaks \"": 1
+        },
+        "regional": {
+            "tomatencremesuppe": 1,
+            "coppa caprese": 1,
+            "gratinierter stangenspargel": 1
+        }
+    },
+    "68229": {
+        "deutsch": {
+            "rumpsteak, vom argentinischen rind": 1,
+            "gebratene peperoni": 1
+        }
+    },
+    "68239": {
+        "deutsch": {
+            "dreierlei vom gebackenen ziegenkäse": 1,
+            "bio-hähnchenbrust im knuspermantel\r\nmit orangen-pfeffer-sauce und bandnudeln": 1,
+            "medaillons vom schwäbisch-hällischen landschwein": 1
+        },
+        "international": {
+            "rotkäppchen": 1,
+            "blonder engel": 1,
+            "vanilleeis mit schokosoße und sahne": 1
+        },
+        "italienisch": {
+            "insalata ,,il castello“": 1,
+            "filetto di salmone": 1,
+            "tagliatelle al salmone": 1
+        }
+    },
+    "68259": {
+        "französisch": {
+            "schwabenpfännchen": 1,
+            "sauere nierle": 1,
+            "\"normannen\" schnitzel": 1
+        },
+        "griechisch": {
+            "rumpsteak": 1,
+            "lammrücken": 1,
+            "lammkotelett": 1
+        },
+        "undefined": {
+            "dessertvariation glashaus": 1,
+            "apfelpfannkuchen": 1,
+            "blaubeerpfannkuchen vanilleeis": 1
+        },
+        "deutsch": {
+            "rindersteak": 1,
+            "gekochtes rindfleisch": 1,
+            "cordon bleu in knuspriger panada vom eigenen brot": 1
+        },
+        "Pizzeria": {
+            "mousse di cioccolato ai frutti di bosco": 1,
+            "panna cotta con salsa di pere": 1,
+            "salmone ripieno di platessa e spinaci": 1
+        },
+        "international": {
+            "schweinerückensteak an gorgonzolarahmsauce": 1,
+            "gnocchi": 1,
+            "paniertes putenschnitzel": 1
+        }
+    },
+    "68305": {
+        "regional": {
+            "gegrillte peperoni": 1,
+            "chilischnitzel": 1,
+            "beilagensalat": 1
+        },
+        "deutsch": {
+            "lachsforelle an dill-zitronensoße": 1,
+            "lammkoteletts": 1,
+            "landolin-burger": 1
+        },
+        "Dinner in the dark": {
+            "menu 1": 3
+        },
+        "italienisch": {
+            "schnitzel gorgonzola": 1,
+            "spargel schnitzel": 1,
+            "tiramisu": 1
+        },
+        "griechisch": {
+            "gyros metaxasauce": 1,
+            "gyros tzatziki": 1,
+            "kalamares": 1
+        }
+    },
+    "68307": {
+        "chinesisch": {
+            "tintenfisch gebraten nach szechuan art": 1,
+            "\"knusprig gebackene ente\"": 1,
+            "hähnchen knusprig gebacken": 1
+        },
+        "Gourmet": {
+            "portion butterkartoffeln": 1,
+            "portion bunter beilagensalat": 1,
+            "portion tages-gemüse": 1
+        },
+        "Fischspezialitäten": {
+            "\"feldschlöss'l\"  kinderbecher": 1,
+            "\"heiß auf eis\"": 1,
+            "\"heiße liebe\"": 1
+        },
+        "italienisch": {
+            "bruschetta": 1,
+            "panna cotta": 1,
+            "cassata siciliana": 1
+        }
+    },
+    "68163": {
+        "italienisch": {
+            "zabaglione": 1,
+            "salmone alla griglia": 1,
+            "calamari alla grilia": 1
+        },
+        "deutsch": {
+            "bauernjunge": 1,
+            "frühlingsbote": 1,
+            "kinder-spezial-pfannkuchen": 1
+        },
+        "international": {
+            "walnuss-eis": 1,
+            "étagère frankreich „eiffelturm“": 1,
+            "rindergulasch": 1
+        },
+        "Bistro": {
+            "gerne wählen sie auch aus unserer eiskarte oder der kuchenvitrine": 1,
+            "frischer obstsalat mit sorbet": 1,
+            "crème brûlée": 1
+        },
+        "Pizzeria": {
+            "spaghetti, penne und tortellini": 1,
+            "tagliatelle \"salmone\"": 1,
+            "tagliatelle \"gorgonzola\"": 1
+        },
+        "chinesisch": {
+            "\"yangtse\" entengenuss für 2 personen": 1,
+            "knusprige \"kanton ente\"": 1,
+            "\"sukijaki\" rindfleisch": 1
+        }
+    },
+    "68159": {
+        "griechisch": {
+            "lachfiletschnitte": 1,
+            "lammkotelettes": 1,
+            "auberginen": 1
+        },
+        "französisch": {
+            "vorspeisenmenü": 1,
+            "großes menü": 1,
+            "kleines menü": 1
+        },
+        "italienisch": {
+            "pizza 32cm": 1,
+            "vegetaria": 1,
+            "roby": 1
+        },
+        "international": {
+            "lachstatar i avocado i rote bete i selleriecrème": 1,
+            "sepia-brioche i wachtelbrust i pflaumenkonfitüre i gemüse-julienne": 1,
+            "menu": 1
+        },
+        "mediterrane Küche": {
+            "minuten-filet-steak mit grünem marktgemüse & püree": 1,
+            "kürbis ravioli mit salbeibutter": 1,
+            "gebratene kalbsleber an schalottensauce mit kartoffelpüree": 1
+        },
+        "regional": {
+            "hallo peru!": 1,
+            "echt hällische maultäschle, kartoffelsalat, geschmolzene zwiebel, brühe": 1,
+            "maultäschle": 1
+        },
+        "Gourmet": {
+            "hummersuppe": 1,
+            "death by cheese": 1,
+            "baklava mannheim art": 1
+        },
+        "deutsch": {
+            "schweinelendchen\r\n\r\nmit schinken und käse überbacken,dazu pommes frites": 1,
+            "wurstsalat\r\n\r\nlyoner in feinen streifen mit paprika und zwiebeln angemacht, dazu pommes frites": 1,
+            "blumenkohl - käse medaillons\r\n\r\nauf holländischer cremesauce mit salat an hausdressing(": 1
+        },
+        "türkisch": {
+            "adana kebap": 1,
+            "lale kuzu tava": 1,
+            "tüm döner - ekmek arası": 1
+        },
+        "Burger Restaurant": {
+            "3 fonduespieße, 12 kugeln häagen dazs eis, 1 soße & 1 schale obst": 1,
+            "ein häagen dazs sowie ein heißgetränk nach wahl": 1,
+            "double chocolate": 1
+        },
+        "thailändisch": {
+            "sate gung": 1,
+            "poh pia tche": 1,
+            "poh pia": 1
+        }
+    },
+    "68309": {
+        "amerikanisch": {
+            "giant farm burger": 1,
+            "pfannkuchen mit ahornsirup": 1,
+            "double giant": 1
+        },
+        "deutsch": {
+            "cordon bleu": 1,
+            "schnitzel „holzfäller art“": 1,
+            "paprikaschnitzel": 1
+        },
+        "griechisch": {
+            "hacksteak mit pommes frites und gem. salat": 1,
+            "gyros mit tsatsiki": 1,
+            "mixed-grill-spieß": 1
+        },
+        "italienisch": {
+            "tortellini alla bolognese": 1,
+            "spaghetti ai frutti di mare": 1,
+            "spaghetti alla carbonara": 1
+        }
+    }
+}
