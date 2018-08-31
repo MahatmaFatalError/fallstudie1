@@ -1,7 +1,7 @@
 import json
 import logging
 import pandas as pd
-from collections import defaultdict, OrderedDict
+from collections import defaultdict
 from config import constants
 from main.database.db_helper import DatastoreHelper, SqlHelper
 from main.helper import util

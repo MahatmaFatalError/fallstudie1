@@ -15,20 +15,27 @@ logger = logging.getLogger(__name__)
 
 class RestaurantCollector(Collector):
 
-    def __init__(self, entity_name):
+    city_name = None
+
+    def __init__(self, entity_name, test_mode, city_name):
         super(RestaurantCollector, self).__init__(
-            entity_name=entity_name
+            entity_name=entity_name,
+            test_mode=test_mode
         )
 
         self.location = None
         self.offset = None
         self.current_path = None
+        self.city_name = city_name
 
     def run(self):
         db = SqlHelper(constants.SQL_DATABASE_NAME)
         yelp_helper = YelpHelper()
         db.create_session()
-        cities = db.fetch_all(constants.SQL_TABLE_CITY)
+        if self.city_name is None:
+            cities = db.fetch_all(constants.SQL_TABLE_CITY)
+        else:
+            cities = db.fetch_entity_where('City', True, False, name=self.city_name)
         try:
             for city in cities:
                 name = city.name
@@ -38,7 +45,7 @@ class RestaurantCollector(Collector):
                         self.location = str(zip_code.zip_code) + ', ' + str(name) + ', Deutschland'
                         self.offset = 0
                         content = yelp_helper.get_search(self.location, self.offset)
-                        if 'error' not in content:
+                        if 'error' not in content and not self.test_mode:
                             total = content['total']
                             save_success = self._save(content)
                             if save_success is False:

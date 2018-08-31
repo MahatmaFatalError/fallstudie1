@@ -13,30 +13,37 @@ logger = logging.getLogger(__name__)
 
 class SpeisekarteCollector(Collector):
 
-    def __init__(self, entity_name):
+    city_name = None
+    current_city = None
+
+    def __init__(self, entity_name, test_mode, city_name):
         super(SpeisekarteCollector, self).__init__(
-            entity_name=entity_name
+            entity_name=entity_name,
+            test_mode=test_mode
         )
-        self.city = None
+        self.city_name = city_name
 
     def run(self):
         db = SqlHelper(constants.SQL_DATABASE_NAME)
         db.create_session()
-        cities = db.fetch_all(constants.SQL_TABLE_CITY)
+        if self.city_name is None:
+            cities = db.fetch_all(constants.SQL_TABLE_CITY)
+        else:
+            cities = db.fetch_entity_where('City', True, False, name=self.city_name)
         all_results = []
         try:
             for city in cities:
-                self.city = city.name
+                self.current_city = city.name
                 result = {
-                    'city': self.city,
+                    'city': self.current_city,
                     'total': None,
                     'restaurants': []
                 }
-                spider = SpeisekarteSpider(self.city)
+                spider = SpeisekarteSpider(self.current_city)
                 spider.run()
                 spider_result = spider.get_result()
                 success = spider_result.get_success()
-                if success:
+                if success and not self.test_mode:
                     data = spider_result.get_data()
                     restaurants = data['restaurants']
                     total = data['total']
@@ -64,7 +71,7 @@ class SpeisekarteCollector(Collector):
         zip_code = restaurant['address']['zip_code']
         attributes = {"updatedAt": datetime.datetime.now(), "zip_code": zip_code, "content": restaurant, "transported": False}
         restaurant_id = restaurant['id']
-        entity_id = self.city + '$' + restaurant_id
+        entity_id = self.current_city + '$' + restaurant_id
         try:
             db.create_or_update(self.entity_name, entity_id, attributes)
             result = True

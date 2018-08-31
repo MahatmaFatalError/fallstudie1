@@ -4,7 +4,7 @@ from google.cloud import datastore
 from pathlib import Path
 from sqlalchemy.orm import sessionmaker
 from config import constants
-from main.database.init_db import City, Restaurant
+from main.database.init_db import City, Restaurant, ZipCode
 import logging
 import sqlalchemy
 
@@ -26,7 +26,7 @@ class DatastoreHelper:
         self.client.put(item)
         return item.key
 
-    def fetch_entity(self, entity_name, limit, offset, operator, **kwargs,):
+    def fetch_entity(self, entity_name, limit=None, offset=None, operator=None, **kwargs,):
         """
         :param entity_name: name of the entity
         :param limit: limit to fetch from datastore
@@ -37,10 +37,13 @@ class DatastoreHelper:
         """
         logger.info('Fetching from offset: %s with limit: %s', str(offset), str(limit))
         query = self.client.query(kind=entity_name)
-        if kwargs is not None:
+        if kwargs is not None and operator is not None:
             for key, value in kwargs.items():
                 query.add_filter(key, operator, value)
-        result = list(query.fetch(limit=limit, offset=offset))
+        if limit is not None and offset is not None:
+            result = list(query.fetch(limit=limit, offset=offset))
+        else:
+            result = list(query.fetch())
         return result
 
     def set_transported(self, entity, value):
@@ -61,9 +64,9 @@ class SqlHelper:
     session = None
 
     def __init__(self, database):
-        self.connect(constants.SQL_DATABASE_USER, constants.SQL_DATABASE_PW, database)
+        self._connect(constants.SQL_DATABASE_USER, constants.SQL_DATABASE_PW, database)
 
-    def connect(self, user, password, db, host=constants.SQL_DATABASE_HOST, port=constants.SQL_DATABASE_PORT):
+    def _connect(self, user, password, db, host=constants.SQL_DATABASE_HOST, port=constants.SQL_DATABASE_PORT):
         # We connect with the help of the PostgreSQL URL
         # connection string found here https://cloud.google.com/appengine/docs/flexible/python/using-cloud-sql-postgres
         url = 'postgresql://{}:{}@{}:{}/{}'
@@ -136,9 +139,11 @@ class SqlHelper:
             result = self.session.query(City)
         elif entity_name == 'restaurant':
             result = self.session.query(Restaurant)
+        elif entity_name == 'zip_code':
+            result = self.session.query(ZipCode)
         return result
 
-    def fetch_entity_where(self, class_name, fetch_all, negated, **kwargs):
+    def fetch_entity_where(self, class_name, fetch_all, negated=False, **kwargs):
         mod = __import__('main.database.init_db', fromlist=[class_name])
         entity_class = getattr(mod, class_name)
         query = self.session.query(entity_class)

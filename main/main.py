@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
+from config import constants
+from main.database.db_helper import SqlHelper
 from main.helper import util
 from main.helper.SignalHandler import SignalHandler
 from main.helper.creator import Creator
@@ -35,7 +37,15 @@ def main():
     util.setup_logging()
 
     action_number = int(input(action_string))
-    test_mode_number = int(input("Execution in test mode?\n"
+    city_name = str(input("For which city? - Leave Blank for all Cities."))
+
+    if city_name is '':
+        city_name = None
+    else:
+        print(city_name)
+        check_city(city_name)
+
+    test_mode_number = int(input("Execu1tion in test mode?\n"
                                  "(1)yes\n"
                                  "(2)no\n"
                                  "Answer by type in the number."))
@@ -57,14 +67,14 @@ def main():
                     .format(collector_method, transporter_method, str(test_mode)))
 
         try:
-            collector = getattr(creator, collector_method)()
+            collector = getattr(creator, collector_method)(test_mode, city_name)
             if collector and (collect_or_transport == 1 or collect_or_transport == 3):
                 threads.append(collector)
         except AttributeError:
             logger.warning('Collector {0} not found'.format(collector_method))
 
         try:
-            transporter = getattr(creator, transporter_method)(test_mode)
+            transporter = getattr(creator, transporter_method)(test_mode, city_name)
             if transporter and (collect_or_transport == 2 or collect_or_transport == 3):
                 threads.append(transporter)
         except AttributeError:
@@ -79,6 +89,18 @@ def main():
                 thread_name = type(thread).__name__
                 logger.info('Starting Thread: {0}'.format(thread_name))
                 thread.start()
+
+
+def check_city(city_name):
+    sql = SqlHelper(constants.SQL_DATABASE_NAME)
+    sql.create_session()
+    city_from_db = sql.fetch_city_by_name(city_name)
+    while city_from_db is None:
+        city_name = str(input("City {0} not available in database. Try again!".format(city_name)))
+        city_from_db = sql.fetch_city_by_name(city_name)
+
+    sql.close_session()
+    return city_name
 
 
 if __name__ == '__main__':

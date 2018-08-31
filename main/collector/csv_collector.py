@@ -19,9 +19,10 @@ class CsvCollector(Collector):
     entity_id = None
     encoding = None
 
-    def __init__(self, entity_id, entity_name, filename, delimiter, encoding=None):
+    def __init__(self, entity_id, entity_name, test_mode, filename, delimiter, encoding=None):
         super(CsvCollector, self).__init__(
             entity_name=entity_name,
+            test_mode=test_mode
         )
         self.entity_id = entity_id
         self.delimiter = delimiter
@@ -40,11 +41,12 @@ class CsvCollector(Collector):
                     item[name] = attribute
                 if item[name] != '':
                     self.data.append(item)
-        success = self._save(self.data)
-        result.set_success(success)
-        if not success:
-            result.set_message('Could not save csv Data in Google Datastore')
-        logger.info(result)
+        if not self.test_mode:
+            success = self._save(self.data)
+            result.set_success(success)
+            if not success:
+                result.set_message('Could not save csv Data in Google Datastore')
+            logger.info(result)
 
     def _save(self, data):
         logger.info('Saving {} in Datastore...'.format(self.entity_name))

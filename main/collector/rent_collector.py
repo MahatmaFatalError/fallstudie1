@@ -14,9 +14,10 @@ class RentCollector(Collector):
 
     filename = None
 
-    def __init__(self, entity_name, filepath):
+    def __init__(self, entity_name, test_mode, filepath):
         super(RentCollector, self).__init__(
-            entity_name=entity_name
+            entity_name=entity_name,
+            test_mode=test_mode
         )
         self.filename = filepath
 
@@ -24,11 +25,12 @@ class RentCollector(Collector):
         result = Result()
         with open(self.filename, encoding='utf-8') as json_file:
             data = json.load(json_file)
-            success = self._save_all(data)
-            result.set_success(success)
-        if not success:
-            result.set_message('Could not save json Data in Google Datastore')
-        logger.info(result)
+            if not self.test_mode:
+                success = self._save_all(data)
+                result.set_success(success)
+                if not success:
+                    result.set_message('Could not save json Data in Google Datastore')
+                logger.info(result)
 
     def _save_all(self, data):
         success = False

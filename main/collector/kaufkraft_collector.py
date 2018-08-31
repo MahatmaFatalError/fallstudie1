@@ -17,9 +17,11 @@ class KaufkraftCollector(Collector):
     pdf_path = None
     entity_id = None
 
-    def __init__(self, entity_id, entity_name, path):
+    def __init__(self, entity_id, entity_name, test_mode, path):
         super(KaufkraftCollector, self).__init__(
-            entity_name=entity_name)
+            entity_name=entity_name,
+            test_mode=test_mode
+        )
         self.pdf_path = path
         self.entity_id = entity_id
 
@@ -77,6 +79,7 @@ class KaufkraftCollector(Collector):
         df_result.growthrate_2016_2017_percentage_euro = df_result.growthrate_2016_2017_percentage_euro.apply(
             lambda x: x * 1000000)
         result_json = df_result.to_json(orient='records')
-        success = self._save(result_json)
-        result.set_success(success)
-        logger.info(result)
+        if not self.test_mode:
+            success = self._save(result_json)
+            result.set_success(success)
+            logger.info(result)

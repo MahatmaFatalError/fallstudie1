@@ -13,14 +13,16 @@ logger = logging.getLogger(__name__)
 # ... means "not-yet-written code"
 # Abstract Transporter Class
 class Transporter(ABC, threading.Thread):
+
     database = None
     source_entity = None
     target_entity = None
     source_db = None
     test_mode = None
     source_entity_id = None
+    city_name = None
 
-    def __init__(self, database, source_entity, test_mode):
+    def __init__(self, database, source_entity, test_mode, city_name):
         super(Transporter, self).__init__()
         logger.info('Creating Transporter for Datastore Entity: {0}'
                     .format(source_entity))
@@ -29,6 +31,7 @@ class Transporter(ABC, threading.Thread):
         self.source_db = DatastoreHelper()
         self.target_db = SqlHelper(self.database)
         self.test_mode = test_mode
+        self.city_name = city_name
 
     def run(self):
         results = []
