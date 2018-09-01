@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{Imatra}
+Hasan, S.F.: Market analysis to discover new restaurant business opportunities
+  in imatra region (2015), \url{https://www.theseus.fi/handle/10024/95430}
+
+\bibitem{CaseOfYelp}
+Luca, M.: Reviews, reputation, and revenue: The case of yelp.com (2016),
+  \url{https://www.hbs.edu/faculty/Pages/item.aspx?num=41233}
+
+\end{thebibliography}
