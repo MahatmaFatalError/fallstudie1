@@ -121,6 +121,13 @@ class Immoscout(Base):
             .format(self.id, self.name, self.updated_at, self.city)
 
 
+class TopCity(Base):
+    __tablename__ = constants.SQL_TABLE_TOP_CITY
+
+    city = Column(String, primary_key=True, autoincrement=False)
+    potential = Column(Numeric)
+
+
 if __name__ == '__main__':
     from main.database.db_helper import SqlHelper
 

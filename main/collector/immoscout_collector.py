@@ -31,12 +31,22 @@ class ImmoscoutCollector(Collector):
         return success
 
     def run(self):
+        from main.database.db_helper import SqlHelper
+
         result = Result()
+        db = SqlHelper(constants.SQL_DATABASE_NAME)
+        session = db.get_connection()
+        df = pd.read_sql_table(table_name='top_city', con=session)
+        top_n = 10
+        cities = pd.DataFrame(data=df.iloc[0:top_n], columns={'city'})
+        for index, row in cities.iterrows():
+            print(str(index + 1) + ". " + row['city'])
+
 
         # cities = {
         #   'city': ['Berlin', 'Frankfurt am Main', 'München', 'Hamburg', 'Düsseldorf', 'Darmstadt', 'Köln', 'Hannover',
         #            'Bremen', 'Erfurt']}
-        cities = {'city': ['Heidelberg', 'Karlsruhe']}
+        # cities = {'city': ['Heidelberg', 'Karlsruhe']}
         city_for_search = pd.DataFrame(cities, columns=['city'])
 
         immo_oauth = OAuth1(
@@ -54,10 +64,26 @@ class ImmoscoutCollector(Collector):
                                              auth=immo_oauth,
                                              params=constants.IMMOSCOUT_HEADERS)
             immo_geo_response_json = pd.read_json(immo_geo_response.text)
-            geocode = pd.Series(immo_geo_response_json['entity'][0]['id'])
-            geo_df = geo_df.append(pd.DataFrame({'geoId': geocode, 'city': row['city']}), ignore_index=True, sort=True)
-            logger.info(
-                'Found Geoode from City: ' + str(row['city']) + ', Geocode: ' + geocode)
+            if not immo_geo_response_json.empty:
+                geocode = pd.Series(immo_geo_response_json['entity'][0]['id'])
+                geo_df = geo_df.append(pd.DataFrame({'geoId': geocode, 'city': row['city']}), ignore_index=True, sort=True)
+                logger.info(
+                    'Found Geocode from City: ' + str(row['city']) + ', Geocode: ' + geocode)
+            else:
+                logger.info("No Geocode for city: " + str(row['city']))
+        logger.info(geo_df)
+
+        # Fläche Retaurant:
+        # https: // se909eeccf1caa559.jimcontent.com / download / version / 1507517357 / module / 11096440527 / name / AuszugDiplomarbeit_13.03.2006.pdf
+        # Gast = 40 %
+        # Technik = 12 %
+        # Personal = 8 %
+        # Gast = 40 %
+        PLATZBEDARF_GAST = 1.5  # m²
+        PLÄTZE_MIN = 52  # für 40.000 € = 100 %
+        PLÄTZE_MAX = 65  # für 125 %
+        TOTAL_FLÄCHE_MIN = PLATZBEDARF_GAST * PLÄTZE_MIN / 40 * 100.0
+        TOTAL_FLÄCHE_MAX = PLATZBEDARF_GAST * PLÄTZE_MAX / 40 * 100.0
 
         restaurant_df = pd.DataFrame()
         # get Immoscout24 object by geocode
@@ -66,9 +92,9 @@ class ImmoscoutCollector(Collector):
                       'geocodes': str(row['geoId']),
                       'gastronomytypes': 'restaurant',
                       'channel': 'is24',
-                      'numberofseats': '52-80',
+                      'numberofseats': str(PLÄTZE_MIN) + '-' + str(PLÄTZE_MAX),
                       'pagesize': '200',
-                      'totalfloorspace': '100.00-250.00'
+                      'totalfloorspace': str(TOTAL_FLÄCHE_MIN) + '-' + str(TOTAL_FLÄCHE_MAX)
                       }
             immo_search_response = requests.request(method='GET',
                                                     url=constants.IMMOSCOUT_SEARCH_URL,
@@ -108,7 +134,9 @@ class ImmoscoutCollector(Collector):
                     df = pd.DataFrame(data, columns={'title', 'price', 'marketingtype', 'currency', 'priceintervaltype',
                                                      'postcode', 'city', 'quarter', 'totalfloorspace'})
                     restaurant_df = restaurant_df.append(df, ignore_index=True, sort=True)
-
+            else:
+                logger.info('No object found for city: ' + str(row['city']))
+        logger.info(restaurant_df)
         result_json = restaurant_df.to_json(orient='records')
         success = self._save(result_json)
         result.set_success(success)
