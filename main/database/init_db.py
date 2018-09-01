@@ -2,7 +2,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Numeric, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from config import constants
-# from main.database.db_helper import SqlHelper
 
 Base = declarative_base()
 
@@ -102,6 +101,29 @@ class RentAvgCalculated(Base):
                            autoincrement=False)
     rent_avg = Column(Numeric, primary_key=True)
 
-# db = SqlHelper(constants.SQL_DATABASE_NAME)
-# engine = db.get_connection()
-# Base.metadata.create_all(engine)
+
+class Immoscout(Base):
+    __tablename__ = constants.SQL_TABLE_IMMOSCOUT
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String)
+    city = Column(String)
+    quarter = Column(String)
+    postcode = Column(Integer)
+    price = Column(Integer)
+    currency = Column(String)
+    marketingtype = Column(String)
+    priceintervaltype = Column(String)
+    totalfloorspace = Column(Numeric)
+
+    def __str__(self):
+        return 'id: {0}, name: {1}, updated at: {2} immoscout: {3}'\
+            .format(self.id, self.name, self.updated_at, self.city)
+
+
+if __name__ == '__main__':
+    from main.database.db_helper import SqlHelper
+
+    db = SqlHelper(constants.SQL_DATABASE_NAME)
+    engine = db.get_connection()
+    Base.metadata.create_all(engine)
