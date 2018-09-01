@@ -2,7 +2,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Numeric, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from config import constants
-# from main.database.db_helper import SqlHelper
 
 Base = declarative_base()
 
@@ -121,6 +120,10 @@ class Immoscout(Base):
         return 'id: {0}, name: {1}, updated at: {2} immoscout: {3}'\
             .format(self.id, self.name, self.updated_at, self.city)
 
-# db = SqlHelper(constants.SQL_DATABASE_NAME)
-# engine = db.get_connection()
-# Base.metadata.create_all(engine)
+
+if __name__ == '__main__':
+    from main.database.db_helper import SqlHelper
+
+    db = SqlHelper(constants.SQL_DATABASE_NAME)
+    engine = db.get_connection()
+    Base.metadata.create_all(engine)
