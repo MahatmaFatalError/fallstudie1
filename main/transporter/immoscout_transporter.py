@@ -1,6 +1,10 @@
 # coding=utf-8
 import json
+import logging
 from main.transporter.transporter import Transporter
+from main.database.init_db import Immoscout
+
+logger = logging.getLogger(__name__)
 
 
 class ImmoscoutTransporter(Transporter):
@@ -14,5 +18,15 @@ class ImmoscoutTransporter(Transporter):
             except TypeError:
                 source_content = content
             for item in source_content:
-                entities.append(item)
+                target_entity = Immoscout()
+                target_entity.city = item['city']
+                target_entity.currency = item['currency']
+                target_entity.title = item['title']
+                target_entity.marketingtype = item['marketingtype']
+                target_entity.postcode = item['postcode']
+                target_entity.price = item['price']
+                target_entity.priceintervaltype = item['priceintervaltype']
+                target_entity.quarter = item['quarter']
+                target_entity.totalfloorspace = item['totalfloorspace']
+                entities.append(target_entity)
         return entities

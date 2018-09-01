@@ -102,6 +102,25 @@ class RentAvgCalculated(Base):
                            autoincrement=False)
     rent_avg = Column(Numeric, primary_key=True)
 
+
+class Immoscout(Base):
+    __tablename__ = constants.SQL_TABLE_IMMOSCOUT
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String)
+    city = Column(String)
+    quarter = Column(String)
+    postcode = Column(Integer)
+    price = Column(Integer)
+    currency = Column(String)
+    marketingtype = Column(String)
+    priceintervaltype = Column(String)
+    totalfloorspace = Column(Numeric)
+
+    def __str__(self):
+        return 'id: {0}, name: {1}, updated at: {2} immoscout: {3}'\
+            .format(self.id, self.name, self.updated_at, self.city)
+
 # db = SqlHelper(constants.SQL_DATABASE_NAME)
 # engine = db.get_connection()
 # Base.metadata.create_all(engine)
