@@ -4,7 +4,6 @@ import logging
 from main.collector.collector import Collector
 from config import constants
 import requests
-import oauth2 as oauth
 from requests_oauthlib import OAuth1
 import pandas as pd
 from main.database.db_helper import DatastoreHelper
