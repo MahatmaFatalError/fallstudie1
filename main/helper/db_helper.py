@@ -5,6 +5,7 @@ from pathlib import Path
 from sqlalchemy.orm import sessionmaker
 from config import constants
 # from main.database.init_db import City, Restaurant, ZipCode
+from main.database.init_db import City, Restaurant, TopCity
 import logging
 import sqlalchemy
 
@@ -150,6 +151,8 @@ class SqlHelper:
             result = self.session.query(Restaurant)
         elif entity_name == 'zip_code':
             result = self.session.query(ZipCode)
+        elif entity_name == 'top_cities':
+            result = self.session.query(TopCity)
         return result
 
     def fetch_entity_where(self, class_name, fetch_all, negated=False, **kwargs):

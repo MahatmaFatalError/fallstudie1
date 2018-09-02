@@ -28,6 +28,7 @@
      - [List of POS Tags (Deutsch)](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/stts_guide.pdf)
      - [List of POS Tags (English)](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/Penn-Treebank-Tagset.pdf)
  14. ``` pip install --upgrade fuzzywuzzy ```
+ 15. ``` pip install --upgrade requests_oauthlib ```
 
 ## Useful Links
 - https://www.yelp.de/developers/documentation/v3/business_search

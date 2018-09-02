@@ -93,9 +93,6 @@ class Transporter(ABC, threading.Thread):
                 else:
                     result.set_success(True)
                     result.set_message('Test Mode active')
-            else:
-                result.set_success(False)
-                result.set_message('No "content" attribute found in entity from Google Datastore')
         else:
             result.set_success(False)
             result.set_message(self.source_entity + ' could not be found in Google Datastore')
