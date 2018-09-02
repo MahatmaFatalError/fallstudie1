@@ -11,19 +11,16 @@ In addition to this some other datasets relating to Germany's cities were used f
 \item CSV file with the population and the area
 \end{itemize}
 
-Purchasing power is an important factor in the catering industry. It makes little sense to open a three-star restaurant in a social focus area or vice versa. A fast food business will not last long between high-end haute cuisine restaurants. In 2016, public television broadcast a study on the quality of life in Germany. These studies included different population, city, and quality reports, with reference to external sources. One of the studies contained information on purchasing power in the cities of Germany. The report led to an external provider who had published this survey \cite{BuyingPower}. This evaluation was publicly available in the download portal of the website in portable document format and was very well suited to adapting this with a python converter in the postgres database. This attribute complements the model to determine the price level for a restaurant.\\
+Purchasing power is an important factor in the catering industry. It makes little sense to open a three-star restaurant in a social focus area or vice versa. A fast food business will not last long between high-end haute cuisine restaurants. In 2016, public television broadcast a study on the quality of life in Germany. These studies included different population, city, and quality reports, with reference to external sources. One of the studies contained information on purchasing power in the cities of Germany. The report led to an external provider who had published this survey \cite{BuyingPower}. This evaluation was publicly available in the download portal of the website in portable document format and was very well suited to adapting this with a python converter in the postgres database. This attribute complements the model to determine the price level for a restaurant.
 \\
 For our use case and in general, it is absolutely necessary to know how much rent you can pay in the month or year or whether you can afford a property. In search of a rent index in Germany, we first came across an open-source evaluation in .json format \cite{Sparda}. Unfortunately, this was only the average land prices. Thereupon the possibility opened by an interface to real estate platforms \cite{ImmoScout} to get more accurate and more up-to-date rental and land prices.
-\\
+\paragraph{Data storage}
+\label{subsec:Data storage}
+As a storage for the datasets the Google Cloud Platform was used. Before that, it is necessary to configure it first. You have to create a GCP-Project and then put the collected data in the Google Cloud Datastore which is a NoSQL document database. From there, it was possible to create a postgreSQL istance with Cloud SQL, the fully-managed relational database service of Google Cloud. For setting up a connection a proxy or current ip address is required.
 \paragraph{Data ingestion}
 \label{subsec:Data ingestion}
 For collecting the yelp data we used the yelp API. Therefor we wrote a script with python. In the following you can some code:
 %code einfügen
-
-\paragraph{Data storage}
-\label{subsec:Data storage}
-As a storage for the datasets the Google Cloud Platform was used. Before that, it is necessary to configure it first. You have to create a GCP-Project and then put the collected data in the Google Cloud Datastore which is a NoSQL document database. From there, it was possible to create a postgreSQL istance with Cloud SQL, the fully-managed relational database service of Google Cloud. For setting up a connection a proxy or current ip address is required.
-
 \paragraph{Data cleaning}
 \label{subsec:Data cleaning}
 The collected datasets in the Datastore were not messy, but there was still a lot of cleaning activities to do. The yelp data itself had some inconsistencies. Especially the columns price\_range and review\_count had a lot of empty values. The price\_range was filled with the average value of \euro\euro. For the column review\_count ...%vorgehen?
