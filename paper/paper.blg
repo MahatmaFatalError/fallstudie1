@@ -5,4 +5,10 @@ Warning--entry type for "CaseOfYelp" isn't style-file defined
 --line 2 of file config/literatur.bib
 Warning--entry type for "Imatra" isn't style-file defined
 --line 10 of file config/literatur.bib
-(There were 2 warnings)
+Warning--entry type for "BuyingPower" isn't style-file defined
+--line 18 of file config/literatur.bib
+Warning--entry type for "Sparda" isn't style-file defined
+--line 26 of file config/literatur.bib
+Warning--entry type for "ImmoScout" isn't style-file defined
+--line 34 of file config/literatur.bib
+(There were 5 warnings)
