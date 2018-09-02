@@ -6,7 +6,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from config import constants
 from main.helper.db_helper import DatastoreHelper, SqlHelper
 from main.helper.result import Result
-from main.helper.value import Value
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +20,7 @@ class Transporter(ABC, threading.Thread):
     test_mode = None
     source_entity_id = None
     city_name = None
-    zip_codes = None
+    zip_codes = []
 
     def __init__(self, database, source_entity, test_mode, city_name):
         super(Transporter, self).__init__()

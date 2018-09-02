@@ -7,6 +7,15 @@ import logging.config
 import os
 
 
+def map_city_to_state_iso_code(city):
+    # TODO: complete mapping
+    codes = {
+        'mannheim': 'BW'
+    }
+
+    return codes[city.lower()]
+
+
 def string_to_base64(string):
     return base64.b64encode(string.encode('utf-8'))
 

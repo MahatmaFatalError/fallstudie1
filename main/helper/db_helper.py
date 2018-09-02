@@ -4,8 +4,7 @@ from google.cloud import datastore
 from pathlib import Path
 from sqlalchemy.orm import sessionmaker
 from config import constants
-# from main.database.init_db import City, Restaurant, ZipCode
-from main.database.init_db import City, Restaurant, TopCity
+from main.database.init_db import City, Restaurant, TopCity, ZipCode
 import logging
 import sqlalchemy
 
@@ -27,7 +26,7 @@ class DatastoreHelper:
         self.client.put(item)
         return item.key
 
-    def fetch_entity(self, entity_name, limit=None, offset=None, only_keys=False, operator='=', **kwargs):
+    def fetch_entity(self, entity_name, limit=None, offset=None, only_keys=False, operator=None, **kwargs):
         """
         :param entity_name: name of the entity
         :param limit: limit to fetch from datastore
@@ -108,18 +107,21 @@ class SqlHelper:
                 entity_id = merged_entity.city_id
         return entity_id
 
+    # deprecated; use fetch_entity_where() instead
     def fetch_restaurant_by_id(self, id):
         result = self.session.query(Restaurant). \
             filter(Restaurant.id == id ). \
             first()
         return result
 
+    # deprecated; use fetch_entity_where() instead
     def find_restaurant_by_long_lat(self, long, lat):
         result = self.session.query(Restaurant). \
             filter(Restaurant.longitude == long). \
             filter(Restaurant.latitude == lat).all()
         return result
 
+    # deprecated; use fetch_entity_where() instead
     def delete_restaurant_by_long_lat(self, long, lat):
         result = self.session.query(Restaurant). \
             filter(Restaurant.longitude == long). \
@@ -143,6 +145,7 @@ class SqlHelper:
             table_names.append(column.key)
         return table_names
 
+    # deprecated; use fetch_entity_where() instead
     def fetch_all(self, entity_name):
         result = None
         if entity_name == 'city':

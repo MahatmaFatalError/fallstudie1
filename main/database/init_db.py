@@ -3,8 +3,6 @@ from sqlalchemy import Column, Integer, String, Numeric, Boolean, ForeignKey, Da
 from sqlalchemy.orm import relationship
 from config import constants
 
-from main.helper.db_helper import SqlHelper
-
 Base = declarative_base()
 
 
@@ -59,7 +57,7 @@ class Speisekarte(Base):
 class SpeisekarteCategory(Base):
     __tablename__ = constants.SQL_TABLE_CATEGORY
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=False)
     speisekarte = Column(String, ForeignKey(constants.SQL_TABLE_MENU + '.id'))
     name = Column(String)
     menu_items = relationship('MenuItem')
@@ -86,7 +84,7 @@ class MenuItem(Base):
 class FavouriteItem(Base):
     __tablename__ = constants.SQL_TABLE_FAV_ITEM
 
-    id = Column(String, primary_key=True, autoincrement=False)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     datasource = Column(String)
     speisekarte = Column(String, ForeignKey(constants.SQL_TABLE_MENU + '.id'))
@@ -187,7 +185,7 @@ class TopCity(Base):
 
 
 if __name__ == '__main__':
-    from main.database.db_helper import SqlHelper
+    from main.helper.db_helper import SqlHelper
 
     db = SqlHelper(constants.SQL_DATABASE_NAME)
     engine = db.get_connection()

@@ -9,6 +9,7 @@ DATASOURCE_YELP = 'yelp'
 # Yelp API constants
 YELP_API_HOST = 'https://api.yelp.com'
 YELP_SEARCH_PATH = '/v3/businesses/search'
+YELP_MATCH_PATH = '/v3/businesses/matches'
 YELP_BUSINESS_PATH = '/v3/businesses/{id}'  # Business ID will come after slash.
 YELP_REVIEW_PATH = 'v3/businesses/{id}/reviews'
 YELP_API_KEY = 'f27wx-PAgrGJvZQ2lbTbRQDXMVGDgkcUt8hX2AhgDe1sIxODCmxHmb3hoKZL0Qt0b5KvlAO9HCctWR6Qcz16dF1VUhk_8rEgerP5VO3UtPOjrLGt8ucp2AQtOeruWnYx'
@@ -60,4 +61,4 @@ SQL_TABLE_FAV_ITEM = 'favourite_item'
 SQL_TABLE_MENU = 'speisekarte'
 SQL_TABLE_SEAT = 'restaurant_seat'
 SQL_TABLE_IMMOSCOUT = 'immoscout'
-SQL_TABLE_TOP_CITY = 'top_cities'
+SQL_TABLE_TOP_CITY = 'top_city'

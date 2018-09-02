@@ -23,6 +23,19 @@ class YelpHelper:
         }
         return self._request(constants.YELP_SEARCH_PATH, url_params=url_params)
 
+    def get_business_match(self, name, street, city, state_iso, zip_code):
+
+        url_params = {
+            'name': name,
+            'address1': street,
+            'city': city,
+            'state': state_iso,
+            'country': 'DE',
+            'zip_code': zip_code,
+            'limit': 1
+        }
+        return self._request(constants.YELP_MATCH_PATH, url_params=url_params)
+
     def get_business(self, business_id, offset = 0):
         """Query the Business API by a business ID.
         Args:
@@ -72,6 +85,4 @@ class YelpHelper:
             logger.info('HTTP Code: {0}'.format(response.status_code))
             response = requests.request('GET', url, headers=headers, params=url_params)
             logger.info('HTTP Code: {0}'.format(response.status_code))
-        # if response.status_code == requests.codes.ok:
-
         return response.json(), response.status_code
