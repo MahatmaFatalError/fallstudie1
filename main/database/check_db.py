@@ -1,4 +1,4 @@
-from main.database.db_helper import SqlHelper
+from main.helper.db_helper import SqlHelper
 
 
 db = SqlHelper('fonethd')

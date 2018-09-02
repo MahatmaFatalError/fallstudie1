@@ -2,9 +2,26 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Numeric, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from config import constants
-# from main.database.db_helper import SqlHelper
+
+from main.helper.db_helper import SqlHelper
 
 Base = declarative_base()
+
+
+# City Classes #
+
+
+class ZipCode(Base):
+    __tablename__ = constants.SQL_TABLE_ZIP_CODE
+
+    city_id = Column(Integer, ForeignKey(constants.SQL_TABLE_CITY + '.id'), primary_key=True, autoincrement=False)
+    zip_code = Column(Integer, primary_key=True)
+    requested = Column(Boolean, default=False)
+    updated_at = Column(DateTime)
+
+    def __str__(self):
+        return 'city id: {0}, zip code: {1}, requested: {2}, updated_at: {3}' \
+            .format(self.city_id, self.zip_code, self.requested, self.updated_at)
 
 
 class City(Base):
@@ -21,21 +38,61 @@ class City(Base):
     rent_avg = Column(Numeric)
 
     def __str__(self):
-        return 'id: {0}, name: {1}, updated at: {2} buying power: {3}'\
+        return 'id: {0}, name: {1}, updated at: {2} buying power: {3}' \
             .format(self.id, self.name, self.updated_at, self.buying_power)
 
 
-class ZipCode(Base):
-    __tablename__ = constants.SQL_TABLE_ZIP_CODE
+# Speisekarte Classes #
 
-    city_id = Column(Integer, ForeignKey(constants.SQL_TABLE_CITY + '.id'), primary_key=True, autoincrement=False)
-    zip_code = Column(Integer, primary_key=True)
-    requested = Column(Boolean, default=False)
-    updated_at = Column(DateTime)
+class Speisekarte(Base):
+    __tablename__ = constants.SQL_TABLE_MENU
 
-    def __str__(self):
-        return 'city id: {0}, zip code: {1}, requested: {2}, updated_at: {3}'\
-            .format(self.city_id, self.zip_code, self.requested, self.updated_at)
+    id = Column(String, primary_key=True, autoincrement=False)
+    yelp_restaurant_id = Column(String)
+    zip_code = Column(Integer)
+    city = Column(String)
+    favourite_items = relationship('FavouriteItem')
+    restaurant_services = relationship('RestaurantService')
+    categories = relationship('SpeisekarteCategory')
+
+
+class SpeisekarteCategory(Base):
+    __tablename__ = constants.SQL_TABLE_CATEGORY
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    speisekarte = Column(String, ForeignKey(constants.SQL_TABLE_MENU + '.id'))
+    name = Column(String)
+    menu_items = relationship('MenuItem')
+
+
+class RestaurantService(Base):
+    __tablename__ = constants.SQL_TABLE_SERVICE
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
+    datasource = Column(String)
+    speisekarte = Column(String, ForeignKey(constants.SQL_TABLE_MENU + '.id'))
+
+
+class MenuItem(Base):
+    __tablename__ = constants.SQL_TABLE_MENU_ITEM
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    category = Column(Integer, ForeignKey(constants.SQL_TABLE_CATEGORY + '.id'))
+    name = Column(String)
+    datasource = Column(String)
+
+
+class FavouriteItem(Base):
+    __tablename__ = constants.SQL_TABLE_FAV_ITEM
+
+    id = Column(String, primary_key=True, autoincrement=False)
+    name = Column(String)
+    datasource = Column(String)
+    speisekarte = Column(String, ForeignKey(constants.SQL_TABLE_MENU + '.id'))
+
+
+# Yelp Classes #
 
 
 class Restaurant(Base):
@@ -91,7 +148,7 @@ class BuyingPowerCalculated(Base):
     __tablename__ = constants.SQL_TABLE_BUYING_POWER
 
     city_id = Column(Integer, ForeignKey(constants.SQL_TABLE_CITY + '.id'), primary_key=True,
-                           autoincrement=False)
+                     autoincrement=False)
     buying_power = Column(Numeric, primary_key=True)
 
 
@@ -99,9 +156,9 @@ class RentAvgCalculated(Base):
     __tablename__ = constants.SQL_TABLE_RENT_AVG
 
     city_id = Column(Integer, ForeignKey(constants.SQL_TABLE_CITY + '.id'), primary_key=True,
-                           autoincrement=False)
+                     autoincrement=False)
     rent_avg = Column(Numeric, primary_key=True)
 
-# db = SqlHelper(constants.SQL_DATABASE_NAME)
-# engine = db.get_connection()
-# Base.metadata.create_all(engine)
+db = SqlHelper(constants.SQL_DATABASE_NAME)
+engine = db.get_connection()
+Base.metadata.create_all(engine)

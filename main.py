@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 from config import constants
-from main.database.db_helper import SqlHelper
 from main.helper import util
+from main.helper.db_helper import SqlHelper
 from main.helper.SignalHandler import SignalHandler
 from main.helper.creator import Creator
 import threading
@@ -17,6 +17,7 @@ def main():
     threads = list()
     stopper = threading.Event()
     test_mode = None
+    city_name = None
 
     collect_or_transport = int(input("What do you want to do?\n"
                                      "(1)collect\n"
@@ -37,15 +38,12 @@ def main():
     util.setup_logging()
 
     action_number = int(input(action_string))
-    city_name = str(input("For which city? - Leave Blank for all Cities."))
-
-    if city_name is '':
-        city_name = None
-    else:
-        print(city_name)
+    if action_number == 6:
+        city_name = str(input("For which city?"))
+        # if you give a city; entities in google datastore must be selectable by "zip_code" Attribute !!!!
         check_city(city_name)
 
-    test_mode_number = int(input("Execu1tion in test mode?\n"
+    test_mode_number = int(input("Execution in test mode?\n"
                                  "(1)yes\n"
                                  "(2)no\n"
                                  "Answer by type in the number."))

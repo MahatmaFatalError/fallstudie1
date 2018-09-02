@@ -1,10 +1,10 @@
 import logging
 
 from config import constants
-from main.database.db_helper import SqlHelper
+from main.helper.db_helper import SqlHelper
 from main.database.init_db import BuyingPowerCalculated
 from main.helper import util
-from main.database.db_helper import DatastoreHelper
+from main.helper.db_helper import DatastoreHelper
 import json
 
 logger = logging.getLogger(__name__)
@@ -14,7 +14,7 @@ def get_germany_buying_power_average():
     source_db = DatastoreHelper()
     buying_power_average = None
 
-    source_entities = source_db.fetch_entity(constants.GCP_ENTITY_KAUFKRAFT, 1, 0, '=', transported=False)
+    source_entities = source_db.fetch_entity(constants.GCP_ENTITY_KAUFKRAFT, 1, 0, False, '=', transported=False)
     if source_entities:
         for datastore_entity in source_entities:
             if 'content' in datastore_entity:

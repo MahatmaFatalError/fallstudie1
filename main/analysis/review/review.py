@@ -4,7 +4,7 @@ import string
 import pandas as pd
 import treetaggerwrapper
 
-from main.analysis.review.word import Word
+from main.helper.value import Word
 from main.helper import util
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer

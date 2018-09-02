@@ -4,8 +4,9 @@ from abc import ABC, abstractmethod
 from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 from config import constants
-from main.database.db_helper import DatastoreHelper, SqlHelper
+from main.helper.db_helper import DatastoreHelper, SqlHelper
 from main.helper.result import Result
+from main.helper.value import Value
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +14,6 @@ logger = logging.getLogger(__name__)
 # ... means "not-yet-written code"
 # Abstract Transporter Class
 class Transporter(ABC, threading.Thread):
-
     database = None
     source_entity = None
     target_entity = None
@@ -21,6 +21,7 @@ class Transporter(ABC, threading.Thread):
     test_mode = None
     source_entity_id = None
     city_name = None
+    zip_codes = None
 
     def __init__(self, database, source_entity, test_mode, city_name):
         super(Transporter, self).__init__()
@@ -33,11 +34,14 @@ class Transporter(ABC, threading.Thread):
         self.test_mode = test_mode
         self.city_name = city_name
 
+        if self.city_name is not None:
+            self._fetch_zip_codes_from_database()
+
     def run(self):
         results = []
         logger.info('Starting transport...')
         self.target_db.create_session()
-        total = self.source_db.get_total(self.source_entity, only_not_yet_transported=True)
+        total = self._get_entities(None, None, True)
         logger.info('Found a total of %s entries in Google Datastore', str(total))
         offset = 0
         while offset < total:
@@ -48,7 +52,7 @@ class Transporter(ABC, threading.Thread):
             if offset == 2500:
                 logger.info('Resetting offset...')
                 offset = 0
-                total = self.source_db.get_total(self.source_entity, only_not_yet_transported=True)
+                total = self._get_entities(None, None, True)
                 logger.info('Found a total of %s entries in Google Datastore', str(total))
         for result in results:
             logger.info(result)
@@ -57,7 +61,7 @@ class Transporter(ABC, threading.Thread):
     def _transport(self, offset):
         result = Result()
         limit = constants.GCP_FETCH_LIMIT
-        source_entities = self.source_db.fetch_entity(self.source_entity, limit, offset, '=', transported=False)
+        source_entities = self._get_entities(limit, offset, False)
         if source_entities:
             for datastore_entity in source_entities:
                 logger.info('Starting mapping...')
@@ -95,6 +99,45 @@ class Transporter(ABC, threading.Thread):
         else:
             result.set_success(False)
             result.set_message(self.source_entity + ' could not be found in Google Datastore')
+        return result
+
+    def _fetch_zip_codes_from_database(self):
+        sql = SqlHelper(constants.SQL_DATABASE_NAME)
+
+        sql.create_session()
+        city_from_db = sql.fetch_city_by_name(self.city_name)
+        # get zip codes and close session afterwards
+        zip_codes = city_from_db.zip_codes
+        sql.close_session()
+
+        for zip in zip_codes:
+            self.zip_codes.append(zip.zip_code)
+
+    def _fetch_entities_by_zip_code(self, entity_name, limit, offset, only_keys):
+        result_all = []
+
+        for zip_code in self.zip_codes:
+            result = self.source_db.fetch_entity(entity_name,
+                                                 limit=limit,
+                                                 offset=offset,
+                                                 only_keys=only_keys,
+                                                 operator='=',
+                                                 zip_code=str(zip_code),
+                                                 transported=False)
+            result_all += result
+        return result_all
+
+    def _get_entities(self, limit, offset, only_total):
+        if self.zip_codes is None:
+            content = self.source_db.fetch_entity(self.source_entity, limit, offset, only_total, '=', transported=False)
+        else:
+            content = self._fetch_entities_by_zip_code(self.source_entity, limit, offset, only_total)
+
+        if only_total:
+            result = len(content)
+        else:
+            result = content
+
         return result
 
     # maps target and source structure and returns a list of entities to save in db

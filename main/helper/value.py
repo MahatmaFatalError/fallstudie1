@@ -1,4 +1,4 @@
-class Word(object):
+class Value(object):
 
     def __init__(self,name):
         self.name = name

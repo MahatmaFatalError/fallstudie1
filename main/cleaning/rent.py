@@ -2,7 +2,7 @@ import logging
 import numpy
 
 from config import constants
-from main.database.db_helper import SqlHelper
+from main.helper.db_helper import SqlHelper
 from main.database.init_db import RentAvgCalculated
 from main.helper import util
 

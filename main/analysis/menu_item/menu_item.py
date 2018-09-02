@@ -3,7 +3,7 @@ import logging
 import pandas as pd
 from collections import defaultdict
 from config import constants
-from main.database.db_helper import DatastoreHelper, SqlHelper
+from main.helper.db_helper import DatastoreHelper, SqlHelper
 from main.helper import util
 
 logger = logging.getLogger(__name__)
@@ -45,7 +45,6 @@ def fetch_zip_codes_from_database(city_string):
     sql.close_session()
 
     return zip_codes
-
 
 def create_count_city(zip_codes):
 

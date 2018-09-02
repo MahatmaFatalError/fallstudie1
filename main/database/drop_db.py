@@ -1,6 +1,6 @@
 from config import constants
-from main.database.db_helper import SqlHelper
-from main.database.init_db import City, Restaurant, RestaurantTransaction, FoodCategory, ZipCode
+from main.helper.db_helper import SqlHelper
+from main.database.init_db import Restaurant, RestaurantTransaction, FoodCategory
 
 db = SqlHelper(constants.SQL_DATABASE_NAME)
 engine = db.get_connection()

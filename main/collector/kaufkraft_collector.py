@@ -5,7 +5,7 @@ from main.collector.collector import Collector
 import pandas as pd
 import numpy as np
 import PyPDF2
-from main.database.db_helper import DatastoreHelper
+from main.helper.db_helper import DatastoreHelper
 from main.helper.result import Result
 from main.helper.util import parse
 

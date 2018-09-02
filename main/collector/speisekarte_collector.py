@@ -4,7 +4,7 @@ import logging
 from google.api_core.exceptions import ServiceUnavailable
 from config import constants
 from main.collector.collector import Collector
-from main.database.db_helper import SqlHelper, DatastoreHelper
+from main.helper.db_helper import SqlHelper, DatastoreHelper
 from urllib.error import HTTPError
 from main.helper.jessy_spider import SpeisekarteSpider
 

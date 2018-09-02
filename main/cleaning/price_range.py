@@ -2,7 +2,7 @@ import logging
 from statistics import mode, StatisticsError
 
 from config import constants
-from main.database.db_helper import SqlHelper
+from main.helper.db_helper import SqlHelper
 from main.database.init_db import PriceRangeCalculated
 from main.helper import util
 from main.helper.exception import YelpError

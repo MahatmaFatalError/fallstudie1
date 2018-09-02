@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 from config import constants
-from main.database.db_helper import SqlHelper, DatastoreHelper
+from main.helper.db_helper import SqlHelper, DatastoreHelper
 from main.helper import util
 import logging
 

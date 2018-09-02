@@ -4,7 +4,7 @@ from google.cloud import datastore
 from pathlib import Path
 from sqlalchemy.orm import sessionmaker
 from config import constants
-from main.database.init_db import City, Restaurant, ZipCode
+# from main.database.init_db import City, Restaurant, ZipCode
 import logging
 import sqlalchemy
 
@@ -26,11 +26,12 @@ class DatastoreHelper:
         self.client.put(item)
         return item.key
 
-    def fetch_entity(self, entity_name, limit=None, offset=None, operator=None, **kwargs,):
+    def fetch_entity(self, entity_name, limit=None, offset=None, only_keys=False, operator='=', **kwargs):
         """
         :param entity_name: name of the entity
         :param limit: limit to fetch from datastore
-        :param offset: offset
+        :param offset: offset and limit must be supplied together
+        :param only_keys: fetch only keys from db
         :param operator: filter operator (=, <, <=, >, >=)
         :param kwargs: filter key and values
         :return: the fetched datatsore entity
@@ -40,6 +41,8 @@ class DatastoreHelper:
         if kwargs is not None and operator is not None:
             for key, value in kwargs.items():
                 query.add_filter(key, operator, value)
+        if only_keys:
+            query.keys_only()
         if limit is not None and offset is not None:
             result = list(query.fetch(limit=limit, offset=offset))
         else:
@@ -51,6 +54,12 @@ class DatastoreHelper:
         self.client.put(entity)
 
     def get_total(self, entity_name, only_not_yet_transported):
+        """
+        DEPRECATED: used fetch_entity() instead
+        :param entity_name:
+        :param only_not_yet_transported:
+        :return:
+        """
         query = self.client.query(kind=entity_name)
         if only_not_yet_transported:
             query.add_filter('transported', '=', False)

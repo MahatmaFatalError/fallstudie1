@@ -1,6 +1,6 @@
 import logging
 from config import constants
-from main.database.db_helper import SqlHelper
+from main.helper.db_helper import SqlHelper
 from main.helper import util
 from main.helper.yelp import YelpHelper
 

@@ -70,8 +70,7 @@ class Creator:
                                                    'plz',
                                                    constants.SQL_DATABASE_NAME,
                                                    constants.GCP_ENTITY_PLZ_CITY,
-                                                   test_mode,
-                                                   city_name)
+                                                   test_mode)
         return plz_transporter
 
     @staticmethod
@@ -80,8 +79,7 @@ class Creator:
                                                    'city',
                                                    constants.SQL_DATABASE_NAME,
                                                    constants.GCP_ENTITY_LOCATION,
-                                                   test_mode,
-                                                   city_name)
+                                                   test_mode)
         return csv_transporter
 
     @staticmethod
@@ -100,8 +98,7 @@ class Creator:
                                                          'kaufkraft',
                                                          constants.SQL_DATABASE_NAME,
                                                          constants.GCP_ENTITY_KAUFKRAFT,
-                                                         test_mode,
-                                                         city_name)
+                                                         test_mode)
         return kaufkraft_transporter
 
     @staticmethod
@@ -110,8 +107,7 @@ class Creator:
                                                          'rent',
                                                          constants.SQL_DATABASE_NAME,
                                                          constants.GCP_ENTITY_RENT,
-                                                         test_mode,
-                                                         city_name)
+                                                         test_mode)
         return kaufkraft_transporter
 
     @staticmethod

@@ -4,7 +4,7 @@ import datetime
 import json
 import logging
 from main.collector.collector import Collector
-from main.database.db_helper import DatastoreHelper
+from main.helper.db_helper import DatastoreHelper
 from main.helper.result import Result
 
 logger = logging.getLogger(__name__)
