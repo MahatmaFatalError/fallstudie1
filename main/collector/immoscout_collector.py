@@ -6,7 +6,7 @@ from config import constants
 import requests
 from requests_oauthlib import OAuth1
 import pandas as pd
-from main.database.db_helper import DatastoreHelper
+from main.helper.db_helper import DatastoreHelper, SqlHelper
 from main.helper.result import Result
 
 logger = logging.getLogger(__name__)
@@ -15,9 +15,10 @@ logger = logging.getLogger(__name__)
 class ImmoscoutCollector(Collector):
     entity_id = None
 
-    def __init__(self, entity_id, entity_name):
+    def __init__(self, entity_name, test_mode, entity_id):
         super(ImmoscoutCollector, self).__init__(
-            entity_name=entity_name)
+            entity_name=entity_name,
+            test_mode=test_mode)
         self.entity_id = entity_id
 
     def _save(self, data):
@@ -31,8 +32,6 @@ class ImmoscoutCollector(Collector):
         return success
 
     def run(self):
-        from main.database.db_helper import SqlHelper
-
         result = Result()
         db = SqlHelper(constants.SQL_DATABASE_NAME)
         session = db.get_connection()
@@ -41,7 +40,6 @@ class ImmoscoutCollector(Collector):
         cities = pd.DataFrame(data=df.iloc[0:top_n], columns={'city'})
         for index, row in cities.iterrows():
             print(str(index + 1) + ". " + row['city'])
-
 
         # cities = {
         #   'city': ['Berlin', 'Frankfurt am Main', 'München', 'Hamburg', 'Düsseldorf', 'Darmstadt', 'Köln', 'Hannover',
@@ -66,9 +64,10 @@ class ImmoscoutCollector(Collector):
             immo_geo_response_json = pd.read_json(immo_geo_response.text)
             if not immo_geo_response_json.empty:
                 geocode = pd.Series(immo_geo_response_json['entity'][0]['id'])
-                geo_df = geo_df.append(pd.DataFrame({'geoId': geocode, 'city': row['city']}), ignore_index=True, sort=True)
+                geo_df = geo_df.append(pd.DataFrame({'geoId': geocode, 'city': row['city']}), ignore_index=True,
+                                       sort=True)
                 logger.info(
-                    'Found Geocode from City: ' + str(row['city']) + ', Geocode: ' + geocode)
+                    'Found Geocode from City: ' + str(row['city']) + ', Geocode: ' + str(geocode))
             else:
                 logger.info("No Geocode for city: " + str(row['city']))
         logger.info(geo_df)
