@@ -2,12 +2,8 @@
 # -*- coding: utf-8 -*-
 import datetime
 import json
-import logging
 from main.collector.collector import Collector
-from main.helper.db_helper import DatastoreHelper
 from main.helper.result import Result
-
-logger = logging.getLogger(__name__)
 
 
 class RentCollector(Collector):
@@ -30,7 +26,13 @@ class RentCollector(Collector):
                 result.set_success(success)
                 if not success:
                     result.set_message('Could not save json Data in Google Datastore')
-                logger.info(result)
+                self.logger.info(result)
+        return result
+
+    def _create_datastore_entity(self, content) -> dict:
+        target_content = json.dumps(content)
+        attributes = {'updatedAt': datetime.datetime.now(), 'content': target_content, 'transported': False}
+        return attributes
 
     def _save_all(self, data):
         success = False
@@ -41,21 +43,11 @@ class RentCollector(Collector):
             for item in features:
                 if 'properties' in item:
                     city = item['properties']
-                    success = self._save(city)
+                    entity_id = city['schluessel']
+                    datastore_entity = self._create_datastore_entity(city)
+                    success = self._save(entity_id, datastore_entity)
                     if success:
                         success_count += 1
             if feature_length == success_count:
                 success = True
-        return success
-
-    def _save(self, data):
-        logger.info('Saving {} in Datastore...'.format(self.entity_name))
-        success = False
-        db = DatastoreHelper()
-        entity_id = data['schluessel']
-        target_content = json.dumps(data)
-        attributes = {'updatedAt': datetime.datetime.now(), 'content': target_content, 'transported': False}
-        key = db.create_or_update(self.entity_name, entity_id, attributes)
-        if key:
-            success = True
         return success

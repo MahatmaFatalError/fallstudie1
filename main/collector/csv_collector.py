@@ -3,12 +3,8 @@
 import csv
 import datetime
 import json
-import logging
 from main.collector.collector import Collector
-from main.helper.db_helper import DatastoreHelper
 from main.helper.result import Result
-
-logger = logging.getLogger(__name__)
 
 
 class CsvCollector(Collector):
@@ -47,7 +43,7 @@ class CsvCollector(Collector):
             result.set_success(success)
             if not success:
                 result.set_message('Could not save csv Data in Google Datastore')
-            logger.info(result)
+            self.logger.info(result)
 
     def _create_datastore_entity(self, content):
         target_content = json.dumps(content)

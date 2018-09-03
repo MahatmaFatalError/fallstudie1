@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 import datetime
-import logging
 from google.api_core.exceptions import ServiceUnavailable
 from config import constants
 from main.collector.collector import Collector
-from main.helper.db_helper import SqlHelper, DatastoreHelper
+from main.helper.db_helper import SqlHelper
 from urllib.error import HTTPError
 from main.helper.jessy_spider import SpeisekarteSpider
-
-logger = logging.getLogger(__name__)
 
 
 class SpeisekarteCollector(Collector):
@@ -49,34 +46,28 @@ class SpeisekarteCollector(Collector):
                     total = data['total']
                     result['total'] = total
                     for restaurant in restaurants:
-                        success = self._save(restaurant)
+                        restaurant_id = restaurant['id']
+                        entity_id = self.current_city + '$' + restaurant_id
+                        datastore_entity = self._create_datastore_entity(restaurant)
+                        success = self._save(entity_id, datastore_entity)
                         restaurant_result = {
                             'success': success,
-                            'content': restaurant['id']
+                            'content': restaurant_id
                         }
                         result['restaurants'].append(restaurant_result)
                 all_results.append(result)
-            logger.info(all_results)
+            self.logger.info(all_results)
         except HTTPError as error:
-            logger.exception('Encountered HTTP error %s on %s:\nAbort program.', error.code, error.url)
+            self.logger.exception('Encountered HTTP error %s on %s:\nAbort program.', error.code, error.url)
         except:
-            logger.exception('Something went wrong')
+            self.logger.exception('Something went wrong')
         finally:
             db.close_session()
 
-    def _save(self, restaurant):
-        logger.info('Saving {} in Datastore...'.format(self.entity_name))
-        result = False
-        db = DatastoreHelper()
-        zip_code = restaurant['address']['zip_code']
-        attributes = {"updatedAt": datetime.datetime.now(), "zip_code": zip_code, "content": restaurant, "transported": False}
-        restaurant_id = restaurant['id']
-        entity_id = self.current_city + '$' + restaurant_id
-        try:
-            db.create_or_update(self.entity_name, entity_id, attributes)
-            result = True
-        except ServiceUnavailable:
-            logger.exception('Service unavailable when trying to save %s', entity_id)
-        except:
-            logger.exception('An Unknown Error occured')
-        return result
+    def _create_datastore_entity(self, content) -> dict:
+        zip_code = content['address']['zip_code']
+        attributes = {"updatedAt": datetime.datetime.now(),
+                      "zip_code": zip_code,
+                      "content": content,
+                      "transported": False}
+        return attributes

@@ -52,6 +52,7 @@ class ReviewCollector(Collector):
         else:
             result.set_success(False)
             result.set_message('Failure when saving Review Entity to Datastore')
+        return result
 
     def _create_datastore_entity(self, content) -> dict:
         attributes = {"updatedAt": datetime.datetime.now(),

@@ -1,18 +1,16 @@
 # coding=utf-8
 import datetime
-import logging
 from main.collector.collector import Collector
 from config import constants
 import requests
 from requests_oauthlib import OAuth1
 import pandas as pd
-from main.helper.db_helper import DatastoreHelper, SqlHelper
+from main.helper.db_helper import SqlHelper
 from main.helper.result import Result
-
-logger = logging.getLogger(__name__)
 
 
 class ImmoscoutCollector(Collector):
+
     entity_id = None
 
     def __init__(self, entity_name, test_mode, entity_id):
@@ -21,15 +19,9 @@ class ImmoscoutCollector(Collector):
             test_mode=test_mode)
         self.entity_id = entity_id
 
-    def _save(self, data):
-        logger.info('Saving {} in Datastore...'.format(self.entity_name))
-        success = False
-        db = DatastoreHelper()
+    def _create_datastore_entity(self, data) -> dict:
         attributes = {'updatedAt': datetime.datetime.now(), 'content': data, 'transported': False}
-        key = db.create_or_update(self.entity_name, self.entity_id, attributes)
-        if key:
-            success = True
-        return success
+        return attributes
 
     def run(self):
         result = Result()
@@ -39,7 +31,7 @@ class ImmoscoutCollector(Collector):
         top_n = 10
         cities = pd.DataFrame(data=df.iloc[0:top_n], columns={'city'})
         for index, row in cities.iterrows():
-            print(str(index + 1) + ". " + row['city'])
+            self.logger.debug(str(index + 1) + ". " + row['city'])
 
         # cities = {
         #   'city': ['Berlin', 'Frankfurt am Main', 'München', 'Hamburg', 'Düsseldorf', 'Darmstadt', 'Köln', 'Hannover',
@@ -66,11 +58,11 @@ class ImmoscoutCollector(Collector):
                 geocode = pd.Series(immo_geo_response_json['entity'][0]['id'])
                 geo_df = geo_df.append(pd.DataFrame({'geoId': geocode, 'city': row['city']}), ignore_index=True,
                                        sort=True)
-                logger.info(
+                self.logger.info(
                     'Found Geocode from City: ' + str(row['city']) + ', Geocode: ' + str(geocode))
             else:
-                logger.info("No Geocode for city: " + str(row['city']))
-        logger.info(geo_df)
+                self.logger.info("No Geocode for city: " + str(row['city']))
+        self.logger.info(geo_df)
 
         # Fläche Retaurant:
         # https: // se909eeccf1caa559.jimcontent.com / download / version / 1507517357 / module / 11096440527 / name / AuszugDiplomarbeit_13.03.2006.pdf
@@ -78,11 +70,11 @@ class ImmoscoutCollector(Collector):
         # Technik = 12 %
         # Personal = 8 %
         # Gast = 40 %
-        PLATZBEDARF_GAST = 1.5  # m²
-        PLÄTZE_MIN = 52  # für 40.000 € = 100 %
-        PLÄTZE_MAX = 65  # für 125 %
-        TOTAL_FLÄCHE_MIN = PLATZBEDARF_GAST * PLÄTZE_MIN / 40 * 100.0
-        TOTAL_FLÄCHE_MAX = PLATZBEDARF_GAST * PLÄTZE_MAX / 40 * 100.0
+        platzbedarf_gast = 1.5  # m²
+        plaetze_min = 52  # für 40.000 € = 100 %
+        plaetze_max = 65  # für 125 %
+        total_flaeche_min = platzbedarf_gast * plaetze_min / 40 * 100.0
+        total_flaeche_max = platzbedarf_gast * plaetze_max / 40 * 100.0
 
         restaurant_df = pd.DataFrame()
         # get Immoscout24 object by geocode
@@ -91,9 +83,9 @@ class ImmoscoutCollector(Collector):
                       'geocodes': str(row['geoId']),
                       'gastronomytypes': 'restaurant',
                       'channel': 'is24',
-                      'numberofseats': str(PLÄTZE_MIN) + '-' + str(PLÄTZE_MAX),
+                      'numberofseats': str(plaetze_min) + '-' + str(plaetze_max),
                       'pagesize': '200',
-                      'totalfloorspace': str(TOTAL_FLÄCHE_MIN) + '-' + str(TOTAL_FLÄCHE_MAX)
+                      'totalfloorspace': str(total_flaeche_min) + '-' + str(total_flaeche_max)
                       }
             immo_search_response = requests.request(method='GET',
                                                     url=constants.IMMOSCOUT_SEARCH_URL,
@@ -102,7 +94,7 @@ class ImmoscoutCollector(Collector):
                                                     auth=immo_oauth)
             immo_search_json = pd.read_json(immo_search_response.text)
             hits = immo_search_json['resultlist.resultlist'][0]['numberOfHits']
-            logger.info("Hits: " + str(hits) + " for city: " + str(row['city']) + "\r\n")
+            self.logger.info("Hits: " + str(hits) + " for city: " + str(row['city']) + "\r\n")
             if hits == 1:
                 rest_dict = immo_search_json['resultlist.resultlist'][1][0]['resultlistEntry']['resultlist.realEstate']
                 data = {'title': [rest_dict['title']],
@@ -134,9 +126,11 @@ class ImmoscoutCollector(Collector):
                                                      'postcode', 'city', 'quarter', 'totalfloorspace'})
                     restaurant_df = restaurant_df.append(df, ignore_index=True, sort=True)
             else:
-                logger.info('No object found for city: ' + str(row['city']))
-        logger.info(restaurant_df)
+                self.logger.info('No object found for city: ' + str(row['city']))
+        self.logger.info(restaurant_df)
         result_json = restaurant_df.to_json(orient='records')
-        success = self._save(result_json)
+        attributes = self._create_datastore_entity(result_json)
+        success = self._save(self.entity_id, attributes)
         result.set_success(success)
-        logger.info(result)
+        self.logger.info(result)
+        return result

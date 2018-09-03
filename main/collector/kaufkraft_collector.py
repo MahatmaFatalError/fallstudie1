@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 import datetime
-import logging
 from main.collector.collector import Collector
 import pandas as pd
 import numpy as np
 import PyPDF2
-from main.helper.db_helper import DatastoreHelper
 from main.helper.result import Result
 from main.helper.util import parse
-
-logger = logging.getLogger(__name__)
 
 
 class KaufkraftCollector(Collector):
@@ -25,15 +21,8 @@ class KaufkraftCollector(Collector):
         self.pdf_path = path
         self.entity_id = entity_id
 
-    def _save(self, data):
-        logger.info('Saving {} in Datastore...'.format(self.entity_name))
-        success = False
-        db = DatastoreHelper()
-        attributes = {'updatedAt': datetime.datetime.now(), 'content': data, 'transported': False}
-        key = db.create_or_update(self.entity_name, self.entity_id, attributes)
-        if key:
-            success = True
-        return success
+    def _create_datastore_entity(self, content) -> dict:
+        return {'updatedAt': datetime.datetime.now(), 'content': content, 'transported': False}
 
     def run(self):
         result = Result()
@@ -80,6 +69,8 @@ class KaufkraftCollector(Collector):
             lambda x: x * 1000000)
         result_json = df_result.to_json(orient='records')
         if not self.test_mode:
-            success = self._save(result_json)
+            datastore_entity = self._create_datastore_entity(result_json)
+            success = self._save(self.entity_id, datastore_entity)
             result.set_success(success)
-            logger.info(result)
+            self.logger.info(result)
+        return result
