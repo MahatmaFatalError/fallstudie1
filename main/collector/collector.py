@@ -32,16 +32,16 @@ class Collector(ABC, threading.Thread):
         pass
 
     def _save(self, entity_id, entity):
-        logger.info('Saving {} in Datastore...'.format(self.entity_name))
+        self.logger.info('Saving {} in Datastore...'.format(self.entity_name))
         success = False
 
         try:
             self.datastore.create_or_update(self.entity_name, entity_id, entity)
             success = True
         except ServiceUnavailable:
-            logger.exception('Service unavailable when trying to save %s', entity_id)
+            self.logger.exception('Service unavailable when trying to save %s', entity_id)
         except:
-            logger.exception('An Unknown Error occured')
+            self.logger.exception('An Unknown Error occured')
         return success
 
     def _fetch_zip_codes_from_database(self):
