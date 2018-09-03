@@ -42,19 +42,14 @@ class CsvCollector(Collector):
                 if item[name] != '':
                     self.data.append(item)
         if not self.test_mode:
-            success = self._save(self.data)
+            entity = self._create_datastore_entity(self.data)
+            success = self._save(self.entity_id, entity)
             result.set_success(success)
             if not success:
                 result.set_message('Could not save csv Data in Google Datastore')
             logger.info(result)
 
-    def _save(self, data):
-        logger.info('Saving {} in Datastore...'.format(self.entity_name))
-        success = False
-        db = DatastoreHelper()
-        target_content = json.dumps(data)
+    def _create_datastore_entity(self, content):
+        target_content = json.dumps(content)
         attributes = {'updatedAt': datetime.datetime.now(), 'content': target_content, 'transported': False}
-        key = db.create_or_update(self.entity_name, self.entity_id, attributes)
-        if key:
-            success = True
-        return success
+        return attributes
