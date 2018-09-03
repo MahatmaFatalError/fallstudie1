@@ -74,7 +74,6 @@ class YelpHelper:
         Raises:
             HTTPError: An error occurs from the HTTP request.
         """
-        result = None
         url_params = url_params or {}
         url = '{0}{1}'.format(constants.YELP_API_HOST, quote(path.encode('utf8')))
         self.current_path = url
@@ -82,7 +81,7 @@ class YelpHelper:
         headers = {'Authorization': 'Bearer %s' % constants.YELP_API_KEY}
         response = requests.request('GET', url, headers=headers, params=url_params)
         logger.info('HTTP Code: {0}'.format(response.status_code))
-        error_codes = [502, 503]
+        error_codes = [500, 502, 503]
         while response.status_code in error_codes:
             time.sleep(0.1)
             logger.info('HTTP Code: {0}'.format(response.status_code))
