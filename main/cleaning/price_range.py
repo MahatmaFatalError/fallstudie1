@@ -27,7 +27,7 @@ def check_price_range_availability_and_update():
     try:
         for restaurant in result:
             restaurant_id = restaurant.id
-            business = yelp_helper.get_business(restaurant_id)
+            business, status_code = yelp_helper.get_business(restaurant_id)
             if 'error' not in business:
                 if 'price' in business:
                     price_range = business['price']

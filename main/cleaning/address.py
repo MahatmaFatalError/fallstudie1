@@ -22,7 +22,7 @@ def main():
 
     for restaurant in result:
         restaurant_id = restaurant.id
-        business = yelp_helper.get_business(restaurant_id)
+        business, status_code = yelp_helper.get_business(restaurant_id)
         if 'location' in business:
             location = business['location']
             if 'zip_code' in location:

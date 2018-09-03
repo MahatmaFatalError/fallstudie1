@@ -40,7 +40,7 @@ class RestaurantCollector(Collector):
                         zip_completed = True
                         self.location = str(zip_code.zip_code) + ', ' + str(name) + ', Deutschland'
                         self.offset = 0
-                        content = yelp_helper.get_search(self.location, self.offset)
+                        content, status_code = yelp_helper.get_search(self.location, self.offset)
                         if 'error' not in content and not self.test_mode:
                             total = content['total']
                             entity_id = str(self.current_path) + str(self.location) + str(self.offset)
