@@ -7,6 +7,7 @@ from main.helper.yelp import YelpHelper
 
 
 class ReviewCollector(Collector):
+
     yelp = None
     current_zip_code = None
 
@@ -34,9 +35,9 @@ class ReviewCollector(Collector):
                         reviews = yelp_entity['reviews']
                         if len(reviews) > 0:
                             datastore_entity = self._create_datastore_entity(yelp_entity)
-                            entity_id = self.current_city + '.' + \
-                                        str(self.current_zip_code) + '.' + \
-                                        str(restaurant_id) + '.' + \
+                            entity_id = self.current_city + '@' + \
+                                        str(self.current_zip_code) + '.@' + \
+                                        str(restaurant_id) + '@' + \
                                         locale
                             if self.test_mode is False:
                                 success = self._save(entity_id, datastore_entity)
