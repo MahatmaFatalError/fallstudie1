@@ -1,10 +1,7 @@
 # coding=utf-8
 import json
-import logging
 from main.transporter.transporter import Transporter
 from main.database.init_db import Immoscout
-
-logger = logging.getLogger(__name__)
 
 
 class ImmoscoutTransporter(Transporter):

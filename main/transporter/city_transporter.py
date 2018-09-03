@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import datetime
 import json
-
 from main.database.init_db import City
 from main.transporter.transporter import Transporter
 

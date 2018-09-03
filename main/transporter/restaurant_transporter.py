@@ -6,16 +6,13 @@ import json
 from config import constants
 from main.database.init_db import Restaurant, FoodCategory, RestaurantTransaction
 from main.transporter.transporter import Transporter
-import logging
-
-logger = logging.getLogger(__name__)
 
 
 class RestaurantTransporter(Transporter):
 
     def map(self, datastore_entity):
         datastore_zip_code = datastore_entity['location'].split(',')[0]
-        logger.debug(datastore_zip_code)
+        self.logger.debug(datastore_zip_code)
         entities = []
         if 'content' in datastore_entity:
             content = datastore_entity['content']
@@ -81,7 +78,7 @@ class RestaurantTransporter(Transporter):
                                     if 'city' in location:
                                         city = location['city']
                                         restaurant.city = city
-                                        logger.debug('City of Restaurant: {0}'.format(city))
+                                        self.logger.debug('City of Restaurant: {0}'.format(city))
                                     if 'country' in location:
                                         country = location['country']
                                         restaurant.country = country
@@ -90,9 +87,9 @@ class RestaurantTransporter(Transporter):
                                         restaurant.state = state
                                 entities.append(restaurant)
                             else:
-                                logger.info("zip doesn't match --> skip")
+                                self.logger.info("zip doesn't match --> skip")
                         else:
-                            logger.info("no zip code --> skip")
+                            self.logger.info("no zip code --> skip")
                     else:
-                        logger.info("no location --> skip")
+                        self.logger.info("no location --> skip")
         return entities

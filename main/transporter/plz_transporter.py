@@ -2,13 +2,10 @@
 # -*- coding: utf-8 -*-
 import datetime
 import json
-import logging
 import re
 from main.database.init_db import ZipCode
 from main.transporter.transporter import Transporter
 from collections import defaultdict
-
-logger = logging.getLogger(__name__)
 
 
 class PlzTransporter(Transporter):
@@ -41,7 +38,7 @@ class PlzTransporter(Transporter):
                         zip_code.requested = False
                         zip_code.updated_at = datetime.datetime.now()
                         target_city.zip_codes.append(zip_code)
-                    logger.info('Found {0} zip codes for {1}'.format(len(target_city.zip_codes), target_city.name))
+                    self.logger.info('Found {0} zip codes for {1}'.format(len(target_city.zip_codes), target_city.name))
                     entities.append(target_city)
-            logger.info('Found {0} cities with zip codes'.format(len(entities)))
+            self.logger.info('Found {0} cities with zip codes'.format(len(entities)))
         return entities

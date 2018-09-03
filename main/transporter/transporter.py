@@ -7,12 +7,11 @@ from config import constants
 from main.helper.db_helper import DatastoreHelper, SqlHelper
 from main.helper.result import Result
 
-logger = logging.getLogger(__name__)
-
 
 # ... means "not-yet-written code"
 # Abstract Transporter Class
 class Transporter(ABC, threading.Thread):
+
     database = None
     source_entity = None
     target_entity = None
@@ -22,10 +21,12 @@ class Transporter(ABC, threading.Thread):
     city_name = None
     zip_codes = []
 
+    logger = logging.getLogger(__name__)
+
     def __init__(self, database, source_entity, test_mode, city_name):
         super(Transporter, self).__init__()
-        logger.info('Creating Transporter for Datastore Entity: {0}'
-                    .format(source_entity))
+        self.logger.info('Creating Transporter for Datastore Entity: {0}'
+                         .format(source_entity))
         self.database = database
         self.source_entity = source_entity
         self.source_db = DatastoreHelper()
@@ -38,10 +39,10 @@ class Transporter(ABC, threading.Thread):
 
     def run(self):
         results = []
-        logger.info('Starting transport...')
+        self.logger.info('Starting transport...')
         self.target_db.create_session()
         total = self._get_entities(None, None, True)
-        logger.info('Found a total of %s entries in Google Datastore', str(total))
+        self.logger.info('Found a total of %s entries in Google Datastore', str(total))
         offset = 0
         while offset < total:
             result = self._transport(offset)
@@ -49,13 +50,13 @@ class Transporter(ABC, threading.Thread):
             offset += constants.GCP_FETCH_LIMIT
             # i dont know why but google datastore doesn't allow a offset greater than 2500
             if offset == 2500:
-                logger.info('Resetting offset...')
+                self.logger.info('Resetting offset...')
                 offset = 0
                 total = self._get_entities(None, None, True)
-                logger.info('Found a total of %s entries in Google Datastore', str(total))
+                self.logger.info('Found a total of %s entries in Google Datastore', str(total))
         for result in results:
-            logger.info(result)
-        logger.info('Done transporting Restaurants...')
+            self.logger.info(result)
+        self.logger.info('Done transporting Restaurants...')
 
     def _transport(self, offset):
         result = Result()
@@ -63,18 +64,18 @@ class Transporter(ABC, threading.Thread):
         source_entities = self._get_entities(limit, offset, False)
         if source_entities:
             for datastore_entity in source_entities:
-                logger.info('Starting mapping...')
+                self.logger.info('Starting mapping...')
                 entities = self.map(datastore_entity)
                 entity_length = len(entities)
-                logger.info('Mapped {0} entities...'.format(str(entity_length)))
+                self.logger.info('Mapped {0} entities...'.format(str(entity_length)))
                 if not self.test_mode:
                     if entity_length > 0:
                         try:
                             for entity in entities:
                                 if entity:
-                                    logger.info('Saving in database...')
+                                    self.logger.info('Saving in database...')
                                     self.target_db.insert(entity)
-                            logger.info('Commiting DB entries')
+                            self.logger.info('Commiting DB entries')
                             self.target_db.commit_session()
                             result.set_success(True)
                             result.set_message('Fetched entries from offset {0} with limit {1}'
@@ -82,7 +83,7 @@ class Transporter(ABC, threading.Thread):
                         except SQLAlchemyError as err:
                             result.set_success(False)
                             result.set_message(err.code)
-                            logger.exception('An SQLAlchemyError occured')
+                            self.logger.exception('An SQLAlchemyError occured')
                         finally:
                             self.target_db.close_session()
                     else:
@@ -106,8 +107,8 @@ class Transporter(ABC, threading.Thread):
         zip_codes = city_from_db.zip_codes
         sql.close_session()
 
-        for zip in zip_codes:
-            self.zip_codes.append(zip.zip_code)
+        for zip_code_obj in zip_codes:
+            self.zip_codes.append(zip_code_obj.zip_code)
 
     def _fetch_entities_by_zip_code(self, entity_name, limit, offset, only_keys):
         result_all = []

@@ -6,9 +6,6 @@ from main.database.init_db import Speisekarte, FavouriteItem, RestaurantService,
 from main.helper import util
 from main.helper.yelp import YelpHelper
 from main.transporter.transporter import Transporter
-import logging
-
-logger = logging.getLogger(__name__)
 
 
 class SpeisekarteTransporter(Transporter):
@@ -52,7 +49,6 @@ class SpeisekarteTransporter(Transporter):
                 if fav_items_list is not  None and len(fav_items_list) > 0:
                     for item in fav_items_list:
                         fav_item = FavouriteItem()
-                        # fav_item.speisekarte = speisekarte
                         fav_item.name = item
                         fav_item.datasource = 'speisekarte.de'
                         speisekarte.favourite_items.append(fav_item)
@@ -63,7 +59,6 @@ class SpeisekarteTransporter(Transporter):
                 if service_list is not None and len(service_list) > 0:
                     for item in service_list:
                         service = RestaurantService()
-                        # service.speisekarte = speisekarte
                         service.datasource = 'speisekarte.de'
                         service.name = item
                         speisekarte.restaurant_services.append(service)
@@ -76,7 +71,6 @@ class SpeisekarteTransporter(Transporter):
                         category = SpeisekarteCategory()
                         if 'category' in item:
                             category.name = item['category']
-                            # category.speisekarte = speisekarte
 
                         if 'id'in item:
                             cat_id = item['id']
@@ -88,7 +82,6 @@ class SpeisekarteTransporter(Transporter):
                             if menu_items is not None and len(menu_items) > 0:
                                 for menu_item_string in menu_items:
                                     menu_item = MenuItem()
-                                    # menu_item.category = category
                                     menu_item.name = menu_item_string
                                     menu_item.datasource = 'speisekarte.de'
 
