@@ -20,18 +20,17 @@ class SpeisekarteTransporter(Transporter):
         if 'content' in datastore_entity:
             speisekarte = Speisekarte()
             content = datastore_entity['content']
+            zip_code = datastore_entity['zip_code']
+            speisekarte.zip_code = zip_code
             try:
                 source_content = json.loads(content)
             except TypeError:
                 source_content = content
-            # logger.debug(source_content)
             if 'id' in source_content:
                 speisekarte_id = source_content['id']
                 speisekarte.id = speisekarte_id
 
             if 'address' in source_content:
-                zip_code = source_content['address']['zip_code']
-                speisekarte.zip_code = zip_code
                 street = source_content['address']['street']
                 name = source_content['address']['name']
                 speisekarte.city = self.city_name
@@ -97,6 +96,4 @@ class SpeisekarteTransporter(Transporter):
 
                         speisekarte.categories.append(category)
             entities.append(speisekarte)
-            if len(entities) == 0:
-                print('----------------------------------------------- no Mapping--------------------------------------------------------')
         return entities

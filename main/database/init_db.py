@@ -47,7 +47,7 @@ class Speisekarte(Base):
 
     id = Column(String, primary_key=True, autoincrement=False)
     yelp_restaurant_id = Column(String)
-    zip_code = Column(Integer)
+    zip_code = Column(Integer, ForeignKey(constants.SQL_TABLE_ZIP_CODE + '.id'))
     city = Column(String)
     favourite_items = relationship('FavouriteItem')
     restaurant_services = relationship('RestaurantService')

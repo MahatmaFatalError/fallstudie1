@@ -4,18 +4,17 @@ from abc import ABC, abstractmethod
 from google.api_core.exceptions import ServiceUnavailable
 from config import constants
 from main.helper.db_helper import SqlHelper, DatastoreHelper
-
-logger = logging.getLogger(__name__)
+from main.helper.result import Result
 
 
 class Collector(ABC, threading.Thread):
     
     entity_name = None
     test_mode = None
-    city_name = None
     zip_codes = []
     current_city = None
     datastore = None
+    logger = logging.getLogger(__name__)
 
     def __init__(self, entity_name, test_mode):
         super(Collector, self).__init__()
@@ -25,7 +24,7 @@ class Collector(ABC, threading.Thread):
         self.datastore = DatastoreHelper()
 
     @abstractmethod
-    def run(self):
+    def run(self) -> Result:
         pass
 
     @abstractmethod
@@ -34,22 +33,22 @@ class Collector(ABC, threading.Thread):
 
     def _save(self, entity_id, entity):
         logger.info('Saving {} in Datastore...'.format(self.entity_name))
-        result = False
+        success = False
 
         try:
             self.datastore.create_or_update(self.entity_name, entity_id, entity)
-            result = True
+            success = True
         except ServiceUnavailable:
             logger.exception('Service unavailable when trying to save %s', entity_id)
         except:
             logger.exception('An Unknown Error occured')
-        return result
+        return success
 
     def _fetch_zip_codes_from_database(self):
         sql = SqlHelper(constants.SQL_DATABASE_NAME)
 
         sql.create_session()
-        city_from_db = sql.fetch_city_by_name(self.city_name)
+        city_from_db = sql.fetch_city_by_name(self.current_city)
         # get zip codes and close session afterwards
         zip_codes = city_from_db.zip_codes
         sql.close_session()

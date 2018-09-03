@@ -50,16 +50,19 @@ class YelpHelper:
         business_path = constants.YELP_BUSINESS_PATH.replace('{id}', business_id)
         return self._request(business_path, url_params=url_params)
 
-    def get_reviews(self, business_id):
+    def get_reviews(self, business_id, locale):
         """Query the Review API by a business ID.
         Args:
             business_id (str): The ID of the business to query.
+            locale (str): de or en
         Returns:
             dict: The JSON response from the request.
         """
+        url_params = {
+            'locale': locale
+        }
         review_path = constants.YELP_REVIEW_PATH.replace('{id}', business_id)
-
-        return self._request(review_path)
+        return self._request(review_path, url_params=url_params)
 
     def _request(self, path, url_params=None):
         """Given your API_KEY, send a GET request to the API.

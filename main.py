@@ -25,7 +25,14 @@ def main():
                                      "(3)both\n"
                                      "Answer by type in the number."))
 
-    choices = {1: 'city', 2: 'plz', 3: 'restaurant', 4: 'kaufkraft', 5: 'rent', 6: 'speisekarte', 7: 'immoscout'}
+    choices = {1: 'city',
+               2: 'plz',
+               3: 'restaurant',
+               4: 'kaufkraft',
+               5: 'rent',
+               6: 'speisekarte',
+               7: 'immoscout',
+               8: 'review'}
 
     action_string = 'What do you want to collect/transport?\n'
 
@@ -38,7 +45,8 @@ def main():
     util.setup_logging()
 
     action_number = int(input(action_string))
-    if action_number == 6:
+    city_action = [6, 8]
+    if action_number in city_action:
         city_name = str(input("For which city?"))
         # if you give a city; entities in google datastore must be selectable by "zip_code" Attribute !!!!
         check_city(city_name)
