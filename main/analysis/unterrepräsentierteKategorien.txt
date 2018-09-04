@@ -1,0 +1,44 @@
+[1] "1. p-value:3.479871207209e-30"
+                   city         cat counter    prozent residuals
+17 Freiburg im Breisgau   Fast Food       1 0.00591716 -2.678974
+21 Freiburg im Breisgau       Greek       1 0.00591716 -2.063468
+39 Freiburg im Breisgau Restaurants       1 0.00591716 -2.779363
+
+[1] "2. p-value:3.71514752923688e-108"
+[1] city      cat       counter   prozent   residuals
+<0 Zeilen> (oder row.names mit Länge 0)
+
+[1] "3. p-value:0.000265151114394721"
+                city         cat counter    prozent residuals
+33 Offenbach am Main Restaurants       2 0.01550388 -2.009828
+
+[1] "4. p-value:4.26410894310418e-10"
+[1] city      cat       counter   prozent   residuals
+<0 Zeilen> (oder row.names mit Länge 0)
+
+[1] "5. p-value:1.71735559625665e-21"
+[1] city      cat       counter   prozent   residuals
+<0 Zeilen> (oder row.names mit Länge 0)
+
+[1] "6. p-value:2.00121489108615e-166"
+         city    cat counter    prozent residuals
+9 Taunusstein German       5 0.09090909 -2.021427
+
+[1] "7. p-value:0.00814133366487241"
+[1] city      cat       counter   prozent   residuals
+<0 Zeilen> (oder row.names mit Länge 0)
+
+[1] "8. p-value:3.60308736869156e-07"
+          city    cat counter  prozent residuals
+25 Bremerhaven German      25 0.105042 -2.171944
+
+[1] "9. p-value:3.58145265630584e-51"
+         city   cat counter    prozent residuals
+4 Dietzenbach Cafes       2 0.02985075 -2.256528
+
+[1] "10. p-value:9.90602946352063e-13"
+   city           cat counter     prozent residuals
+9  Kiel   Beer Garden       2 0.003577818 -2.623167
+37 Kiel        German      52 0.093023256 -3.095212
+44 Kiel       Italian      33 0.059033989 -3.106624
+50 Kiel Mediterranean       1 0.001788909 -2.654534

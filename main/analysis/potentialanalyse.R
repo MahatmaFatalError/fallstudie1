@@ -2,6 +2,7 @@ library('RPostgreSQL')
 #install.packages("DMwR")
 library(DMwR)
 library(dplyr)
+library(stringr)
 
 
 ## connect to db
@@ -36,7 +37,6 @@ dtab$z_population_restaurants_sqkm <- SoftMax(dtab$population_sqkm / dtab$restau
 #dtab$z_restaurants_population_sqkm <- SoftMax((dtab$restaurants_per_sqkm / dtab$population_sqkm))
 #((dtab$restaurants_per_sqkm / dtab$population_sqkm)) 
 
-#dtab$potential <- (0.2 * dtab$z_restaurants_per_sqkm) * (0.2 * dtab$z_reviewcounts_per_restaurant) * (0.6 * dtab$z_avg_rating)
 dtab$potential <- (dtab$z_population_restaurants_sqkm) * (dtab$z_reviewcounts_per_restaurant) * (dtab$z_avg_rating)
 # je höher z_population_restaurants_sqkm (also je mehr Einwohner/Restaurants) desto besser für unser potential
 #TODO: genau die einzenlen faktoren begründen, warum keine weiteren faktoren?
@@ -51,19 +51,24 @@ dbWriteTable(con, "top_cities", value = insert[1:100, ], row.names = FALSE, appe
 
 
 # Kontingenzanalyse chi^2 test lokale kategorieverteilung vs globale verteilung  -> top10_city_category
-#Beipsiwl Stadt Essen
-global_distribution <- dbGetQuery(con, "select l.city, g.* from categorie_frequency g, top10_city_category_2 l
-            where g.cat in (l.cat) and l.city = 'Essen' order by cat")
-global_distribution$prozent <- global_distribution$freq/sum(global_distribution$freq)
+# für top10 cities
+i = 0
+while(i<10){
+  i=i+1;
+  global_distribution <- dbGetQuery(con, str_c("select l.city, g.* from categorie_frequency_materialized g, top10_city_category_2 l
+            where g.cat in (l.cat) and l.city = '", insert$city[i] ,"' order by cat"))
+  global_distribution$prozent <- global_distribution$freq/sum(global_distribution$freq)
+  
+  local_distribution <- dbGetQuery(con, str_c("select * from top10_city_category_2  where  city = '", insert$city[i] ,"' order by cat"))
+  local_distribution$prozent <- local_distribution$counter/sum(local_distribution$counter)
+  
+  cat("\n")
+  print(str_c(i, ". p-value:",r$p.value))
+  r <- chisq.test(local_distribution$counter, p=global_distribution$prozent)
+  local_distribution$residuals <- r$residuals # suche betraglich hohe negative Abweichung
+  print(subset(local_distribution, residuals <= -2))
+}
 
-
-local_distribution <- dbGetQuery(con, " select * from top10_city_category_2  where  city = 'Essen' order by cat")
-local_distribution$prozent <- local_distribution$counter/sum(local_distribution$counter)
-
-r <- chisq.test(local_distribution$counter, p=global_distribution$prozent)
-r
-local_distribution$residuals <- r$residuals # suche betraglich hohe negative Abweichung
-subset(local_distribution, residuals <= -2)
 
 # disconnect from the database
 dbDisconnect(con)
