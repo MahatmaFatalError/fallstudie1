@@ -121,7 +121,7 @@ class Transporter(ABC, threading.Thread):
                                                  offset=offset,
                                                  only_keys=only_keys,
                                                  operator='=',
-                                                 zip_code=str(zip_code),
+                                                 zip_code=zip_code,
                                                  transported=False)
             result_all += result
         return result_all

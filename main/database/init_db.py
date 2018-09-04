@@ -46,7 +46,7 @@ class Speisekarte(Base):
 
     id = Column(String, primary_key=True, autoincrement=False)
     yelp_restaurant_id = Column(String)
-    zip_code = Column(Integer, ForeignKey(constants.SQL_TABLE_ZIP_CODE + '.id'))
+    zip_code = Column(Integer)
     city = Column(String)
     favourite_items = relationship('FavouriteItem')
     restaurant_services = relationship('RestaurantService')
@@ -101,6 +101,14 @@ class Review(Base):
     text = Column(String)
     restaurant_id = Column(String, ForeignKey(constants.SQL_TABLE_RESTAURANT + '.id'))
     rating = Column(Numeric)
+
+
+class RatingWord(Base):
+    __tablename__ = constants.SQL_TABLE_RATING_WORD
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
+    tfidf = Column(Numeric)
 
 
 class Restaurant(Base):

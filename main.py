@@ -57,12 +57,17 @@ def main():
                                 "Answer by type in the number."))
 
         if city_or_top == 1:
-            city_name = str(input("For which city?"))
+            city_name = str(input("For which city?\n"
+                                  "Leave Empty for All Cities!"))
             # if you give a city; entities in google datastore must be selectable by "zip_code" Attribute !!!!
-            check_city(city_name)
+            if city_name == '':
+                city_name = None
+            else:
+                check_city(city_name)
         elif city_or_top == 2:
-            top_how_much = int(input("Top How Much?\n"
-                                     "Answer by type in a number."))
+            if collect_or_transport == 1 or collect_or_transport == 3:
+                top_how_much = int(input("Top How Much?\n"
+                                         "Answer by type in a number."))
 
     test_mode_number = int(input("Execution in test mode?\n"
                                  "(1)yes\n"

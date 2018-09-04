@@ -7,10 +7,10 @@ from config import constants
 import logging
 import sqlalchemy
 
-logger = logging.getLogger(__name__)
-
 
 class DatastoreHelper:
+
+    logger = logging.getLogger(__name__)
 
     def __init__(self):
         root_path = Path(__file__).parents[2]
@@ -25,7 +25,7 @@ class DatastoreHelper:
         self.client.put(item)
         return item.key
 
-    def fetch_entity(self, entity_name, limit=None, offset=None, only_keys=False, operator=None, **kwargs):
+    def fetch_entity(self, entity_name, limit, offset, only_keys, operator, **kwargs):
         """
         :param entity_name: name of the entity
         :param limit: limit to fetch from datastore
@@ -35,7 +35,7 @@ class DatastoreHelper:
         :param kwargs: filter key and values
         :return: the fetched datatsore entity
         """
-        logger.info('Fetching from offset: %s with limit: %s', str(offset), str(limit))
+        print(entity_name)
         query = self.client.query(kind=entity_name)
         if kwargs is not None and operator is not None:
             for key, value in kwargs.items():
@@ -43,9 +43,12 @@ class DatastoreHelper:
         if only_keys:
             query.keys_only()
         if limit is not None and offset is not None:
+            self.logger.info('Fetching %s from Google Datastore with offset: %s and limit: %s', entity_name, str(offset), str(limit))
             result = list(query.fetch(limit=limit, offset=offset))
         else:
+            self.logger.info('Fetching {0} from Google Datastore'.format(entity_name))
             result = list(query.fetch())
+        print(result)
         return result
 
     def set_transported(self, entity, value):
