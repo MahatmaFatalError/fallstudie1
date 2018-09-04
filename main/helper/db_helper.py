@@ -4,7 +4,6 @@ from google.cloud import datastore
 from pathlib import Path
 from sqlalchemy.orm import sessionmaker
 from config import constants
-from main.database.init_db import City, Restaurant, TopCity, ZipCode
 import logging
 import sqlalchemy
 
@@ -109,6 +108,7 @@ class SqlHelper:
 
     # deprecated; use fetch_entity_where() instead
     def fetch_restaurant_by_id(self, id):
+        from main.database.init_db import Restaurant
         result = self.session.query(Restaurant). \
             filter(Restaurant.id == id ). \
             first()
@@ -116,6 +116,7 @@ class SqlHelper:
 
     # deprecated; use fetch_entity_where() instead
     def find_restaurant_by_long_lat(self, long, lat):
+        from main.database.init_db import Restaurant
         result = self.session.query(Restaurant). \
             filter(Restaurant.longitude == long). \
             filter(Restaurant.latitude == lat).all()
@@ -123,6 +124,7 @@ class SqlHelper:
 
     # deprecated; use fetch_entity_where() instead
     def delete_restaurant_by_long_lat(self, long, lat):
+        from main.database.init_db import Restaurant
         result = self.session.query(Restaurant). \
             filter(Restaurant.longitude == long). \
             filter(Restaurant.latitude == lat). \
@@ -147,6 +149,7 @@ class SqlHelper:
 
     # deprecated; use fetch_entity_where() instead
     def fetch_all(self, entity_name):
+        from main.database.init_db import City, Restaurant, TopCity, ZipCode
         result = None
         if entity_name == 'city':
             result = self.session.query(City)
@@ -178,6 +181,7 @@ class SqlHelper:
         return result
 
     def fetch_city_by_name(self, name):
+        from main.database.init_db import City
         result = self.session.query(City).\
             filter(City.name.like(name)).\
             first()

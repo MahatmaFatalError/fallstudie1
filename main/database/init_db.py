@@ -5,7 +5,6 @@ from config import constants
 
 Base = declarative_base()
 
-
 # City Classes #
 
 
@@ -93,6 +92,17 @@ class FavouriteItem(Base):
 # Yelp Classes #
 
 
+class Review(Base):
+    __tablename__ = constants.SQL_TABLE_REVIEW
+
+    id = Column(String, primary_key=True, autoincrement=False)
+    datasource = Column(String)
+    created_at = Column(DateTime)
+    text = Column(String)
+    restaurant_id = Column(String, ForeignKey(constants.SQL_TABLE_RESTAURANT + '.id'))
+    rating = Column(Numeric)
+
+
 class Restaurant(Base):
     __tablename__ = constants.SQL_TABLE_RESTAURANT
 
@@ -173,7 +183,7 @@ class Immoscout(Base):
     totalfloorspace = Column(Numeric)
 
     def __str__(self):
-        return 'id: {0}, name: {1}, updated at: {2} immoscout: {3}'\
+        return 'id: {0}, name: {1}, updated at: {2} immoscout: {3}' \
             .format(self.id, self.name, self.updated_at, self.city)
 
 
