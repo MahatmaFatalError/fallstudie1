@@ -11,14 +11,16 @@ class ReviewCollector(Collector):
     yelp = None
     current_zip_code = None
     current_restaurant_id = None
+    top_how_much = None
 
-    def __init__(self, entity_name, test_mode, city_name):
+    def __init__(self, entity_name, test_mode, city_name, top_how_much):
         super(ReviewCollector, self).__init__(
             entity_name=entity_name,
             test_mode=test_mode
         )
         self.current_city = city_name
         self.yelp = YelpHelper()
+        self.top_how_much = top_how_much
 
     def run(self):
         result = Result()

@@ -12,12 +12,16 @@ from main.helper.result import Result
 class ImmoscoutCollector(Collector):
 
     entity_id = None
+    top_how_much = None
+    city_name = None
 
-    def __init__(self, entity_name, test_mode, entity_id):
+    def __init__(self, entity_name, test_mode, entity_id, city_name, top_how_much):
         super(ImmoscoutCollector, self).__init__(
             entity_name=entity_name,
             test_mode=test_mode)
         self.entity_id = entity_id
+        self.top_how_much = top_how_much
+        self.city_name = city_name
 
     def _create_datastore_entity(self, data) -> dict:
         attributes = {'updatedAt': datetime.datetime.now(), 'content': data, 'transported': False}
@@ -28,8 +32,7 @@ class ImmoscoutCollector(Collector):
         db = SqlHelper(constants.SQL_DATABASE_NAME)
         session = db.get_connection()
         df = pd.read_sql_table(table_name='top_city', con=session)
-        top_n = 10
-        cities = pd.DataFrame(data=df.iloc[0:top_n], columns={'city'})
+        cities = pd.DataFrame(data=df.iloc[0:self.top_how_much], columns={'city'})
         for index, row in cities.iterrows():
             self.logger.debug(str(index + 1) + ". " + row['city'])
 

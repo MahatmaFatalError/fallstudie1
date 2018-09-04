@@ -4,14 +4,13 @@ import string
 import pandas as pd
 import treetaggerwrapper
 
-from main.helper.value import Word
 from main.helper import util
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from collections import defaultdict
 from nltk.stem import SnowballStemmer
 
-
+from main.helper.value import Value
 from main.helper.yelp import YelpHelper
 
 logger = logging.getLogger(__name__)
@@ -71,7 +70,7 @@ def analyze(reviews_to_analyze, result_file_name):
         top5_scores_sorted_by_tfidf = sorted(tfidf_scores, key=lambda tup: tup[1], reverse=reversed_result)[:5]
         for w, s in [(feature_names[i], s) for (i, s) in top5_scores_sorted_by_tfidf]:
             top_words_cum[w] += s
-            top_words[Word(w)] = s
+            top_words[Value(w)] = s
 
     if cumulated:
         write_result(top_words_cum, result_file_name)
@@ -115,12 +114,12 @@ def write_json_file():
             outfile.write('\n')
 
 
-def text_process(mess):
+def text_process(review_text):
     global language
     global stemming
 
     # Remove punctutation
-    no_punc = [char for char in mess if char not in string.punctuation]
+    no_punc = [char for char in review_text if char not in string.punctuation]
     # Join the characters again to form the string.
     no_punc = ''.join(no_punc)
 

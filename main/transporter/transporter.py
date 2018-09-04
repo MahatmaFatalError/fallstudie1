@@ -20,10 +20,11 @@ class Transporter(ABC, threading.Thread):
     source_entity_id = None
     city_name = None
     zip_codes = []
+    top_how_much = None
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self, database, source_entity, test_mode, city_name):
+    def __init__(self, database, source_entity, test_mode, city_name, top_how_much):
         super(Transporter, self).__init__()
         self.logger.info('Creating Transporter for Datastore Entity: {0}'
                          .format(source_entity))
@@ -33,6 +34,7 @@ class Transporter(ABC, threading.Thread):
         self.target_db = SqlHelper(self.database)
         self.test_mode = test_mode
         self.city_name = city_name
+        self.top_how_much = top_how_much
 
         if self.city_name is not None:
             self._fetch_zip_codes_from_database()

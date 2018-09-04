@@ -13,11 +13,16 @@ logger = logging.getLogger(__name__)
 
 
 def main():
+
     creator = Creator()
     threads = list()
     stopper = threading.Event()
+
     test_mode = None
     city_name = None
+    top_how_much = None
+
+    util.setup_logging()
 
     collect_or_transport = int(input("What do you want to do?\n"
                                      "(1)collect\n"
@@ -42,14 +47,22 @@ def main():
 
     action_string += "Answer by type in the number."
 
-    util.setup_logging()
-
     action_number = int(input(action_string))
-    city_action = [6, 8]
+
+    city_action = [6, 8, 7]
     if action_number in city_action:
-        city_name = str(input("For which city?"))
-        # if you give a city; entities in google datastore must be selectable by "zip_code" Attribute !!!!
-        check_city(city_name)
+        city_or_top = int(input("By City or By Top How Much\n"
+                                "(1)By City\n"
+                                "(2)By Top How Much\n"
+                                "Answer by type in the number."))
+
+        if city_or_top == 1:
+            city_name = str(input("For which city?"))
+            # if you give a city; entities in google datastore must be selectable by "zip_code" Attribute !!!!
+            check_city(city_name)
+        elif city_or_top == 2:
+            top_how_much = int(input("Top How Much?\n"
+                                     "Answer by type in a number."))
 
     test_mode_number = int(input("Execution in test mode?\n"
                                  "(1)yes\n"
@@ -69,20 +82,22 @@ def main():
         collector_method = 'create_' + action + '_collector'
         transporter_method = 'create_' + action + '_transporter'
 
-        logger.info('Trying to execute {0} and {1}. Test Mode: {2}'
-                    .format(collector_method, transporter_method, str(test_mode)))
+        logger.info('Trying to {0} {1} / {2}. Test Mode: {3}'
+                    .format(collect_or_transport, collector_method, transporter_method, str(test_mode)))
 
         try:
-            collector = getattr(creator, collector_method)(test_mode, city_name)
-            if collector and (collect_or_transport == 1 or collect_or_transport == 3):
-                threads.append(collector)
+            if collect_or_transport == 1 or collect_or_transport == 3:
+                collector = getattr(creator, collector_method)(test_mode, city_name, top_how_much)
+                if collector:
+                    threads.append(collector)
         except AttributeError:
             logger.warning('Collector {0} not found'.format(collector_method))
 
         try:
-            transporter = getattr(creator, transporter_method)(test_mode, city_name)
-            if transporter and (collect_or_transport == 2 or collect_or_transport == 3):
-                threads.append(transporter)
+            if collect_or_transport == 2 or collect_or_transport == 3:
+                transporter = getattr(creator, transporter_method)(test_mode, city_name, top_how_much)
+                if transporter:
+                    threads.append(transporter)
         except AttributeError:
             logger.warning('Transporter {0} not found'.format(transporter_method))
 

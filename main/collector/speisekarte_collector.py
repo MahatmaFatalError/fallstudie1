@@ -12,13 +12,15 @@ class SpeisekarteCollector(Collector):
 
     city_name = None
     current_city = None
+    top_how_much = None
 
-    def __init__(self, entity_name, test_mode, city_name):
+    def __init__(self, entity_name, test_mode, city_name, top_how_much):
         super(SpeisekarteCollector, self).__init__(
             entity_name=entity_name,
             test_mode=test_mode
         )
         self.city_name = city_name
+        self.top_how_much = top_how_much
 
     def run(self):
         db = SqlHelper(constants.SQL_DATABASE_NAME)

@@ -46,6 +46,7 @@ def fetch_zip_codes_from_database(city_string):
 
     return zip_codes
 
+
 def create_count_city(zip_codes):
 
     fav_items = defaultdict(int)
@@ -154,17 +155,6 @@ def create_favoutite_items_plz(datastore_content):
 def write_result(result, title):
     with open('result/' + title + '.txt', 'w', encoding="utf-8") as outfile:
         json.dump(result, outfile, indent=4, ensure_ascii=False)
-
-
-def analyze_result(result):
-    # convert result to dataframe
-    # json_data = json.dumps(result)
-    fav_items = pd.DataFrame.from_dict(result)
-    kaefertal = fav_items[fav_items['68309'].notnull()]['68309']
-    kaefertal_list = kaefertal.tolist()
-    # italienisch = fav_items.loc['italienisch', '68309']
-    # print(italienisch)
-    # visualize it
 
 
 if __name__ == '__main__':
