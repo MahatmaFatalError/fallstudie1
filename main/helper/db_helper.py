@@ -156,12 +156,13 @@ class SqlHelper:
         return table_names
 
     def fetch_table_as_dataframe(self, table_name):
+        self.logger.info('Fetching {0} from PostgreSQL'.format(table_name))
         dataframe = pd.read_sql_table(table_name=table_name, con=self.con)
         return dataframe
 
     # deprecated; use fetch_entity_where() instead
     def fetch_all(self, entity_name):
-        from main.database.init_db import City, Restaurant, TopCity, ZipCode
+        from main.database.init_db import City, Restaurant, TopCities, ZipCode
         result = None
         if entity_name == 'city':
             result = self.session.query(City)
@@ -170,7 +171,7 @@ class SqlHelper:
         elif entity_name == 'zip_code':
             result = self.session.query(ZipCode)
         elif entity_name == 'top_cities':
-            result = self.session.query(TopCity)
+            result = self.session.query(TopCities)
         return result
 
     def fetch_entity_where(self, class_name, fetch_all=True, negated=False, **kwargs):

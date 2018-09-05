@@ -58,7 +58,6 @@ def main():
         if city_or_top == 1:
             city_name = str(input("For which city?\n"
                                   "Leave Empty for All Cities!"))
-            # if you give a city; entities in google datastore must be selectable by "zip_code" Attribute !!!!
             if city_name == '':
                 city_name = None
             else:
