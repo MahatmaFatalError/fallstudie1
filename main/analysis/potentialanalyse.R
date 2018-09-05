@@ -10,7 +10,11 @@ pg = dbDriver("PostgreSQL")
 con = dbConnect(pg, user="postgres", password="team123",
                 host="35.190.205.207", port=5432, dbname="fonethd")
 
-## dtab = dbReadTable(con, "restaurant")
+restaurantsPerCity = dbGetQuery(con, "select avg(rs), percentile_cont(0.5) within group (order by rs ) median from (
+                  select city, count(review_count) rs
+                  from restaurants_in_germany group by city) foo")
+
+
 dtab = dbGetQuery(con, "select  
                   city, 
                   avg(rating) avg_rating,
@@ -27,7 +31,7 @@ dtab = dbGetQuery(con, "select
                   from restaurants_in_germany
                   where review_count >= 9 and population_sqkm > 0
                   group by city
-                  having sum(review_count)  > 138")
+                  having sum(review_count)  > 138 and count(review_count) >= 28")
 
 # Wertebereiche standardisieren
 dtab$z_restaurants_per_sqkm <- SoftMax(dtab$restaurants_per_sqkm)
