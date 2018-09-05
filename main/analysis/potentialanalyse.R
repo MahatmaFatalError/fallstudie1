@@ -42,7 +42,10 @@ dtab$potential <- (dtab$z_population_restaurants_sqkm) * (dtab$z_reviewcounts_pe
 
 View(arrange(dtab, desc(potential)))
 insert <- arrange(dtab[, c(1, 16)], desc(potential))
+dbExecute(con, "TRUNCATE TABLE top_cities")
 dbWriteTable(con, "top_cities", value = insert[1:100, ], row.names = FALSE, append = TRUE) #append = TRUE
+dbExecute(con, "REFRESH MATERIALIZED VIEW categorie_frequency_materialized WITH DATA")
+dbExecute(con, "REFRESH MATERIALIZED VIEW top10_city_category_2 WITH DATA;")
 
 ### korrelationskoeff buying power mit price range, scatter plot // -> keine nennenswerte korrelation
 ### durchschnitts rating pro PLZ von den städten ->  table top10_city_plz
@@ -61,11 +64,12 @@ while(i<10){
   local_distribution <- dbGetQuery(con, str_c("select * from top10_city_category_2  where  city = '", insert$city[i] ,"' order by cat"))
   local_distribution$prozent <- local_distribution$counter/sum(local_distribution$counter)
   
-  cat("\n")
-  print(str_c(i, ". p-value:",r$p.value))
   r <- chisq.test(local_distribution$counter, p=global_distribution$prozent)
   local_distribution$residuals <- r$residuals 
+  
   # suche betraglich hohe negative Abweichung
+  cat("\n")
+  print(str_c(i, ". p-value:",r$p.value))
   print(subset(local_distribution, residuals <= -2))
 }
 
