@@ -6,10 +6,10 @@ from sqlalchemy.orm import sessionmaker
 from config import constants
 import logging
 import sqlalchemy
+import pandas as pd
 
 
 class DatastoreHelper:
-
     logger = logging.getLogger(__name__)
 
     def __init__(self):
@@ -35,7 +35,6 @@ class DatastoreHelper:
         :param kwargs: filter key and values
         :return: the fetched datatsore entity
         """
-        print(entity_name)
         query = self.client.query(kind=entity_name)
         if kwargs is not None and operator is not None:
             for key, value in kwargs.items():
@@ -43,12 +42,12 @@ class DatastoreHelper:
         if only_keys:
             query.keys_only()
         if limit is not None and offset is not None:
-            self.logger.info('Fetching %s from Google Datastore with offset: %s and limit: %s', entity_name, str(offset), str(limit))
+            self.logger.info('Fetching %s from Google Datastore with offset: %s and limit: %s', entity_name,
+                             str(offset), str(limit))
             result = list(query.fetch(limit=limit, offset=offset))
         else:
             self.logger.info('Fetching {0} from Google Datastore'.format(entity_name))
             result = list(query.fetch())
-        print(result)
         return result
 
     def set_transported(self, entity, value):
@@ -73,6 +72,8 @@ class SqlHelper:
     con = None
     meta = None
     session = None
+
+    logger = logging.getLogger(__name__)
 
     def __init__(self, database):
         self._connect(constants.SQL_DATABASE_USER, constants.SQL_DATABASE_PW, database)
@@ -109,11 +110,15 @@ class SqlHelper:
                 entity_id = merged_entity.city_id
         return entity_id
 
-    # deprecated; use fetch_entity_where() instead
     def fetch_restaurant_by_id(self, id):
+        """
+         deprecated; use fetch_entity_where() instead
+        :param id: yelp restaurant id
+        :return: restaurant object
+        """
         from main.database.init_db import Restaurant
         result = self.session.query(Restaurant). \
-            filter(Restaurant.id == id ). \
+            filter(Restaurant.id == id). \
             first()
         return result
 
@@ -150,6 +155,10 @@ class SqlHelper:
             table_names.append(column.key)
         return table_names
 
+    def fetch_table_as_dataframe(self, table_name):
+        dataframe = pd.read_sql_table(table_name=table_name, con=self.con)
+        return dataframe
+
     # deprecated; use fetch_entity_where() instead
     def fetch_all(self, entity_name):
         from main.database.init_db import City, Restaurant, TopCity, ZipCode
@@ -164,7 +173,7 @@ class SqlHelper:
             result = self.session.query(TopCity)
         return result
 
-    def fetch_entity_where(self, class_name, fetch_all, negated=False, **kwargs):
+    def fetch_entity_where(self, class_name, fetch_all=True, negated=False, **kwargs):
         mod = __import__('main.database.init_db', fromlist=[class_name])
         entity_class = getattr(mod, class_name)
         query = self.session.query(entity_class)
@@ -185,8 +194,7 @@ class SqlHelper:
 
     def fetch_city_by_name(self, name):
         from main.database.init_db import City
-        result = self.session.query(City).\
-            filter(City.name.like(name)).\
+        result = self.session.query(City). \
+            filter(City.name.like(name)). \
             first()
         return result
-

@@ -12,6 +12,7 @@ class ReviewCollector(Collector):
     current_zip_code = None
     current_restaurant_id = None
     top_how_much = None
+    current_locale = None
 
     def __init__(self, entity_name, test_mode, city_name, top_how_much):
         super(ReviewCollector, self).__init__(
@@ -33,6 +34,7 @@ class ReviewCollector(Collector):
                 self.current_restaurant_id = restaurant.id
                 self.current_zip_code = restaurant.zip_code
                 for locale in locale_list:
+                    self.current_locale = locale
                     yelp_entity, status_code = self.yelp.get_reviews(self.current_restaurant_id, locale)
                     if 'error' not in yelp_entity:
                         reviews = yelp_entity['reviews']
@@ -59,11 +61,12 @@ class ReviewCollector(Collector):
         return result
 
     def _create_datastore_entity(self, content) -> dict:
-        attributes = {"updatedAt": datetime.datetime.now(),
-                      "zip_code": self.current_zip_code,
-                      "content": content,
+        attributes = {'updatedAt': datetime.datetime.now(),
+                      'zip_code': self.current_zip_code,
+                      'content': content,
                       'restaurant_id': self.current_restaurant_id,
-                      "transported": False}
+                      'locale': self.current_locale,
+                      'transported': False}
         return attributes
 
     def _fetch_all_restaurants_from_city(self):

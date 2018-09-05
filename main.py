@@ -3,7 +3,7 @@
 from config import constants
 from main.helper import util
 from main.helper.db_helper import SqlHelper
-from main.helper.SignalHandler import SignalHandler
+from main.helper.signal_handler import SignalHandler
 from main.helper.creator import Creator
 import threading
 import logging
@@ -49,8 +49,7 @@ def main():
 
     action_number = int(input(action_string))
 
-    city_action = [6, 8, 7]
-    if action_number in city_action:
+    if action_number in [6, 8, 7]:
         city_or_top = int(input("By City or By Top How Much\n"
                                 "(1)By City\n"
                                 "(2)By Top How Much\n"
@@ -65,9 +64,10 @@ def main():
             else:
                 check_city(city_name)
         elif city_or_top == 2:
-            if collect_or_transport == 1 or collect_or_transport == 3:
-                top_how_much = int(input("Top How Much?\n"
-                                         "Answer by type in a number."))
+            if collect_or_transport in [1, 3]:
+                if action_number in [7, 8]:
+                    top_how_much = int(input("Top How Much?\n"
+                                             "Answer by type in a number."))
 
     test_mode_number = int(input("Execution in test mode?\n"
                                  "(1)yes\n"

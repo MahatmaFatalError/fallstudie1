@@ -30,8 +30,7 @@ class ImmoscoutCollector(Collector):
     def run(self):
         result = Result()
         db = SqlHelper(constants.SQL_DATABASE_NAME)
-        session = db.get_connection()
-        df = pd.read_sql_table(table_name='top_city', con=session)
+        df = db.fetch_table_as_dataframe('top_cities')
         cities = pd.DataFrame(data=df.iloc[0:self.top_how_much], columns={'city'})
         for index, row in cities.iterrows():
             self.logger.debug(str(index + 1) + ". " + row['city'])

@@ -101,6 +101,7 @@ class Review(Base):
     text = Column(String)
     restaurant_id = Column(String, ForeignKey(constants.SQL_TABLE_RESTAURANT + '.id'))
     rating = Column(Numeric)
+    language = Column(String)
 
 
 class RatingWord(Base):
@@ -195,10 +196,11 @@ class Immoscout(Base):
             .format(self.id, self.name, self.updated_at, self.city)
 
 
-class TopCity(Base):
+class TopCities(Base):
     __tablename__ = constants.SQL_TABLE_TOP_CITY
 
     city = Column(String, primary_key=True, autoincrement=False)
+    state = Column(String)
     potential = Column(Numeric)
 
 

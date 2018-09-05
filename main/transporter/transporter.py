@@ -20,7 +20,6 @@ class Transporter(ABC, threading.Thread):
     source_entity_id = None
     city_name = None
     zip_codes = []
-    top_how_much = None
 
     logger = logging.getLogger(__name__)
 
@@ -34,7 +33,6 @@ class Transporter(ABC, threading.Thread):
         self.target_db = SqlHelper(self.database)
         self.test_mode = test_mode
         self.city_name = city_name
-        self.top_how_much = top_how_much
 
         if self.city_name is not None:
             self._fetch_zip_codes_from_database()
@@ -121,7 +119,7 @@ class Transporter(ABC, threading.Thread):
                                                  offset=offset,
                                                  only_keys=only_keys,
                                                  operator='=',
-                                                 zip_code=zip_code,
+                                                 zip_code=str(zip_code), # Speisekarte Transporter need string instead int
                                                  transported=False)
             result_all += result
         return result_all

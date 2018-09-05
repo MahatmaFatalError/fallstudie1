@@ -11,12 +11,19 @@ class ReviewTransporter(Transporter):
         entities = []
         review = Review()
         restaurant_id = None
+        language = None
         try:
             source_content = json.loads(datastore_entity)
         except TypeError:
             source_content = datastore_entity
         if 'restaurant_id' in source_content:
             restaurant_id = source_content['restaurant_id']
+        if 'locale' in source_content:
+            locale = source_content['locale']
+            if locale == 'en_US':
+                language = 'english'
+            elif locale == 'de_DE':
+                language = 'german'
         if 'content' in source_content:
             content = source_content['content']
             total = content['total']
@@ -34,6 +41,7 @@ class ReviewTransporter(Transporter):
                     review.text = text
                     review.created_at = time_created
                     review.rating = rating
+                    review.language = language
 
                     entities.append(review)
 
