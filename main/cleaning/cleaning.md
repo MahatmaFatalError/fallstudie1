@@ -66,3 +66,17 @@ Take a look at ```rent_avg.py``` script.
 
 # 8. ```review_count``` cleaning
 Take a look at ```review_count.py``` script.
+
+
+# Top City Cleaning
+
+```sql
+UPDATE public.top_cities
+	SET city='Hannover'
+	WHERE city = 'Hanover';
+```
+
+1. Hanover
+2. Dusseldorf
+3. Nuremberg
+4. Munich 
