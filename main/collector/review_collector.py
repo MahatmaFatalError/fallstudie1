@@ -62,7 +62,7 @@ class ReviewCollector(Collector):
 
     def _create_datastore_entity(self, content) -> dict:
         attributes = {'updatedAt': datetime.datetime.now(),
-                      'zip_code': self.current_zip_code,
+                      'zip_code': str(self.current_zip_code),
                       'content': content,
                       'restaurant_id': self.current_restaurant_id,
                       'locale': self.current_locale,

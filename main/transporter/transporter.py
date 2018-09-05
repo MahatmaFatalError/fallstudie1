@@ -119,7 +119,7 @@ class Transporter(ABC, threading.Thread):
                                                  offset=offset,
                                                  only_keys=only_keys,
                                                  operator='=',
-                                                 zip_code=str(zip_code), # Speisekarte Transporter need string instead int
+                                                 zip_code=zip_code,  # Speisekarte Transporter need string instead int
                                                  transported=False)
             result_all += result
         return result_all
