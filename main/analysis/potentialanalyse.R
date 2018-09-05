@@ -74,5 +74,27 @@ while(i<10){
 }
 
 
+# Globale Verleilung nun mit allen Kategorien
+global_distribution <- dbGetQuery(con, str_c("select g.* from categorie_frequency_materialized g order by cat"))
+global_distribution$prozent <- global_distribution$freq/sum(global_distribution$freq)
+i = 0
+while(i<10){
+  i=i+1;
+  local_distribution <- dbGetQuery(con, str_c("select * from top10_city_category_2  where  city = '", insert$city[i] ,"'
+                                              union
+                                              select '", insert$city[i] ,"', g.cat, 0 from categorie_frequency_materialized g where g.cat not in (select cat from top10_city_category_2  where  city = '", insert$city[i] ,"')
+                                              order by cat"))
+  local_distribution$prozent <- local_distribution$counter/sum(local_distribution$counter)
+  
+  r <- chisq.test(local_distribution$counter, p=global_distribution$prozent)
+  local_distribution$residuals <- r$residuals 
+  
+  # suche betraglich hohe negative Abweichung
+  cat("\n")
+  print(str_c(i, ". p-value:",r$p.value))
+  print(subset(local_distribution, residuals <= -2))
+}
+
+
 # disconnect from the database
 dbDisconnect(con)
