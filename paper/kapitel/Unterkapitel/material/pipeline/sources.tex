@@ -1,0 +1,12 @@
+\paragraph{Data sources}
+\label{subsec:Data sources}
+As mentioned previously, a lot of various key figures were collected for the following data analysis relating to the restaurant business. The main data source with helpful key figures should be at least from one restaurant online review website. In this case the online platform of yelp was chosen. yelp is a popular community site that allows restraurants to present themselves, give visitors a star scale rating of one to five, or give visitors the opportunity to leave comments. For example, the interface Yelp Fusion provides the name of the restaurant, the type of food or the coordinates of the restaurant with latitude and longitude. \\
+\\
+In addition to this some other datasets relating to Germany's cities were used for the data analysis:
+\begin{itemize}
+\item CSV file with the population and the area
+\end{itemize}
+
+Purchasing power is an important factor in the catering industry. It makes little sense to open a three-star restaurant in a social focus area or vice versa. A fast food business will not last long between high-end haute cuisine restaurants. In 2016, public television broadcast a study on the quality of life in Germany. These studies included different population, city, and quality reports, with reference to external sources. One of the studies contained information on purchasing power in the cities of Germany. The report led to an external provider who had published this survey \cite{BuyingPower}. This evaluation was publicly available in the download portal of the website in portable document format and was very well suited to adapting this with a python converter in the postgres database. This attribute complements the model to determine the price level for a restaurant.
+\\
+For our use case and in general, it is absolutely necessary to know how much rent you can pay in the month or year or whether you can afford a property. In search of a rent index in Germany, we first came across an open-source evaluation in .json format \cite{Sparda}. Unfortunately, this was only the average land prices. Thereupon the possibility opened by an interface to real estate platforms \cite{ImmoScout} to get more accurate and more up-to-date rental and land prices.
