@@ -27,15 +27,13 @@ dtab = dbGetQuery(con, "select
                   where review_count >= 9 and population_sqkm > 0
                   group by city
                   having sum(review_count)  > 138")
-#summary(dtab)
-#str(dtab)
 
+# Wertebereiche standardisieren
 dtab$z_restaurants_per_sqkm <- SoftMax(dtab$restaurants_per_sqkm)
 dtab$z_reviewcounts_per_restaurant <- SoftMax(dtab$reviewcounts_per_restaurant)
 dtab$z_avg_rating <- SoftMax(dtab$avg_rating)
 dtab$z_population_restaurants_sqkm <- SoftMax(dtab$population_sqkm / dtab$restaurants_per_sqkm)
 #dtab$z_restaurants_population_sqkm <- SoftMax((dtab$restaurants_per_sqkm / dtab$population_sqkm))
-#((dtab$restaurants_per_sqkm / dtab$population_sqkm)) 
 
 dtab$potential <- (dtab$z_population_restaurants_sqkm) * (dtab$z_reviewcounts_per_restaurant) * (dtab$z_avg_rating)
 # je höher z_population_restaurants_sqkm (also je mehr Einwohner/Restaurants) desto besser für unser potential
@@ -44,17 +42,21 @@ dtab$potential <- (dtab$z_population_restaurants_sqkm) * (dtab$z_reviewcounts_pe
 
 View(arrange(dtab, desc(potential)))
 insert <- arrange(dtab[, c(1, 16)], desc(potential))
+dbExecute(con, "TRUNCATE TABLE top_cities")
 dbWriteTable(con, "top_cities", value = insert[1:100, ], row.names = FALSE, append = TRUE) #append = TRUE
+dbExecute(con, "REFRESH MATERIALIZED VIEW categorie_frequency_materialized WITH DATA")
+dbExecute(con, "REFRESH MATERIALIZED VIEW top10_city_category_2 WITH DATA;")
 
-# effect buying power mit price range, scatter plot // -> keine nennenswerte korrelation
-# durchschnitts rating pro PLZ von den städten ->  top10_city_plz
+### korrelationskoeff buying power mit price range, scatter plot // -> keine nennenswerte korrelation
+### durchschnitts rating pro PLZ von den städten ->  table top10_city_plz
 
 
-# Kontingenzanalyse chi^2 test lokale kategorieverteilung vs globale verteilung  -> top10_city_category
+# Kontingenzanalyse lokale kategorieverteilung vs globale verteilung  -> table top10_city_category
 # für top10 cities
 i = 0
 while(i<10){
   i=i+1;
+  # nur diejenigen globalen Kategorien berücksichtigen, die es auch lokal gibt
   global_distribution <- dbGetQuery(con, str_c("select l.city, g.* from categorie_frequency_materialized g, top10_city_category_2 l
             where g.cat in (l.cat) and l.city = '", insert$city[i] ,"' order by cat"))
   global_distribution$prozent <- global_distribution$freq/sum(global_distribution$freq)
@@ -62,10 +64,12 @@ while(i<10){
   local_distribution <- dbGetQuery(con, str_c("select * from top10_city_category_2  where  city = '", insert$city[i] ,"' order by cat"))
   local_distribution$prozent <- local_distribution$counter/sum(local_distribution$counter)
   
+  r <- chisq.test(local_distribution$counter, p=global_distribution$prozent)
+  local_distribution$residuals <- r$residuals 
+  
+  # suche betraglich hohe negative Abweichung
   cat("\n")
   print(str_c(i, ". p-value:",r$p.value))
-  r <- chisq.test(local_distribution$counter, p=global_distribution$prozent)
-  local_distribution$residuals <- r$residuals # suche betraglich hohe negative Abweichung
   print(subset(local_distribution, residuals <= -2))
 }
 
