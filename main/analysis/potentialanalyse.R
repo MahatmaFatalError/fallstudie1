@@ -22,7 +22,8 @@ dtab = dbGetQuery(con, "select
                   sum(review_count) / count(id) reviewcounts_per_restaurant,
                   max(buying_power) bp,
                   max(size_sqkm) size_sqkm,
-                  max(population_sqkm) population_sqkm
+                  max(population_sqkm) population_sqkm,
+                  max(state) state
                   from restaurants_in_germany
                   where review_count >= 9 and population_sqkm > 0
                   group by city
@@ -41,7 +42,7 @@ dtab$potential <- (dtab$z_population_restaurants_sqkm) * (dtab$z_reviewcounts_pe
 
 
 View(arrange(dtab, desc(potential)))
-insert <- arrange(dtab[, c(1, 16)], desc(potential))
+insert <- arrange(dtab[, c(1, 12, 17)], desc(potential))
 dbExecute(con, "TRUNCATE TABLE top_cities")
 dbWriteTable(con, "top_cities", value = insert[1:100, ], row.names = FALSE, append = TRUE) #append = TRUE
 dbExecute(con, "REFRESH MATERIALIZED VIEW categorie_frequency_materialized WITH DATA")
