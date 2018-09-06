@@ -16,6 +16,7 @@ class ImmoscoutTransporter(Transporter):
                 source_content = content
             for item in source_content:
                 target_entity = Immoscout()
+                target_entity.id = item['id']
                 target_entity.city = item['city']
                 target_entity.currency = item['currency']
                 target_entity.title = item['title']

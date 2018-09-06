@@ -139,10 +139,11 @@ class Creator:
         return speisekarte_transporter
 
     @staticmethod
-    def create_immoscout_transporter(test_mode):
+    def create_immoscout_transporter(test_mode, city_name):
         immoscout_transporter = EverythingFactory.create(constants.FACTORY_TRANSPORTER,
                                                          'immoscout',
                                                          constants.SQL_DATABASE_NAME,
                                                          constants.GCP_ENTITY_IMMOSCOUT,
-                                                         test_mode)
+                                                         test_mode,
+                                                         city_name)
         return immoscout_transporter
