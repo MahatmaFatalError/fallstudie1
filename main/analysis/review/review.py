@@ -9,7 +9,6 @@ from main.helper.text_analyzer import TextAnalyzer
 from main.helper.value import Value
 
 logger = logging.getLogger(__name__)
-reviews_df = None
 
 # If you want to, change things here! #
 top_how_much = 50
@@ -21,24 +20,30 @@ stemming = True
 
 
 def run():
-    reviews = fetch_reviews_from_postgres()
+    reviews = fetch_reviews_from_postgres(with_categories=True)
+    print(reviews)
     # enrich_with_category()
     # one_star_reviews = reviews[reviews.stars == 1]
     # five_star_reviews = reviews[reviews.stars == 5]
     # logger.info('Analyzing 1-Star Reviews')
-    analyze(reviews, 'german', 'All')
+    # analyze(reviews, 'german', 'All')
     # logger.info('Analyzing 5-Star Reviews')
     # analyze(five_star_reviews, '5-Star Reviews')
 
 
-def fetch_reviews_from_postgres():
-    global reviews_df
+def fetch_reviews_from_postgres(with_categories):
 
     db = SqlHelper(constants.SQL_DATABASE_NAME)
 
     session = db.get_connection()
 
-    df = pd.read_sql_table(table_name='review', con=session)
+    if with_categories:
+        query = 'SELECT r.rating, r.text, r.language, fc.name ' \
+                'FROM review AS r JOIN food_category AS fc ' \
+                'ON (r.restaurant_id = fc.restaurant_id);'
+        df = pd.read_sql_query(sql=query, con=session)
+    else:
+        df = pd.read_sql_table(table_name='review', con=session)
 
     return df
 
@@ -109,10 +114,6 @@ def write_result(result, file_name):
         for word, score in result_sorted_by_tfidf:
             result_file.write('{0} - {1}'.format(word, score))
             result_file.write('\n')
-
-
-    # TODO: fetch category from db
-# def enrich_with_category():
 
 
 if __name__ == '__main__':
