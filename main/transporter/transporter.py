@@ -20,6 +20,7 @@ class Transporter(ABC, threading.Thread):
     source_entity_id = None
     city_name = None
     zip_codes = []
+    top_how_much = None
 
     logger = logging.getLogger(__name__)
 
@@ -125,7 +126,7 @@ class Transporter(ABC, threading.Thread):
         return result_all
 
     def _get_entities(self, limit, offset, only_total):
-        if self.zip_codes is None:
+        if not self.zip_codes:
             content = self.source_db.fetch_entity(self.source_entity, limit, offset, only_total, '=', transported=False)
         else:
             content = self._fetch_entities_by_zip_code(self.source_entity, limit, offset, only_total)

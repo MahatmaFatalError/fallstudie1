@@ -13,7 +13,6 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-
     creator = Creator()
     threads = list()
     stopper = threading.Event()
@@ -63,10 +62,9 @@ def main():
             else:
                 check_city(city_name)
         elif city_or_top == 2:
-            if collect_or_transport in [1, 3]:
-                if action_number in [7, 8]:
-                    top_how_much = int(input("Top How Much?\n"
-                                             "Answer by type in a number."))
+            if action_number in [7, 8]:
+                top_how_much = int(input("Top How Much?\n"
+                                         "Answer by type in a number."))
 
     test_mode_number = int(input("Execution in test mode?\n"
                                  "(1)yes\n"
