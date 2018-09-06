@@ -35,7 +35,7 @@ class Transporter(ABC, threading.Thread):
         self.test_mode = test_mode
         self.city_name = city_name
 
-        if self.city_name is not None:
+        if self.city_name:
             self._fetch_zip_codes_from_database()
 
     def run(self):

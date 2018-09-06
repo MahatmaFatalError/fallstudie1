@@ -14,16 +14,18 @@ class SpeisekarteTransporter(Transporter):
         entities = []
         yelp = YelpHelper()
         ok_codes = [200, 201]
+        state_iso = None
+
         if 'content' in datastore_entity:
             speisekarte = Speisekarte()
             content = datastore_entity['content']
-            language = datastore_entity['language']
-            state_iso = datastore_entity['state']
-            zip_code = datastore_entity['zip_code']
+            if 'language' in datastore_entity:
+                language = datastore_entity['language']
+            else:
+                language = 'german'
 
             tagger_dir = 'data/tree_tagger'
-            analyzer = TextAnalyzer(language, True, tagger_dir)
-            speisekarte.zip_code = zip_code
+            analyzer = TextAnalyzer(language, True, False, tagger_dir)
 
             try:
                 source_content = json.loads(content)
@@ -34,19 +36,31 @@ class SpeisekarteTransporter(Transporter):
                 speisekarte.id = speisekarte_id
 
             if 'address' in source_content:
+                if 'state' in datastore_entity:
+                    state_iso = datastore_entity['state']
+                if 'zip_code' in datastore_entity:
+                    zip_code = datastore_entity['zip_code']
+                else:
+                    zip_code = source_content['address']['zip_code']
+                if 'city' in datastore_entity:
+                    self.city_name = datastore_entity['city']
+                else:
+                    self.city_name = source_content['address']['city']
+
                 street = source_content['address']['street']
                 name = source_content['address']['name']
                 speisekarte.city = self.city_name
-
-                result_json, status_code = yelp.get_business_match(name, street, self.city_name, state_iso, zip_code)
-                if status_code in ok_codes:
-                    if 'businesses' in result_json:
-                        business = result_json['businesses']
-                        if len(business) > 0:
-                            yelp_restaurant_id = business[0]['id']
-                            speisekarte.yelp_restaurant_id = yelp_restaurant_id
-                else:
-                    speisekarte.yelp_restaurant_id = None
+                speisekarte.zip_code = zip_code
+                if state_iso:
+                    result_json, status_code = yelp.get_business_match(name, street, self.city_name, state_iso, zip_code)
+                    if status_code in ok_codes:
+                        if 'businesses' in result_json:
+                            business = result_json['businesses']
+                            if len(business) > 0:
+                                yelp_restaurant_id = business[0]['id']
+                                speisekarte.yelp_restaurant_id = yelp_restaurant_id
+                    else:
+                        speisekarte.yelp_restaurant_id = None
 
             # create favourite items
             if 'favourite_items' in source_content:
@@ -54,7 +68,7 @@ class SpeisekarteTransporter(Transporter):
                 if fav_items_list is not None and len(fav_items_list) > 0:
                     for item in fav_items_list:
                         item_improved = util.convert_list_to_string(analyzer.text_process(item))
-                        if item_improved is not None or item_improved != ' ':
+                        if item_improved:
                             fav_item = FavouriteItem()
                             fav_item.name = item_improved
                             fav_item.datasource = 'speisekarte.de'
@@ -90,7 +104,7 @@ class SpeisekarteTransporter(Transporter):
                                 for menu_item_string in menu_items:
                                     menu_item_improved = util. \
                                         convert_list_to_string(analyzer.text_process(menu_item_string))
-                                    if menu_item_improved is not None or menu_item_improved != ' ':
+                                    if menu_item_improved:
                                         menu_item = MenuItem()
                                         menu_item.name = menu_item_improved
                                         menu_item.datasource = 'speisekarte.de'

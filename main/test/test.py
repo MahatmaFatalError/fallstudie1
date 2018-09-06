@@ -30,6 +30,13 @@ sql.create_session()
 # else:
 #     print('Value is None')
 
-result = datastore.fetch_entity('THD_Speisekarte', None, None, True, '=', transported=False, zip_code=44866)
-print(result)
+# result = datastore.fetch_entity('THD_Speisekarte', None, None, True, '=', transported=False, zip_code=44866)
+# print(result)
 sql.close_session()
+
+city = None
+
+if not city:
+    print('Value is None/Empty')
+else:
+    print(city)

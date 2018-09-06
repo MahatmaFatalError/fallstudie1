@@ -16,6 +16,7 @@ tree_tagger_dir = '../../../data/tree_tagger'
 reversed_result = True  # True = absteigend
 cumulated = True
 stemming = True
+tagging = True
 #####################################
 
 
@@ -51,8 +52,9 @@ def fetch_reviews_from_postgres(with_categories):
 def analyze(reviews_to_analyze, language_to_analyze, result_file_name):
     global cumulated
     global stemming
+    global tagging
 
-    text_analyzer = TextAnalyzer(language_to_analyze, stemming, tree_tagger_dir)
+    text_analyzer = TextAnalyzer(language_to_analyze, stemming, tagging, tree_tagger_dir)
 
     count_vectorizer = text_analyzer.create_count_vectorizer()
 

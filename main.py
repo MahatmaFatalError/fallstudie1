@@ -26,7 +26,7 @@ def main():
     collect_or_transport = int(input("What do you want to do?\n"
                                      "(1)collect\n"
                                      "(2)transport\n"
-                                     "(3)both\n"
+                                     # "(3)both\n"
                                      "Answer by type in the number."))
 
     choices = {1: 'city',
