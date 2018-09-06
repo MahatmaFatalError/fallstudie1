@@ -5,7 +5,6 @@ from config import constants
 
 Base = declarative_base()
 
-
 # City Classes #
 
 
@@ -47,7 +46,7 @@ class Speisekarte(Base):
 
     id = Column(String, primary_key=True, autoincrement=False)
     yelp_restaurant_id = Column(String)
-    zip_code = Column(Integer, ForeignKey(constants.SQL_TABLE_ZIP_CODE + '.id'))
+    zip_code = Column(Integer)
     city = Column(String)
     favourite_items = relationship('FavouriteItem')
     restaurant_services = relationship('RestaurantService')
@@ -91,6 +90,26 @@ class FavouriteItem(Base):
 
 
 # Yelp Classes #
+
+
+class Review(Base):
+    __tablename__ = constants.SQL_TABLE_REVIEW
+
+    id = Column(String, primary_key=True, autoincrement=False)
+    datasource = Column(String)
+    created_at = Column(DateTime)
+    text = Column(String)
+    restaurant_id = Column(String, ForeignKey(constants.SQL_TABLE_RESTAURANT + '.id'))
+    rating = Column(Numeric)
+    language = Column(String)
+
+
+class RatingWord(Base):
+    __tablename__ = constants.SQL_TABLE_RATING_WORD
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
+    tfidf = Column(Numeric)
 
 
 class Restaurant(Base):
@@ -173,14 +192,15 @@ class Immoscout(Base):
     totalfloorspace = Column(Numeric)
 
     def __str__(self):
-        return 'id: {0}, name: {1}, updated at: {2} immoscout: {3}'\
+        return 'id: {0}, name: {1}, updated at: {2} immoscout: {3}' \
             .format(self.id, self.name, self.updated_at, self.city)
 
 
-class TopCity(Base):
+class TopCities(Base):
     __tablename__ = constants.SQL_TABLE_TOP_CITY
 
     city = Column(String, primary_key=True, autoincrement=False)
+    state = Column(String)
     potential = Column(Numeric)
 
 

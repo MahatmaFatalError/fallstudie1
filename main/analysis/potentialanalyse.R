@@ -10,7 +10,11 @@ pg = dbDriver("PostgreSQL")
 con = dbConnect(pg, user="postgres", password="team123",
                 host="35.190.205.207", port=5432, dbname="fonethd")
 
-## dtab = dbReadTable(con, "restaurant")
+restaurantsPerCity = dbGetQuery(con, "select avg(rs), percentile_cont(0.5) within group (order by rs ) median from (
+                  select city, count(review_count) rs
+                  from restaurants_in_germany group by city) foo")
+
+
 dtab = dbGetQuery(con, "select  
                   city, 
                   avg(rating) avg_rating,
@@ -22,11 +26,12 @@ dtab = dbGetQuery(con, "select
                   sum(review_count) / count(id) reviewcounts_per_restaurant,
                   max(buying_power) bp,
                   max(size_sqkm) size_sqkm,
-                  max(population_sqkm) population_sqkm
+                  max(population_sqkm) population_sqkm,
+                  max(state) state
                   from restaurants_in_germany
                   where review_count >= 9 and population_sqkm > 0
                   group by city
-                  having sum(review_count)  > 138")
+                  having sum(review_count)  > 138 and count(review_count) >= 28")
 
 # Wertebereiche standardisieren
 dtab$z_restaurants_per_sqkm <- SoftMax(dtab$restaurants_per_sqkm)
@@ -41,7 +46,7 @@ dtab$potential <- (dtab$z_population_restaurants_sqkm) * (dtab$z_reviewcounts_pe
 
 
 View(arrange(dtab, desc(potential)))
-insert <- arrange(dtab[, c(1, 16)], desc(potential))
+insert <- arrange(dtab[, c(1, 12, 17)], desc(potential))
 dbExecute(con, "TRUNCATE TABLE top_cities")
 dbWriteTable(con, "top_cities", value = insert[1:100, ], row.names = FALSE, append = TRUE) #append = TRUE
 dbExecute(con, "REFRESH MATERIALIZED VIEW categorie_frequency_materialized WITH DATA")

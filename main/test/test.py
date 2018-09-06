@@ -1,30 +1,35 @@
 from config import constants
+from main.helper import util
 from main.helper.db_helper import DatastoreHelper, SqlHelper
+import pandas as pd
 
-db = DatastoreHelper()
+from main.helper.text_analyzer import TextAnalyzer
+
+datastore = DatastoreHelper()
 sql = SqlHelper(constants.SQL_DATABASE_NAME)
 
 sql.create_session()
 
-speisekarten = sql.fetch_entity_where('Speisekarte', True)
+# df = sql.fetch_table_as_dataframe('top_cities')
+# cities = pd.DataFrame(data=df.iloc[0:10], columns={'city', 'state'})
+# cities = cities.values.tolist()
 
-print(len(speisekarten))
+# city_objects = sql.fetch_entity_where('TopCities')
+# cities = [[city.state, city.city] for city in city_objects]
+# print(cities[1])
+# print(cities[0])
 
-# zip_codes_list = []
-# sql.create_session()
+# analyzer = TextAnalyzer('german', False)
 #
-# city_from_db = sql.fetch_city_by_name('Mannheim')
+# text = ',,,,,'
 #
-# # get zip codes and close session afterwards
-# zip_codes = city_from_db.zip_codes
-#
-# sql.close_session()
-#
-# for zip in zip_codes:
-#     zip_codes_list.append(zip.zip_code)
-# total_all = []
-# for item in zip_codes_list:
-#     total = db.fetch_entity(entity_name=constants.GCP_ENTITY_SPEISEKARTE, operator='=', zip_code=str(item))
-#     total_all += total
-#
-# print(len(total_all))
+# menu_item_improved = util.convert_list_to_string(analyzer.text_process(text))
+# if menu_item_improved:
+#     print('Item: ')
+#     print(menu_item_improved)
+# else:
+#     print('Value is None')
+
+result = datastore.fetch_entity('THD_Speisekarte', None, None, True, '=', transported=False, zip_code=44866)
+print(result)
+sql.close_session()

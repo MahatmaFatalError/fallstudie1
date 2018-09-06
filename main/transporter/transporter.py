@@ -23,7 +23,7 @@ class Transporter(ABC, threading.Thread):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self, database, source_entity, test_mode, city_name):
+    def __init__(self, database, source_entity, test_mode, city_name, top_how_much):
         super(Transporter, self).__init__()
         self.logger.info('Creating Transporter for Datastore Entity: {0}'
                          .format(source_entity))

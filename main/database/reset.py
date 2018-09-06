@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 def main():
     gcp_entity = None
-    choices = {1: 'restaurant', 2: 'kaufkraft', 3: 'rent', 4: 'speisekarte', 5: 'zip_code'}
+    choices = {1: 'restaurant', 2: 'kaufkraft', 3: 'rent', 4: 'speisekarte', 5: 'zip_code', 6: 'review'}
 
     action_string = 'What do you want to reset?\n'
 
@@ -32,18 +32,20 @@ def main():
         gcp_entity = constants.GCP_ENTITY_RENT
     elif action_number == 4:
         gcp_entity = constants.GCP_ENTITY_SPEISEKARTE
+    elif action_number == 6:
+        gcp_entity = constants.GCP_ENTITY_REVIEW
 
     if action_number != 5:
         if gcp_entity is not None:
             reset_datastore(gcp_entity)
-    else:
-        reset_postgres()
+    # else:
+        # reset_postgres()
 
 
 def reset_datastore(gcp_entity):
     datastore = DatastoreHelper()
 
-    ds_entities = datastore.fetch_entity(gcp_entity)
+    ds_entities = datastore.fetch_entity(gcp_entity, None, None, False, None)
     for ds_entity in ds_entities:
         datastore.set_transported(ds_entity, False)
 

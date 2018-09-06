@@ -1,28 +1,17 @@
-import json
 import logging
-import string
 import pandas as pd
-import treetaggerwrapper
-
-from main.helper.value import Word
+from config import constants
 from main.helper import util
-from nltk.corpus import stopwords
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.feature_extraction.text import TfidfTransformer
 from collections import defaultdict
-from nltk.stem import SnowballStemmer
-
-
-from main.helper.yelp import YelpHelper
+from main.helper.db_helper import SqlHelper
+from main.helper.text_analyzer import TextAnalyzer
+from main.helper.value import Value
 
 logger = logging.getLogger(__name__)
-reviews = None
-data_excerpt = []
 
 # If you want to, change things here! #
-excerpt_size = 1000
-top_how_much = 100
-language = 'english'
-source_file_name = 'yelp_academic_dataset_review_sample.json'
+top_how_much = 50
 tree_tagger_dir = '../../../data/tree_tagger'
 reversed_result = True  # True = absteigend
 cumulated = True
@@ -31,25 +20,46 @@ stemming = True
 
 
 def run():
-    create_excerpt()
+    reviews = fetch_reviews_from_postgres(with_categories=True)
+    print(reviews)
     # enrich_with_category()
-    # write_json_file()
-    create_df()
-    one_star_reviews = reviews[reviews.stars == 1]
-    five_star_reviews = reviews[reviews.stars == 5]
-    logger.info('Analyzing 1-Star Reviews')
-    analyze(one_star_reviews, '1-Star Reviews')
-    logger.info('Analyzing 5-Star Reviews')
-    analyze(five_star_reviews, '5-Star Reviews')
+    # one_star_reviews = reviews[reviews.stars == 1]
+    # five_star_reviews = reviews[reviews.stars == 5]
+    # logger.info('Analyzing 1-Star Reviews')
+    # analyze(reviews, 'german', 'All')
+    # logger.info('Analyzing 5-Star Reviews')
+    # analyze(five_star_reviews, '5-Star Reviews')
 
 
-def analyze(reviews_to_analyze, result_file_name):
+def fetch_reviews_from_postgres(with_categories):
+
+    db = SqlHelper(constants.SQL_DATABASE_NAME)
+
+    session = db.get_connection()
+
+    if with_categories:
+        query = 'SELECT r.rating, r.text, r.language, fc.name ' \
+                'FROM review AS r JOIN food_category AS fc ' \
+                'ON (r.restaurant_id = fc.restaurant_id);'
+        df = pd.read_sql_query(sql=query, con=session)
+    else:
+        df = pd.read_sql_table(table_name='review', con=session)
+
+    return df
+
+
+def analyze(reviews_to_analyze, language_to_analyze, result_file_name):
     global cumulated
+    global stemming
+
+    text_analyzer = TextAnalyzer(language_to_analyze, stemming, tree_tagger_dir)
+
+    count_vectorizer = text_analyzer.create_count_vectorizer()
 
     top_words_cum = defaultdict(float)  # cumulated words
     top_words = {}
 
-    bow_transformer = CountVectorizer(analyzer=text_process).fit(reviews_to_analyze['text'])
+    bow_transformer = count_vectorizer.fit(reviews_to_analyze['text'])
 
     review_bow = bow_transformer.transform(reviews_to_analyze['text'])
 
@@ -71,7 +81,7 @@ def analyze(reviews_to_analyze, result_file_name):
         top5_scores_sorted_by_tfidf = sorted(tfidf_scores, key=lambda tup: tup[1], reverse=reversed_result)[:5]
         for w, s in [(feature_names[i], s) for (i, s) in top5_scores_sorted_by_tfidf]:
             top_words_cum[w] += s
-            top_words[Word(w)] = s
+            top_words[Value(w)] = s
 
     if cumulated:
         write_result(top_words_cum, result_file_name)
@@ -82,11 +92,11 @@ def analyze(reviews_to_analyze, result_file_name):
 def write_result(result, file_name):
     global top_how_much
     global cumulated
-    global excerpt_size
     global stemming
+    global reviews_df
 
     top_how_much_string = str(top_how_much)
-    title = file_name + '_top_' + top_how_much_string + '_of_' + str(excerpt_size)
+    title = file_name + '_top_' + top_how_much_string + '_of_' + str(reviews_df.shape[0])
     if reversed_result:
         title += '_reversed'
     if cumulated:
@@ -104,135 +114,6 @@ def write_result(result, file_name):
         for word, score in result_sorted_by_tfidf:
             result_file.write('{0} - {1}'.format(word, score))
             result_file.write('\n')
-
-
-def write_json_file():
-    global data_excerpt
-
-    with open('yelp_academic_dataset_review_sample.json', 'w') as outfile:
-        for json_object in data_excerpt:
-            json.dump(json_object, outfile)
-            outfile.write('\n')
-
-
-def text_process(mess):
-    global language
-    global stemming
-
-    # Remove punctutation
-    no_punc = [char for char in mess if char not in string.punctuation]
-    # Join the characters again to form the string.
-    no_punc = ''.join(no_punc)
-
-    # Remove any stopwords
-    no_stopwords = [word for word in no_punc.split() if word.lower() not in stopwords.words(language)]
-
-    # Tag each word
-    tagged_words = tag_text(no_stopwords)
-
-    # Remove unwanted tags
-    extracted_tags = extract_tags(tagged_words)
-
-    if stemming:
-        # Stem it
-        stemmer = SnowballStemmer(language)
-        result = [stemmer.stem(word) for word in extracted_tags]
-    else:
-        result = extracted_tags
-    return result
-
-
-def create_excerpt():
-    global data_excerpt
-
-    with open(source_file_name, 'r') as file:
-        for index, line in enumerate(file):
-            if index == excerpt_size:
-                break
-            else:
-                line = line.rstrip()
-                json_line = json.loads(line)
-                data_excerpt.append(json_line)
-
-
-def enrich_with_category():
-    global data_excerpt
-
-    yelp = YelpHelper()
-
-    for review in data_excerpt:
-        category_tupel = ()
-        business_id = review['business_id']
-        result, status_code = yelp.get_business(business_id, 0)
-        status_codes = [403, 404]
-        if status_code not in status_codes:
-            if 'error' not in result:
-                categories = result['categories']
-                if categories is not None:
-                    for category in categories:
-                        cat_title = category['title']
-                        title_tuple = (cat_title, )
-                        category_tupel += title_tuple
-                    review['category'] = category_tupel
-                    logger.info('Added Category: {0}'.format(category_tupel))
-            else:
-                logger.error('{0}: {1}'.format(result['error']['code'], result['error']['description']))
-                break
-
-
-def create_df():
-    global reviews
-
-    json_data = json.dumps(data_excerpt)
-    reviews = pd.read_json(json_data)
-
-
-def tag_text(text):
-    if language == 'german':
-        country_code = 'de'
-    else:
-        country_code = 'en'
-    tagger = treetaggerwrapper.TreeTagger(TAGLANG=country_code, TAGDIR=tree_tagger_dir)
-    text_with_tags = tagger.tag_text(text)
-
-    tags = treetaggerwrapper.make_tags(text_with_tags)
-    return tags
-
-
-def extract_tags(tags):
-    result = []
-    usefult_tags_german = [
-        'ADJA',
-        'ADJD',
-        'FM',
-        'NA',
-        'NE',
-        'NN'
-    ]
-    useful_tags_english = [
-        'FW',
-        'JJ',
-        'JJR',
-        'JJS',
-        'RB',
-        'RBS',
-        'RBR',
-        'NNS',
-        'NN',
-        'NP',
-        'NPS'
-    ]
-    if language == 'german':
-        useful_tags = usefult_tags_german
-    else:
-        useful_tags = useful_tags_english
-
-    for tag in tags:
-        pos = tag.pos
-        if pos in useful_tags:
-            result.append(tag.word)
-
-    return result
 
 
 if __name__ == '__main__':

@@ -4,14 +4,13 @@ from google.cloud import datastore
 from pathlib import Path
 from sqlalchemy.orm import sessionmaker
 from config import constants
-from main.database.init_db import City, Restaurant, TopCity, ZipCode
 import logging
 import sqlalchemy
-
-logger = logging.getLogger(__name__)
+import pandas as pd
 
 
 class DatastoreHelper:
+    logger = logging.getLogger(__name__)
 
     def __init__(self):
         root_path = Path(__file__).parents[2]
@@ -26,7 +25,7 @@ class DatastoreHelper:
         self.client.put(item)
         return item.key
 
-    def fetch_entity(self, entity_name, limit=None, offset=None, only_keys=False, operator=None, **kwargs):
+    def fetch_entity(self, entity_name, limit, offset, only_keys, operator, **kwargs):
         """
         :param entity_name: name of the entity
         :param limit: limit to fetch from datastore
@@ -36,7 +35,6 @@ class DatastoreHelper:
         :param kwargs: filter key and values
         :return: the fetched datatsore entity
         """
-        logger.info('Fetching from offset: %s with limit: %s', str(offset), str(limit))
         query = self.client.query(kind=entity_name)
         if kwargs is not None and operator is not None:
             for key, value in kwargs.items():
@@ -44,8 +42,11 @@ class DatastoreHelper:
         if only_keys:
             query.keys_only()
         if limit is not None and offset is not None:
+            self.logger.info('Fetching %s from Google Datastore with offset: %s and limit: %s', entity_name,
+                             str(offset), str(limit))
             result = list(query.fetch(limit=limit, offset=offset))
         else:
+            self.logger.info('Fetching {0} from Google Datastore'.format(entity_name))
             result = list(query.fetch())
         return result
 
@@ -71,6 +72,8 @@ class SqlHelper:
     con = None
     meta = None
     session = None
+
+    logger = logging.getLogger(__name__)
 
     def __init__(self, database):
         self._connect(constants.SQL_DATABASE_USER, constants.SQL_DATABASE_PW, database)
@@ -107,15 +110,21 @@ class SqlHelper:
                 entity_id = merged_entity.city_id
         return entity_id
 
-    # deprecated; use fetch_entity_where() instead
     def fetch_restaurant_by_id(self, id):
+        """
+         deprecated; use fetch_entity_where() instead
+        :param id: yelp restaurant id
+        :return: restaurant object
+        """
+        from main.database.init_db import Restaurant
         result = self.session.query(Restaurant). \
-            filter(Restaurant.id == id ). \
+            filter(Restaurant.id == id). \
             first()
         return result
 
     # deprecated; use fetch_entity_where() instead
     def find_restaurant_by_long_lat(self, long, lat):
+        from main.database.init_db import Restaurant
         result = self.session.query(Restaurant). \
             filter(Restaurant.longitude == long). \
             filter(Restaurant.latitude == lat).all()
@@ -123,6 +132,7 @@ class SqlHelper:
 
     # deprecated; use fetch_entity_where() instead
     def delete_restaurant_by_long_lat(self, long, lat):
+        from main.database.init_db import Restaurant
         result = self.session.query(Restaurant). \
             filter(Restaurant.longitude == long). \
             filter(Restaurant.latitude == lat). \
@@ -145,8 +155,14 @@ class SqlHelper:
             table_names.append(column.key)
         return table_names
 
+    def fetch_table_as_dataframe(self, table_name):
+        self.logger.info('Fetching {0} from PostgreSQL'.format(table_name))
+        dataframe = pd.read_sql_table(table_name=table_name, con=self.con)
+        return dataframe
+
     # deprecated; use fetch_entity_where() instead
     def fetch_all(self, entity_name):
+        from main.database.init_db import City, Restaurant, TopCities, ZipCode
         result = None
         if entity_name == 'city':
             result = self.session.query(City)
@@ -155,10 +171,10 @@ class SqlHelper:
         elif entity_name == 'zip_code':
             result = self.session.query(ZipCode)
         elif entity_name == 'top_cities':
-            result = self.session.query(TopCity)
+            result = self.session.query(TopCities)
         return result
 
-    def fetch_entity_where(self, class_name, fetch_all, negated=False, **kwargs):
+    def fetch_entity_where(self, class_name, fetch_all=True, negated=False, **kwargs):
         mod = __import__('main.database.init_db', fromlist=[class_name])
         entity_class = getattr(mod, class_name)
         query = self.session.query(entity_class)
@@ -178,8 +194,8 @@ class SqlHelper:
         return result
 
     def fetch_city_by_name(self, name):
-        result = self.session.query(City).\
-            filter(City.name.like(name)).\
+        from main.database.init_db import City
+        result = self.session.query(City). \
+            filter(City.name.like(name)). \
             first()
         return result
-

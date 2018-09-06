@@ -1,9 +1,9 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import json
-
 from main.database.init_db import Speisekarte, FavouriteItem, RestaurantService, SpeisekarteCategory, MenuItem
 from main.helper import util
+from main.helper.text_analyzer import TextAnalyzer
 from main.helper.yelp import YelpHelper
 from main.transporter.transporter import Transporter
 
@@ -17,8 +17,14 @@ class SpeisekarteTransporter(Transporter):
         if 'content' in datastore_entity:
             speisekarte = Speisekarte()
             content = datastore_entity['content']
+            language = datastore_entity['language']
+            state_iso = datastore_entity['state']
             zip_code = datastore_entity['zip_code']
+
+            tagger_dir = 'data/tree_tagger'
+            analyzer = TextAnalyzer(language, True, tagger_dir)
             speisekarte.zip_code = zip_code
+
             try:
                 source_content = json.loads(content)
             except TypeError:
@@ -31,7 +37,6 @@ class SpeisekarteTransporter(Transporter):
                 street = source_content['address']['street']
                 name = source_content['address']['name']
                 speisekarte.city = self.city_name
-                state_iso = util.map_city_to_state_iso_code(self.city_name)
 
                 result_json, status_code = yelp.get_business_match(name, street, self.city_name, state_iso, zip_code)
                 if status_code in ok_codes:
@@ -46,12 +51,14 @@ class SpeisekarteTransporter(Transporter):
             # create favourite items
             if 'favourite_items' in source_content:
                 fav_items_list = source_content['favourite_items']
-                if fav_items_list is not  None and len(fav_items_list) > 0:
+                if fav_items_list is not None and len(fav_items_list) > 0:
                     for item in fav_items_list:
-                        fav_item = FavouriteItem()
-                        fav_item.name = item
-                        fav_item.datasource = 'speisekarte.de'
-                        speisekarte.favourite_items.append(fav_item)
+                        item_improved = util.convert_list_to_string(analyzer.text_process(item))
+                        if item_improved is not None or item_improved != ' ':
+                            fav_item = FavouriteItem()
+                            fav_item.name = item_improved
+                            fav_item.datasource = 'speisekarte.de'
+                            speisekarte.favourite_items.append(fav_item)
 
             # create services
             if 'services' in source_content:
@@ -72,7 +79,7 @@ class SpeisekarteTransporter(Transporter):
                         if 'category' in item:
                             category.name = item['category']
 
-                        if 'id'in item:
+                        if 'id' in item:
                             cat_id = item['id']
                             category.id = cat_id
 
@@ -81,11 +88,14 @@ class SpeisekarteTransporter(Transporter):
                             menu_items = item['menu_items']
                             if menu_items is not None and len(menu_items) > 0:
                                 for menu_item_string in menu_items:
-                                    menu_item = MenuItem()
-                                    menu_item.name = menu_item_string
-                                    menu_item.datasource = 'speisekarte.de'
+                                    menu_item_improved = util. \
+                                        convert_list_to_string(analyzer.text_process(menu_item_string))
+                                    if menu_item_improved is not None or menu_item_improved != ' ':
+                                        menu_item = MenuItem()
+                                        menu_item.name = menu_item_improved
+                                        menu_item.datasource = 'speisekarte.de'
 
-                                    category.menu_items.append(menu_item)
+                                        category.menu_items.append(menu_item)
 
                         speisekarte.categories.append(category)
             entities.append(speisekarte)

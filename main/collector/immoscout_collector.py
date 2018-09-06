@@ -12,12 +12,16 @@ from main.helper.result import Result
 class ImmoscoutCollector(Collector):
 
     entity_id = None
+    top_how_much = None
+    city_name = None
 
-    def __init__(self, entity_name, test_mode, entity_id):
+    def __init__(self, entity_name, test_mode, entity_id, city_name, top_how_much):
         super(ImmoscoutCollector, self).__init__(
             entity_name=entity_name,
             test_mode=test_mode)
         self.entity_id = entity_id
+        self.top_how_much = top_how_much
+        self.city_name = city_name
 
     def _create_datastore_entity(self, data) -> dict:
         attributes = {'updatedAt': datetime.datetime.now(), 'content': data, 'transported': False}
@@ -26,10 +30,8 @@ class ImmoscoutCollector(Collector):
     def run(self):
         result = Result()
         db = SqlHelper(constants.SQL_DATABASE_NAME)
-        session = db.get_connection()
-        df = pd.read_sql_table(table_name=constants.SQL_TABLE_TOP_CITY, con=session)
-        top_n = 10
-        cities = pd.DataFrame(data=df.iloc[0:top_n], columns={'city'})
+        df = db.fetch_table_as_dataframe('top_cities')
+        cities = pd.DataFrame(data=df.iloc[0:self.top_how_much], columns={'city'})
         for index, row in cities.iterrows():
             self.logger.debug(str(index + 1) + ". " + row['city'])
 
@@ -97,9 +99,7 @@ class ImmoscoutCollector(Collector):
             self.logger.info("Hits: " + str(hits) + " for city: " + str(row['city']) + "\r\n")
             if hits == 1:
                 rest_dict = immo_search_json['resultlist.resultlist'][1][0]['resultlistEntry']['resultlist.realEstate']
-                real_estate_id = immo_search_json['resultlist.resultlist'][1][0]['resultlistEntry']['resultlist.realEstate']['@id']
-                data = {'id': real_estate_id,
-                        'title': [rest_dict['title']],
+                data = {'title': [rest_dict['title']],
                         'price': [rest_dict['price']['value']],
                         'marketingtype': [rest_dict['price']['marketingType']],
                         'currency': [rest_dict['price']['currency']],
@@ -108,15 +108,14 @@ class ImmoscoutCollector(Collector):
                         'city': [rest_dict['address']['city']],
                         'quarter': [rest_dict['address']['quarter']],
                         'totalfloorspace': [rest_dict['totalFloorSpace']]}
-                df = pd.DataFrame(data, columns={'id', 'title', 'price', 'marketingtype', 'currency',
-                                                 'priceintervaltype', 'postcode', 'city', 'quarter', 'totalfloorspace'})
+                df = pd.DataFrame(data, columns={'title', 'price', 'marketingtype', 'currency', 'priceintervaltype',
+                                                 'postcode', 'city', 'quarter', 'totalfloorspace'})
                 restaurant_df = restaurant_df.append(df, ignore_index=True, sort=True)
             elif hits >= 1:
                 for i in range(hits):
-                    rest_dict = immo_search_json['resultlist.resultlist'][1][0]['resultlistEntry'][i]['resultlist.realEstate']
-                    real_estate_id = immo_search_json['resultlist.resultlist'][1][0]['resultlistEntry'][i]['resultlist.realEstate']['@id']
-                    data = {'id': real_estate_id,
-                            'title': [rest_dict['title']],
+                    rest_dict = immo_search_json['resultlist.resultlist'][1][0]['resultlistEntry'][i][
+                        'resultlist.realEstate']
+                    data = {'title': [rest_dict['title']],
                             'price': [rest_dict['price']['value']],
                             'marketingtype': [rest_dict['price']['marketingType']],
                             'currency': [rest_dict['price']['currency']],
@@ -125,9 +124,8 @@ class ImmoscoutCollector(Collector):
                             'city': [rest_dict['address']['city']],
                             'quarter': [rest_dict['address']['quarter']],
                             'totalfloorspace': [rest_dict['totalFloorSpace']]}
-                    df = pd.DataFrame(data, columns={'id', 'title', 'price', 'marketingtype', 'currency',
-                                                     'priceintervaltype', 'postcode', 'city', 'quarter',
-                                                     'totalfloorspace'})
+                    df = pd.DataFrame(data, columns={'title', 'price', 'marketingtype', 'currency', 'priceintervaltype',
+                                                     'postcode', 'city', 'quarter', 'totalfloorspace'})
                     restaurant_df = restaurant_df.append(df, ignore_index=True, sort=True)
             else:
                 self.logger.info('No object found for city: ' + str(row['city']))

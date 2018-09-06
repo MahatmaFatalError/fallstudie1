@@ -1,47 +1,78 @@
-[1] "1. p-value:3.479871207209e-30"
-                   city         cat counter    prozent residuals
-17 Freiburg im Breisgau   Fast Food       1 0.00591716 -2.678974
-21 Freiburg im Breisgau       Greek       1 0.00591716 -2.063468
-39 Freiburg im Breisgau Restaurants       1 0.00591716 -2.779363
+[1] "1. p-value:6.17460170661252e-18"
+     city          cat counter     prozent residuals
+4  Bochum     Bakeries       1 0.001538462 -2.241373
+15 Bochum        Cafes      42 0.064615385 -2.100141
+23 Bochum Coffee & Tea       5 0.007692308 -2.229655
+37 Bochum       German      66 0.101538462 -2.695671
+63 Bochum  Restaurants      12 0.018461538 -3.571578
+78 Bochum         Thai       1 0.001538462 -2.016274
 
-[1] "2. p-value:3.71514752923688e-108"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
+[1] "2. p-value:1.05398461197136e-42"
+    city                       cat counter      prozent residuals
+9  Essen                  Bakeries       3 0.0026064292 -2.589185
+12 Essen                  Bavarian       1 0.0008688097 -2.347091
+24 Essen                     Cafes      69 0.0599478714 -3.164009
+34 Essen              Coffee & Tea       8 0.0069504778 -3.083244
+52 Essen                    German     134 0.1164205039 -2.023024
+58 Essen                    Hotels       2 0.0017376195 -3.453973
+60 Essen Ice Cream & Frozen Yogurt       3 0.0026064292 -2.177889
+89 Essen               Restaurants      24 0.0208514335 -4.287183
 
-[1] "3. p-value:0.000265151114394721"
-                city         cat counter    prozent residuals
-33 Offenbach am Main Restaurants       2 0.01550388 -2.009828
-
-[1] "4. p-value:4.26410894310418e-10"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
-
-[1] "5. p-value:1.71735559625665e-21"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
-
-[1] "6. p-value:2.00121489108615e-166"
-         city    cat counter    prozent residuals
-9 Taunusstein German       5 0.09090909 -2.021427
-
-[1] "7. p-value:0.00814133366487241"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
-
-[1] "8. p-value:3.60308736869156e-07"
-          city    cat counter  prozent residuals
-25 Bremerhaven German      25 0.105042 -2.171944
-
-[1] "9. p-value:3.58145265630584e-51"
-         city   cat counter    prozent residuals
-4 Dietzenbach Cafes       2 0.02985075 -2.256528
-
-[1] "10. p-value:9.90602946352063e-13"
+[1] "3. p-value:3.479871207209e-30"
    city           cat counter     prozent residuals
 9  Kiel   Beer Garden       2 0.003577818 -2.623167
 37 Kiel        German      52 0.093023256 -3.095212
 44 Kiel       Italian      33 0.059033989 -3.106624
 50 Kiel Mediterranean       1 0.001788909 -2.654534
+
+[1] "4. p-value:1.81448907385525e-67"
+       city         cat counter      prozent residuals
+49  Dresden   Fast Food      27 0.0249077491 -3.183276
+51  Dresden        Food       1 0.0009225092 -2.220532
+71  Dresden     Italian      66 0.0608856089 -3.833466
+95  Dresden       Pizza      45 0.0415129151 -2.509343
+101 Dresden Restaurants      29 0.0267527675 -3.230885
+
+[1] "5. p-value:2.47675847517305e-82"
+       city          cat counter     prozent residuals
+35  Leipzig Coffee & Tea       9 0.007518797 -2.977206
+63  Leipzig       Hotels       8 0.006683375 -2.031822
+71  Leipzig      Italian      65 0.054302423 -4.765504
+99  Leipzig  Restaurants      32 0.026733500 -3.402758
+123 Leipzig      Turkish       7 0.005847953 -2.250962
+
+[1] "6. p-value:2.80846601752806e-50"
+        city                  cat counter      prozent residuals
+20  Dortmund                Cafes      56 0.0534351145 -3.742229
+27  Dortmund         Coffee & Tea       6 0.0057251908 -3.228598
+45  Dortmund               German      91 0.0868320611 -4.516440
+49  Dortmund               Hotels       5 0.0047709924 -2.457807
+74  Dortmund Patisserie/Cake Shop       1 0.0009541985 -2.002139
+84  Dortmund          Restaurants      34 0.0324427481 -2.399525
+96  Dortmund              Swabian       1 0.0009541985 -2.083177
+103 Dortmund                 Thai       3 0.0028625954 -2.074424
+109 Dortmund            Wine Bars       2 0.0019083969 -2.124961
+
+[1] "7. p-value:1.71735559625665e-21"
+[1] city      cat       counter   prozent   residuals
+<0 Zeilen> (oder row.names mit Länge 0)
+
+[1] "8. p-value:8.7003974895132e-177"
+      city     cat counter     prozent residuals
+50 Rostock Italian      24 0.053333333 -3.255253
+61 Rostock   Pizza      10 0.022222222 -3.473688
+78 Rostock Turkish       1 0.002222222 -2.120388
+
+[1] "9. p-value:1.43598909371412e-29"
+        city         cat counter    prozent residuals
+44 Bielefeld      German      71 0.10906298 -2.239082
+52 Bielefeld     Italian      45 0.06912442 -2.527934
+69 Bielefeld Restaurants      16 0.02457757 -2.900346
+
+[1] "10. p-value:4.4347776372861e-05"
+          city    cat counter    prozent residuals
+8  Norderstedt  Cafes       5 0.03164557 -2.751454
+18 Norderstedt German      15 0.09493671 -2.055668
 
 
 
@@ -54,49 +85,76 @@
 
 
 ======================= nun ALLE globalen Kategorien ============
+!!! AUF SIGNIFIKANZ-NIVEAU ACHTEN!!! Falls p-value > 0,05 -> lokale Kategorien weichen nicht signifikant von den globalen ab.
 
+[1] "1. p-value:0.999983294301423"
+      city          cat counter     prozent residuals
+33  Bochum     Bakeries       1 0.001538462 -2.137202
+100 Bochum Coffee & Tea       5 0.007692308 -2.055439
+186 Bochum       German      66 0.101538462 -2.118597
+332 Bochum  Restaurants      12 0.018461538 -3.299891
 
-[1] "1. p-value:1.11223442728664e-32"
-                    city         cat counter    prozent residuals
-156 Freiburg im Breisgau   Fast Food       1 0.00591716 -2.347805
-332 Freiburg im Breisgau Restaurants       1 0.00591716 -2.440362
+[1] "2. p-value:0.000100411323631529"
+     city                       cat counter      prozent residuals
+33  Essen                  Bakeries       3 0.0026064292 -2.479170
+40  Essen                  Bavarian       1 0.0008688097 -2.268814
+72  Essen                     Cafes      69 0.0599478714 -2.731516
+100 Essen              Coffee & Tea       8 0.0069504778 -2.919103
+212 Essen                    Hotels       2 0.0017376195 -3.340667
+215 Essen Ice Cream & Frozen Yogurt       3 0.0026064292 -2.073711
+332 Essen               Restaurants      24 0.0208514335 -4.014430
+371 Essen                   Swabian       0 0.0000000000 -2.537139
 
-[1] "2. p-value:1"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
-
-[1] "3. p-value:1"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
-
-[1] "4. p-value:0.999999999830785"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
-
-[1] "5. p-value:2.78184006206144e-116"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
-
-[1] "6. p-value:1"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
-
-[1] "7. p-value:1"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
-
-[1] "8. p-value:0.00282037320028571"
-           city          cat counter prozent residuals
-100 Bremerhaven Coffee & Tea       0       0 -2.111008
-
-[1] "9. p-value:1"
-[1] city      cat       counter   prozent   residuals
-<0 Zeilen> (oder row.names mit Länge 0)
-
-[1] "10. p-value:0.752179976044473"
+[1] "3. p-value:0.752179976044473"
     city                       cat counter     prozent residuals
 46  Kiel               Beer Garden       2 0.003577818 -2.473993
 186 Kiel                    German      52 0.093023256 -2.519482
 215 Kiel Ice Cream & Frozen Yogurt       0 0.000000000 -2.129392
 227 Kiel                   Italian      33 0.059033989 -2.642556
 267 Kiel             Mediterranean       1 0.001788909 -2.526312
+
+[1] "4. p-value:3.18017404146913e-16"
+       city         cat counter      prozent residuals
+156 Dresden   Fast Food      27 0.0249077491 -2.953384
+170 Dresden        Food       1 0.0009225092 -2.157625
+227 Dresden     Italian      66 0.0608856089 -3.480124
+314 Dresden       Pizza      45 0.0415129151 -2.220312
+332 Dresden Restaurants      29 0.0267527675 -2.993034
+371 Dresden     Swabian       0 0.0000000000 -2.462189
+
+[1] "5. p-value:3.68252788973639e-26"
+       city          cat counter     prozent residuals
+100 Leipzig Coffee & Tea       9 0.007518797 -2.833169
+227 Leipzig      Italian      65 0.054302423 -4.403300
+332 Leipzig  Restaurants      32 0.026733500 -3.148267
+371 Leipzig      Swabian       0 0.000000000 -2.587342
+398 Leipzig      Turkish       7 0.005847953 -2.127233
+
+[1] "6. p-value:7.3274094444936e-07"
+        city          cat counter      prozent residuals
+40  Dortmund     Bavarian       0 0.0000000000 -2.525454
+72  Dortmund        Cafes      56 0.0534351145 -3.337524
+100 Dortmund Coffee & Tea       6 0.0057251908 -3.075310
+186 Dortmund       German      91 0.0868320611 -4.002032
+212 Dortmund       Hotels       5 0.0047709924 -2.324362
+332 Dortmund  Restaurants      34 0.0324427481 -2.087021
+371 Dortmund      Swabian       1 0.0009541985 -2.007899
+413 Dortmund    Wine Bars       2 0.0019083969 -2.032595
+
+[1] "7. p-value:0.999999999830785"
+[1] city      cat       counter   prozent   residuals
+<0 Zeilen> (oder row.names mit Länge 0)
+
+[1] "8. p-value:3.30779239438549e-83"
+       city     cat counter    prozent residuals
+227 Rostock Italian      24 0.05333333 -2.767194
+314 Rostock   Pizza      10 0.02222222 -3.133949
+
+[1] "9. p-value:0.639784623872931"
+         city         cat counter    prozent residuals
+227 Bielefeld     Italian      45 0.06912442 -2.008165
+332 Bielefeld Restaurants      16 0.02457757 -2.577343
+
+[1] "10. p-value:1"
+          city   cat counter    prozent residuals
+72 Norderstedt Cafes       5 0.03164557 -2.245636

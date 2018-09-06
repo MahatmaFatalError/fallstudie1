@@ -12,7 +12,7 @@ class Collector(ABC, threading.Thread):
     entity_name = None
     test_mode = None
     zip_codes = []
-    current_city = None
+    cities = []
     datastore = None
     logger = logging.getLogger(__name__)
 
@@ -48,13 +48,15 @@ class Collector(ABC, threading.Thread):
         sql = SqlHelper(constants.SQL_DATABASE_NAME)
 
         sql.create_session()
-        city_from_db = sql.fetch_city_by_name(self.current_city)
-        # get zip codes and close session afterwards
-        zip_codes = city_from_db.zip_codes
-        sql.close_session()
 
-        for zip in zip_codes:
-            self.zip_codes.append(zip.zip_code)
+        for city in self.cities:
+            city_from_db = sql.fetch_city_by_name(city)
+            # get zip codes
+            zip_codes = city_from_db.zip_codes
+            for zip in zip_codes:
+                self.zip_codes.append(zip.zip_code)
+
+        sql.close_session()
 
     def _fetch_entities_by_zip_code(self, entity_name):
         result_all = []
