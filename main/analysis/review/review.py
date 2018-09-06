@@ -9,27 +9,44 @@ from main.helper.text_analyzer import TextAnalyzer
 from main.helper.value import Value
 
 logger = logging.getLogger(__name__)
+reviews_df = None
 
 # If you want to, change things here! #
 top_how_much = 50
+rating = 5
 tree_tagger_dir = '../../../data/tree_tagger'
-reversed_result = True  # True = absteigend
+reversed_result = False  # True = absteigend
 cumulated = True
 stemming = True
 tagging = True
+language = 'german'
+group_by_category = True
 #####################################
 
 
 def run():
-    reviews = fetch_reviews_from_postgres(with_categories=True)
-    print(reviews)
-    # enrich_with_category()
-    # one_star_reviews = reviews[reviews.stars == 1]
-    # five_star_reviews = reviews[reviews.stars == 5]
-    # logger.info('Analyzing 1-Star Reviews')
-    # analyze(reviews, 'german', 'All')
-    # logger.info('Analyzing 5-Star Reviews')
-    # analyze(five_star_reviews, '5-Star Reviews')
+    global reviews_df
+    global rating
+    global language
+
+    reviews_df = fetch_reviews_from_postgres(with_categories=group_by_category)
+
+    if rating:
+        reviews_df = reviews_df[reviews_df.rating == rating]
+
+    if language:
+        reviews_df = reviews_df[reviews_df.language == language]
+
+    if group_by_category:
+        groups = reviews_df.groupby('category')
+
+        for name, group in groups:
+            logger.info('Group By Category')
+            logger.info('Analyzing ' + str(name))
+            analyze(group, language, str(rating) + '-Star Rating_Group_by' + str(name) + '_in_' + language)
+    else:
+        logger.info('Analyzing {0}-Star Reviews in {1}'.format(rating, language))
+        analyze(reviews_df, language, '{0}-Star Reviews_in_{1}'.format(rating, language))
 
 
 def fetch_reviews_from_postgres(with_categories):
@@ -39,7 +56,7 @@ def fetch_reviews_from_postgres(with_categories):
     session = db.get_connection()
 
     if with_categories:
-        query = 'SELECT r.rating, r.text, r.language, fc.name ' \
+        query = 'SELECT r.rating, r.text, r.language, fc.name as category ' \
                 'FROM review AS r JOIN food_category AS fc ' \
                 'ON (r.restaurant_id = fc.restaurant_id);'
         df = pd.read_sql_query(sql=query, con=session)
