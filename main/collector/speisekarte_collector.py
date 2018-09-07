@@ -69,7 +69,6 @@ class SpeisekarteCollector(Collector):
                         }
                         result['restaurants'].append(restaurant_result)
                 all_results.append(result)
-            self.logger.info(all_results)
         except HTTPError as error:
             self.logger.exception('Encountered HTTP error %s on %s:\nAbort program.', error.code, error.url)
         except:
