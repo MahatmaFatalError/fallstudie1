@@ -63,7 +63,6 @@ class SpeisekarteSpider:
                 self.result.set_message(message)
         except:
             self.result.set_success(False)
-            # TODO Exceptions????
 
     def _create_city_id(self):
         self.city_id = self.city.lower().strip().replace(' ', '-')
