@@ -75,7 +75,6 @@ class ReviewCollector(Collector):
                         message = yelp_entity['error']['description']
                         result.set_success(False)
                         result.set_message(message)
-                        sql.close_session()
                         raise YelpError(yelp_entity['error']['code'], message)
         else:
             result.set_success(False)
@@ -103,6 +102,6 @@ class ReviewCollector(Collector):
         return attributes
 
     def _fetch_all_restaurants(self):
-        self._fetch_zip_codes_from_database()
+        self._fetch_zip_codes_from_database('review_collected')
         result = self._fetch_entities_by_zip_code('Restaurant')
         return result

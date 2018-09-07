@@ -15,12 +15,12 @@ reviews_df = None
 top_how_much = 50
 rating = 5
 tree_tagger_dir = '../../../data/tree_tagger'
-reversed_result = False  # True = absteigend
+reversed_result = True  # True = absteigend
 cumulated = True
 stemming = True
 tagging = True
-language = 'german'
-group_by_category = True
+language = 'english'
+group_by_category = False
 #####################################
 
 
@@ -43,7 +43,8 @@ def run():
         for name, group in groups:
             logger.info('Group By Category')
             logger.info('Analyzing ' + str(name))
-            analyze(group, language, str(rating) + '-Star Rating_Group_by' + str(name) + '_in_' + language)
+            name = str(name).replace('/', '_')
+            analyze(group, language, str(rating) + '-Star Rating_Group_by_' + name + '_in_' + language)
     else:
         logger.info('Analyzing {0}-Star Reviews in {1}'.format(rating, language))
         analyze(reviews_df, language, '{0}-Star Reviews_in_{1}'.format(rating, language))

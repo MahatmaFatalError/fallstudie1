@@ -44,7 +44,7 @@ class Collector(ABC, threading.Thread):
             self.logger.exception('An Unknown Error occured')
         return success
 
-    def _fetch_zip_codes_from_database(self):
+    def _fetch_zip_codes_from_database(self, delta_handling_attribute):
         sql = SqlHelper(constants.SQL_DATABASE_NAME)
 
         sql.create_session()
@@ -53,8 +53,10 @@ class Collector(ABC, threading.Thread):
             city_from_db = sql.fetch_city_by_name(city)
             # get zip codes
             zip_codes = city_from_db.zip_codes
-            for zip in zip_codes:
-                self.zip_codes.append(zip.zip_code)
+            for zip_code_object in zip_codes:
+                collected = getattr(zip_code_object, delta_handling_attribute)
+                if not collected:
+                    self.zip_codes.append(zip_code_object.zip_code)
 
         sql.close_session()
 
@@ -65,10 +67,11 @@ class Collector(ABC, threading.Thread):
         sql.create_session()
 
         for zip_code in self.zip_codes:
+            kwargs = {'zip_code': str(zip_code)}
             result = sql.fetch_entity_where(class_name=entity_name,
                                             negated=False,
                                             fetch_all=True,
-                                            zip_code=str(zip_code))
+                                            **kwargs)
             result_all += result
         sql.close_session()
         return result_all

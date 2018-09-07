@@ -46,6 +46,7 @@ def main():
                      'Ok?\n' \
                      '(1)yes\n' \
                      '(2)no\n' \
+                     'Answer by type in the number.' \
         .format(collect_or_transport, action, city_or_top, city_name, top_how_much, test_mode)
 
     confirm = int(input(confirm_string))
@@ -111,6 +112,7 @@ def ask_action(choices):
 
 
 def ask_city_or_top(action_number, collect_or_transport):
+    city_or_top = None
     if action_number in [6, 8, 7]:
         city_or_top = int(input("By City or By Top How Much\n"
                                 "(1)By City\n"
@@ -120,8 +122,6 @@ def ask_city_or_top(action_number, collect_or_transport):
         if city_or_top == 2 and collect_or_transport == 2:
             logger.info('Top How much not available when transporting. Will be ignored')
             city_or_top = None
-    else:
-        city_or_top = None
     return city_or_top
 
 
