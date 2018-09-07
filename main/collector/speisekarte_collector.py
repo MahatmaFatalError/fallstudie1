@@ -36,7 +36,7 @@ class SpeisekarteCollector(Collector):
             city_objects = db.fetch_entity_where('TopCities')
             cities = [[city.state, city.city] for city in city_objects]
         else:
-            city_objects = db.fetch_entity_where('TopCities', True, False, name=self.city_name)
+            city_objects = db.fetch_entity_where('TopCities', True, False, city=self.city_name)
             cities = [[city.state, city.city] for city in city_objects]
         all_results = []
         try:
