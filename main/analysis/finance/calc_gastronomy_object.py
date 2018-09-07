@@ -3,22 +3,13 @@
 from config import constants
 import pandas as pd
 
-BUDGET = 750000 # €
-BUY_FACTOR = 1 # einmal kaufen
-RENT_FACTOR = 12 # für ein Jahr Miete
-EINRICHTUNGS_KOSTEN_PER_SQUARE_METER = 1500
-EINRICHTUNG_PER_SEAT = 200
-PLÄTZE_MIN = 52  # für 40.000 € = 100 %
-PLÄTZE_MAX = 65  # für 125 %
-
 
 def calc(price, priceintervaltype, totalfloorspace, seats):
     if 'ONE_TIME_CHARGE' in str(priceintervaltype):
-        multiplier = BUY_FACTOR
+        multiplier = constants.BUY_FACTOR
     else:
-        multiplier = RENT_FACTOR
-    print('multiplier: ' + str(multiplier))
-    rest_budget = BUDGET - price * multiplier - EINRICHTUNGS_KOSTEN_PER_SQUARE_METER * totalfloorspace - seats * EINRICHTUNG_PER_SEAT
+        multiplier = constants.RENT_FACTOR
+    rest_budget = constants.BUDGET - price * multiplier - constants.FURNISH_COST_PER_SQUARE_METER * totalfloorspace - seats * constants.FURNISH_COST_PER_SEAT
     return rest_budget
 
 
@@ -34,8 +25,8 @@ if __name__ == '__main__':
     filter_price_zero = immo_df[immo_df['price'] > 0]
 
     # Calcualting min/max rest_budget for seats: 52 (100 %) to 65 (125 %)
-    result = filter_price_zero.assign(min = lambda x: calc(x['price'], x['priceintervaltype'], x['totalfloorspace'], PLÄTZE_MAX),
-                                      max = lambda x: calc(x['price'], x['priceintervaltype'], x['totalfloorspace'], PLÄTZE_MIN))
+    result = filter_price_zero.assign(min = lambda x: calc(x['price'], x['priceintervaltype'], x['totalfloorspace'], constants.SEATS_MAX),
+                                      max = lambda x: calc(x['price'], x['priceintervaltype'], x['totalfloorspace'], constants.SEATS_MIN))
 
     result = result[result['min'] >= 0]
 

@@ -64,3 +64,13 @@ SQL_TABLE_SEAT = 'restaurant_seat'
 SQL_TABLE_IMMOSCOUT = 'immoscout'
 SQL_TABLE_TOP_CITY = 'top_cities'
 SQL_TABLE_RATING_WORD = 'top_rating_word'
+
+# finance Constants
+BUDGET = 750000 # €
+BUY_FACTOR = 1 # one time buy
+RENT_FACTOR = 12 # for one year monthly rent
+FURNISH_COST_PER_SQUARE_METER = 1500
+FURNISH_COST_PER_SEAT = 200
+SEATS_MIN = 52  # for 40.000 € = 100 %
+SEATS_MAX = 65  # for 125 %
+FLOOR_SPACE_GUEST = 1.5  # m²
