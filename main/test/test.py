@@ -32,11 +32,10 @@ sql.create_session()
 
 # result = datastore.fetch_entity('THD_Speisekarte', None, None, True, '=', transported=False, zip_code=44866)
 # print(result)
+
+sql._update_entity('ZipCode', 'zip_code', '10115', 'review_collected', False)
+
+sql.commit_session()
+
 sql.close_session()
 
-city = None
-
-if not city:
-    print('Value is None/Empty')
-else:
-    print(city)

@@ -72,3 +72,4 @@ class Collector(ABC, threading.Thread):
             result_all += result
         sql.close_session()
         return result_all
+

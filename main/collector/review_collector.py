@@ -10,7 +10,6 @@ from main.helper.yelp import YelpHelper
 
 
 class ReviewCollector(Collector):
-
     yelp = None
     current_zip_code = None
     current_city = None
@@ -31,10 +30,13 @@ class ReviewCollector(Collector):
         result = Result()
         result.set_success(True)
 
+        sql = SqlHelper(constants.SQL_DATABASE_NAME)
+        sql.create_session()
+
         if self.current_city:
             self.cities.append(self.current_city)
         elif self.top_how_much:
-            self._fetch_top_how_much()
+            self.cities = self._fetch_top_city_from(self.top_how_much, 'top_cities')
 
         restaurants = self._fetch_all_restaurants()
         locale_list = ['en_US', 'de_DE']
@@ -57,7 +59,15 @@ class ReviewCollector(Collector):
                                         locale
                             if not self.test_mode:
                                 success = self._save(entity_id, datastore_entity)
-                                result.set_success(success)
+                                if success:
+                                    result.set_success(success)
+                                    sql.update_entity('ZipCode',
+                                                      'zip_code',
+                                                      self.current_zip_code,
+                                                      'review_collected',
+                                                      True)
+                                    sql.commit_session()
+
                         else:
                             self.logger.debug('No Reviews found for restaurant {0} in {1}'
                                               .format(restaurant.name, self.current_city))
@@ -65,19 +75,22 @@ class ReviewCollector(Collector):
                         message = yelp_entity['error']['description']
                         result.set_success(False)
                         result.set_message(message)
+                        sql.close_session()
                         raise YelpError(yelp_entity['error']['code'], message)
         else:
             result.set_success(False)
             result.set_message('Failure when saving Review Entity to Datastore')
+
+        sql.close_session()
         return result
 
-    def _fetch_top_how_much(self):
+    def _fetch_top_city_from(self, top_how_much, table_name):
         db = SqlHelper(constants.SQL_DATABASE_NAME)
         db.create_session()
-        df = db.fetch_table_as_dataframe('top_cities')
-        self.logger.info('Fetching Top {0}'.format(self.top_how_much))
-        cities_dataframe = pd.DataFrame(data=df.iloc[:self.top_how_much], columns={'city'})
-        self.cities = cities_dataframe['city'].values.tolist()
+        df = db.fetch_table_as_dataframe(table_name)
+        self.logger.info('Fetching Top {0}'.format(top_how_much))
+        cities_dataframe = pd.DataFrame(data=df.iloc[:top_how_much], columns={'city'})
+        return cities_dataframe['city'].values.tolist()
 
     def _create_datastore_entity(self, content) -> dict:
         attributes = {'updatedAt': datetime.datetime.now(),

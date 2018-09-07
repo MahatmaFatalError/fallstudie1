@@ -15,10 +15,11 @@ class ZipCode(Base):
     zip_code = Column(Integer, primary_key=True)
     requested = Column(Boolean, default=False)
     updated_at = Column(DateTime)
+    review_collected = Column(Boolean, default=False)
 
     def __str__(self):
-        return 'city id: {0}, zip code: {1}, requested: {2}, updated_at: {3}' \
-            .format(self.city_id, self.zip_code, self.requested, self.updated_at)
+        return 'city id: {0}, zip code: {1}, requested: {2}, updated_at: {3}, review_collected: {4}' \
+            .format(self.city_id, self.zip_code, self.requested, self.updated_at, self.review_collected)
 
 
 class City(Base):

@@ -199,3 +199,7 @@ class SqlHelper:
             filter(City.name.like(name)). \
             first()
         return result
+
+    def update_entity(self, class_name, attribute_to_select, attribute_value, attribute_to_set, value_to_set):
+        db_object = self.fetch_entity_where(class_name, False, False, **{attribute_to_select: attribute_value})
+        setattr(db_object, attribute_to_set, value_to_set)
