@@ -1,3 +1,16 @@
 \paragraph{Data Storage}
 \label{par:storage}
-As a storage for the datasets the Google Cloud Platform was used. Before that, it is necessary to configure it first. You have to create a GCP-Project and then put the collected data in the Google Cloud Datastore which is a NoSQL document database. From there, it was possible to create a postgreSQL istance with Cloud SQL, the fully-managed relational database service of Google Cloud. For setting up a connection a proxy or current ip address is required.
+In order for the data to be available for analysis and visualization, it must be read from the \gds{} and imported into the \pg{} database.
+Before the data in the \pg{} can be personalized, it must be mapped to the respective table format.
+
+This process is called \textit{Data Storage} and the Python module \code{transporter.py} was developed especially for this purpose.
+In contrast to the implementation of the \code{collector} module, a large part of the \textit{Data Storage} logic is in the base class.
+Only the logic for transforming the \gds{} entity to a \pg{} database table must be implemented as soon as a new
+data source is to be connected.
+
+In summary, the following steps had to be taken to develop a new \textit{transporter}:
+\begin{itemize}
+  \item Create a new \pg{} table with \code{sqlalchemy}
+  \item  Create a new \code{<example>\_transporter.py} file that inherits from the base class.
+  \item Implementation of the \code{map()} Methdode in which the \gds{} entity is received and one or more \code{sqlalchemy} object(s) are created and returned.
+\end{itemize}
