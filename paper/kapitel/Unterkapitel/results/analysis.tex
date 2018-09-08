@@ -43,14 +43,41 @@ First of all, a list of cities ordered by their general potential fit needs to b
 \begin{equation}
 \begin{aligned}
 	potential_c = &SoftMax(\frac{population.sqkm_c}{restaurants.sqkm_c})  \\
-	\times & SoftMax(\textstyle \sum reviewcount_{cr}  \\
+	\times & SoftMax(\textstyle \sum reviewcount_{cr})  \\
 	\times & SoftMax(\varnothing rating_{cr}) %^\prime 
 \end{aligned}
 \label{eq:potential_benchmark}
 \end{equation}
 
-where $potential_c$ is the potential of a city expressed by a floating number between 0 and 1,  $(\frac{population.sqkm_c}{restaurants.sqkm_c})$ is the quotient of average population per square kilometer per city by average count of restaurants per square kilometer per city, $\sum reviewcount_{cr}$ is the sum of all restaurant reviews per city and $\varnothing rating_{cr}$ is the average restaraunt rating per city.
+where $potential_c$ is the potential of a city expressed by a floating-point number between 0 and 1,  $(\frac{population.sqkm_c}{restaurants.sqkm_c})$ is the quotient of average population per square kilometer per city by average restaurant density per square kilometer per city, $\sum reviewcount_{cr}$ is the sum of all restaurant reviews per city and $\varnothing rating_{cr}$ is the average restaurant rating per city. In order to weight the factors equally each of them needs to be standardized, i.e. their values  gets compressed to a continuous variable ranging from 0 to 1 via the $SoftMax$ function.\newline
+To avoid blurring the results with unrepresentative cities, the following conditions needs to be fulfilled in order to be taken into account as a potential city: 
 
+\begin{equation}
+\begin{aligned}
+reviewcount_{r} &\geq \varnothing reviewcount_{r} \\
+reviewcount_{rc} &\geq \varnothing reviewcount_{rc} \\
+\sum restaurants_{c} &\geq \varnothing \sum restaurants_{c} 
+\end{aligned}
+\label{eq:potential_condition}
+\end{equation}
+
+For the given data this yields to $reviewcount_{r} \geq 10 $, $reviewcount_{rc} \geq 28$ and $\sum restaurants_{c} \geq 138$.
+
+\begin{table}[!htbp] \centering 
+	\caption{} 
+	\label{} 
+	\begin{tabular}{@{\extracolsep{5pt}}lccccccc} 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Pctl(25)} & \multicolumn{1}{c}{Pctl(75)} & \multicolumn{1}{c}{Max} \\ 
+		\hline \\[-1.8ex] 
+		reviews & 70,875 & 10.238 & 20.934 & 0 & 2 & 10 & 837 \\ 
+		reviews in city  & 3,032 & 306.393 & 4,158.057 & 0 & 4 & 79 & 173,471 \\
+		restaurants in city & 3,032 & 28.560 & 194.364 & 1 & 1 & 20 & 8,203 \\  
+		\hline \\[-1.8ex] 
+	\end{tabular} 
+\end{table} 
+%TODO zahlen checken 
 % bedingungen:  review_count >= 9  sum(review_count)  > 138 and count(review_count) >= 28
 
 %- Ranking Algorithm
