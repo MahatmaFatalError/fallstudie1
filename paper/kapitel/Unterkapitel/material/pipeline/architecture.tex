@@ -67,13 +67,14 @@ we consciously forgo a batch layer - and therefore also the Lambda architecture 
 in order not to unnecessarily increase the complexity of our architecture but also to reduce the processing time of data at the same time.
 So we decided for a simplified version of the Kappa architecture.
 
-In step 1, we collect the data from different data sources and write them unchanged into a schemalless database.
-Step 2 is the transport of the data into a relational database from where it could be visualized and/or analyzed.
+In step 1 we collect the data from different data sources and write them unchanged into \gds{}
+The second step consists of transporting the data into the \pg{} database from where it can be analyzed later on.
 The transport included not only the simple moving of the data from the source to the target database but also the conversion of the data
 into a format that has been adapted to the relational database.
-If the data needs any enrichment with additional attributes to enrich the subsequent analysis and visualization in a more meaningful way, this is happening also in the Transport layer.
-The last step, the analysis of the data, was done depending on the scenario with the Bi- and Software Analysis Software Tableau or with a Python Script and the libraries \code{pandas} and \code{matplotlib}.
+Conversion, in this case, does not only mean to add additional attributes to enrich the subsequent analysis and visualization in a more meaningful way,
+but also sorting out not used attributes.
+The last step, the analysis of the data, was done depending on the scenario either with the Bi- and Software Analysis Software Tableau or with a Python Script and the libraries \code{pandas} and \code{matplotlib}.
+\newline
 The following picture shows our previously described variant of the Kappa architecture.
 
-The following chapters are showing the used data sources and describe the single processes to get the data ready for the analysis.
-Our processes are Data Ingestion, Data Storage and Data Cleaning.
+%TODO: picture
