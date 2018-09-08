@@ -64,19 +64,13 @@ COALESCE(city.buying_power, bp.buying_power) AS buying_power_cleaned
 # 8. ```rent_avg``` cleaning
 Take a look at ```rent_avg.py``` script.
 
-# 8. ```review_count``` cleaning
+# 9. ```review_count``` cleaning
 Take a look at ```review_count.py``` script.
 
 
-# Top City Cleaning
-
+# 10. Top City Cleaning
 ```sql
 UPDATE public.top_cities
 	SET city='Hannover'
 	WHERE city = 'Hanover';
 ```
-
-1. Hanover
-2. Dusseldorf
-3. Nuremberg
-4. Munich 
