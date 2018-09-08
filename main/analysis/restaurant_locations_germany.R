@@ -21,10 +21,8 @@ plot(dtab$buying_power_groups)
 
 
 ## crunch character data to factors
-priceCat = factor(dtab$price_range)
-#str(priceCat)
-#levels(priceCat)
-dtab$price_range = priceCat
+restaurants_final$price_range = factor(restaurants_final$price_range)
+
 
 foodCat = factor(dtab$category)
 #str(foodCat)
@@ -47,8 +45,25 @@ summary(fit.lr)
 
 ## tree
 library(partykit)
-fit.t <- ctree(rating ~ price_range + state + review_count + buying_power + population_sqkm, data=dtab)
+fit.t <- ctree(rating ~ price_range + review_count + state + population_sqkm + buying_power, data=restaurants_final)
 plot(fit.t)
+
+
+library(caret)
+model2 <- train(rating ~ price_range + review_count + state + population_sqkm + buying_power , data = restaurants_final, method='ctree', tuneLength=2
+               #, trControl=trainControl(method='cv', number=10, classProbs=TRUE, summaryFunction=twoClassSummary)
+               )
+model2
+plot(model2)
+
+
+# kommt zu keinem Ende
+#fit.rf <- cforest(rating ~ price_range + review_count + state + population_sqkm + buying_power, data=restaurants_final)
+#plot(fit.rf)
+
+library(rpart)
+fit.cart <- rpart(rating ~ price_range + review_count + state + population_sqkm + buying_power, data=restaurants_final)
+plot(fit.cart) #
 
 
 library(effects)
@@ -70,7 +85,7 @@ corrplot(dtab, type = "full", order = "hclust")
 # Beide sind normalverteilt, bedingung für pearson
 shapiro.test(restaurants_final$rating[1:5000])
 shapiro.test(restaurants_final$buying_power[1:5000])
-
+  
 # ganz leichte minimale negative signifikante korrelation
 cor.test(restaurants_final$buying_power,restaurants_final$rating, method="pearson")
 
