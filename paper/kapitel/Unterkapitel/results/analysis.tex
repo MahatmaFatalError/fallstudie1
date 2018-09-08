@@ -3,12 +3,30 @@
 
 
 \paragraph{Setup \& Assumptions}
-Starting with the technical setup, it should be mentioned that the following analyses were calculated with the R programming language. Each approach follows the same procedure: Preparation and loading of the to be analyzed data via SQL, application of the appropriate analysis methods, interpretation of their results and finally storage of them to be available for further reuse.
+Starting with the technical setup, it should be mentioned that the following analyses were calculated with the R programming language. Each approach follows the same procedure: Preparation and loading of the to be analyzed data via SQL, application of the appropriate analysis methods, interpretation of their results and finally storage of them to be available for further reuse.\newline
 A foundational assumption of the following approaches is the positive impact of increasing Yelp's star rating on the revenue of a restaurant, which is a essential finding of \cite{CaseOfYelp}\footnote{Under certain circumstances like no affiliation of the restaurant to a chain.}. Based on this, predictive methods are applied  to investigate which features lead to good restaurant ratings.
 
 
+\paragraph{1st Approach -  Regression Analysis}
+The first analytical method conducted is multiple linear regression. As the Yelp rating is ratio scaled this method can be applied since it allows for metric scaled dependent variables as well as nominal and metric scaled independent variables. The regression equation is as follows: 
 
-\paragraph{1st Approach - Linear Regression}
+\begin{equation}
+	\begin{aligned}
+	\mathrm{rating}_{r} = \beta_{0} 
+	&+ \beta_{1}  \mathrm{price.range}_{r} \\
+	&+ \beta_{2}  \mathrm{review.count}_{r} \\
+	&+ \beta_{3}  \mathrm{category1}_{r}    \\
+	&+ \beta_{4}  \mathrm{category2}_{r} \\
+	&+ \beta_{5}  \mathrm{category3}_{r} \\
+	&+ \beta_{6}  \mathrm{state}_{r}   \\
+	&+ \beta_{7}  \mathrm{population.sqkm}_{cr}  \\
+	&+ \beta_{8}  \mathrm{buying.power}_{cr} + \epsilon
+	\end{aligned}
+	\label{eq:rating_regression}
+\end{equation}
+where $rating_r$ is the rating for restaurant $r$, $price.range_r$ is the categorical cost per person for a meal incl. one drink, tax and tip\footnote{4 distinctions: \euro (up to 10\euro),\euro\euro (11\euro - 30\euro), \euro\euro\euro (31\euro - 60\euro), \euro\euro\euro\euro (above 61\euro) } for restaurant $r$, $review.count$ is the number of ratings that are given for restaurant $r$, $category1-3_r$ are the up to three culinary categories for restaurant $r$, $state_r$ is the federal state in which restaurant $r$ is located in, $population.sqkm_{cr}$ is the population per square kilometer of the city $c$ in which restaurant $r$ is located in, $buying.power_{cr}$ is the buying power for the city $c$ in which restaurant $r$ is located in. \newline
+The result shows that  intercept $\beta_{0}$, $price.range_r$, $review.count$, $population.sqkm_{cr}$ and 
+$buying.power_{cr}$ do have a significant effect onto $rating_r$. Due to the fact that the categories are distributed over 421 distinct values and can be combined 3 times, no significant impact of a certain category can be found. Unfortunately, even the significant variables are not reliable since $adjusted$ $ R^2$ only scores 0.05312 which indicates that the regression model only predicts very little variance in the dependent variable and is therefor not appropriate.
 
 
 \paragraph{2nd Approach - Classification Tree Partitioning}
