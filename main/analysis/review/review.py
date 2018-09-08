@@ -17,9 +17,9 @@ rating = 5
 tree_tagger_dir = '../../../data/tree_tagger'
 reversed_result = True  # True = absteigend
 cumulated = True
-stemming = True
+stemming = False
 tagging = True
-language = 'english'
+language = 'german'
 group_by_category = False
 #####################################
 
@@ -51,9 +51,9 @@ def run():
 
 
 def fetch_reviews_from_postgres(with_categories):
+    global language
 
     db = SqlHelper(constants.SQL_DATABASE_NAME)
-
     session = db.get_connection()
 
     if with_categories:
@@ -63,6 +63,7 @@ def fetch_reviews_from_postgres(with_categories):
         df = pd.read_sql_query(sql=query, con=session)
     else:
         df = pd.read_sql_table(table_name='review', con=session)
+    logger.info('Found {0} Reviews in {1}'.format(df.shape[0], language))
 
     return df
 

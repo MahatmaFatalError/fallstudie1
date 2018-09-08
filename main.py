@@ -162,6 +162,7 @@ def ask_mode():
 
 
 def check_city(city_name):
+    logger.info('Checking if city is available in PostgreSQL...')
     sql = SqlHelper(constants.SQL_DATABASE_NAME)
     sql.create_session()
     city_from_db = sql.fetch_city_by_name(city_name)

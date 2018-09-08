@@ -175,6 +175,7 @@ class SqlHelper:
         return result
 
     def fetch_entity_where(self, class_name, fetch_all=True, negated=False, **kwargs):
+        self.logger.info('Fetching Enitity {0} from PostgreSQL')
         mod = __import__('main.database.init_db', fromlist=[class_name])
         entity_class = getattr(mod, class_name)
         query = self.session.query(entity_class)

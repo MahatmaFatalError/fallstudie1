@@ -48,8 +48,8 @@ class Collector(ABC, threading.Thread):
         sql = SqlHelper(constants.SQL_DATABASE_NAME)
 
         sql.create_session()
-
         for city in self.cities:
+            self.logger.info('Fetching zip codes for {0} from PostGreSQL'.format(city))
             city_from_db = sql.fetch_city_by_name(city)
             # get zip codes
             zip_codes = city_from_db.zip_codes
@@ -67,11 +67,10 @@ class Collector(ABC, threading.Thread):
         sql.create_session()
 
         for zip_code in self.zip_codes:
-            kwargs = {'zip_code': str(zip_code)}
             result = sql.fetch_entity_where(class_name=entity_name,
                                             negated=False,
                                             fetch_all=True,
-                                            **kwargs)
+                                            zip_code=str(zip_code))
             result_all += result
         sql.close_session()
         return result_all
