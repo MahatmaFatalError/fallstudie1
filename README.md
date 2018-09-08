@@ -8,27 +8,23 @@
 ## Prerequistes
  1. Python 3.6
     - https://www.python.org/downloads/
-    - 64 bit for review.py script
- 2. Google Cloud SDK (with bundled Python)
-    - https://cloud.google.com/sdk/docs/?hl=de
- 3. pip (should be included in python install bundle)
+ 2. pip (should be included in python install bundle)
     - https://pip.pypa.io/en/stable/installing/
- 4. ``` pip install --upgrade google-cloud-datastore ```
- 5. ``` pip install --upgrade sqlalchemy ```
- 6. ``` pip install --upgrade psycopg2 ```
- 7. ``` pip install --upgrade requests ```
- 8. ``` pip install --upgrade pandas ```
- 9. ``` pip install --upgrade PyPDF2 ```
- 10. ``` pip install --upgrade nltk ```
- 11. ``` pip install --upgrade sklearn ```
- 12. Tree Tagger
+ 3. ``` pip install --upgrade google-cloud-datastore ```
+ 4. ``` pip install --upgrade sqlalchemy ```
+ 5. ``` pip install --upgrade psycopg2 ```
+ 6. ``` pip install --upgrade requests ```
+ 7. ``` pip install --upgrade pandas ```
+ 8. ``` pip install --upgrade PyPDF2 ```
+ 9. ``` pip install --upgrade nltk ```
+ 10. ``` pip install --upgrade sklearn ```
+ 11. Tree Tagger
      - [Installation Guide](http://www.smo.uhi.ac.uk/~oduibhin/oideasra/interfaces/winttinterface.htm)
- 13. ``` pip install --upgrade treetaggerwrapper ```
+ 12. ``` pip install --upgrade treetaggerwrapper ```
      - [Usage Guide](https://treetaggerwrapper.readthedocs.io/en/latest/)
      - [List of POS Tags (Deutsch)](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/stts_guide.pdf)
      - [List of POS Tags (English)](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/Penn-Treebank-Tagset.pdf)
- 14. ``` pip install --upgrade fuzzywuzzy ```
- 15. ``` pip install --upgrade requests_oauthlib ```
+ 13. ``` pip install --upgrade requests_oauthlib ```
 
 ## Useful Links
 - https://www.yelp.de/developers/documentation/v3/business_search
