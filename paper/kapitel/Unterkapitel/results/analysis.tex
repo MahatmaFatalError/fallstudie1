@@ -34,14 +34,29 @@ Since the previous approach hardly allows for interpretation, the choice of the 
 For calculation of the tree models the same independent variables are chosen except the categories as they have to many factors which would reduce readability of a tree. The results, however, are doubtful. The CART model only contains a single root while the calculation of the Random Forest model runs for a unacceptable period of time. Only the model of the Unbiased Conditional Inference Tree delivers clear results which are shown in \ref{fig:ctree}. 
 While the tree is easy to read, its leafs are doubtful as they result in a similar distribution of ratings, depicted by box plots.
 Interestingly, the tree lacks a decision node based on the review counts which has been significant in the regression model.
-After checking the trained model on the basis of test data for cross-validation, the already suspected result is confirmed: $ R^2$ of 0.00236 confirms the assumption that crucial independent variables are missing in the data in ordner to achieve proper prediction quality.
-\bildWOCite{kapitel/unterkapitel/results/ctree.png}{Unbiased Conditional Inference Tree}{ctree}{}{}
+After checking the trained model on the basis of test data for cross-validation, the already suspected result is confirmed: $R^2$ of 0.00236 confirms the assumption that crucial independent variables are missing in the data.
+\bildWOCite{kapitel/unterkapitel/results/ctree.png}{Unbiased Conditional Inference Tree of Yelp restaurant data}{ctree}{}{}
  
-\paragraph{3rd Approach - Analysis of Potential}
+\paragraph{3rd Approach - Benchmarking of Potential}
+The preceding results substantiate lack of essential information which would be necessary in order to achieve proper prediction quality. Hence, this approach reclaims basic ranking techniques to calculate a Key Performance Indicator (KPI) which states the suitability of a city in combination with a food category.\newline
+First of all, a list of cities ordered by their general potential fit needs to be generated. In order to calculate this synthetic potential KPI we propose the following equation:
+\begin{equation}
+\begin{aligned}
+	potential_c = &SoftMax(\frac{population.sqkm_c}{restaurants.sqkm_c})  \\
+	\times & SoftMax(\textstyle \sum reviewcount_{cr}  \\
+	\times & SoftMax(\varnothing rating_{cr}) %^\prime 
+\end{aligned}
+\label{eq:potential_benchmark}
+\end{equation}
 
+where $potential_c$ is the potential of a city expressed by a floating number between 0 and 1,  $(\frac{population.sqkm_c}{restaurants.sqkm_c})$ is the quotient of average population per square kilometer per city by average count of restaurants per square kilometer per city, $\sum reviewcount_{cr}$ is the sum of all restaurant reviews per city and $\varnothing rating_{cr}$ is the average restaraunt rating per city.
 
+% bedingungen:  review_count >= 9  sum(review_count)  > 138 and count(review_count) >= 28
 
 %- Ranking Algorithm
 %- KPI Formula
 %- contingency analysis 
 %- χ2 test
+
+
+% wir bräuchten eignetlich noc hTouristik Daten damit wir wissenm wieviel Leute die Stadt besuchen
