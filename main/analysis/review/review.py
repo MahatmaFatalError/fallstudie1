@@ -21,6 +21,9 @@ stemming = False
 tagging = True
 language = 'german'
 group_by_category = False
+city = None
+
+
 #####################################
 
 
@@ -30,6 +33,9 @@ def run():
     global language
 
     reviews_df = fetch_reviews_from_postgres(with_categories=group_by_category)
+
+    if city:
+        reviews_df = reviews_df[reviews_df.city == city]
 
     if rating:
         reviews_df = reviews_df[reviews_df.rating == rating]
@@ -57,12 +63,27 @@ def fetch_reviews_from_postgres(with_categories):
     session = db.get_connection()
 
     if with_categories:
-        query = 'SELECT r.rating, r.text, r.language, fc.name as category ' \
-                'FROM review AS r JOIN food_category AS fc ' \
+        query = 'SELECT r.rating, r.text, r.language, zip.zip_code, city.name as city, fc.name as category ' \
+                'FROM review AS r ' \
+                'JOIN restaurant AS rest ' \
+                'ON (r.restaurant_id = rest.id) ' \
+                'JOIN zip_code AS zip ' \
+                'ON (rest.zip_code = zip.zip_code) ' \
+                'JOIN city ' \
+                'ON (zip.city_id = city.id) ' \
+                'JOIN food_category AS fc ' \
                 'ON (r.restaurant_id = fc.restaurant_id);'
-        df = pd.read_sql_query(sql=query, con=session)
     else:
-        df = pd.read_sql_table(table_name='review', con=session)
+        query = 'SELECT r.rating, r.text, r.language, zip.zip_code, city.name' \
+                'FROM review AS r ' \
+                'JOIN restaurant AS rest ' \
+                'ON (r.restaurant_id = rest.id) ' \
+                'JOIN zip_code AS zip ' \
+                'ON (rest.zip_code = zip.zip_code) ' \
+                'JOIN city ' \
+                'ON (zip.city_id = city.id);'
+
+    df = pd.read_sql_query(sql=query, con=session)
     logger.info('Found {0} Reviews in {1}'.format(df.shape[0], language))
 
     return df

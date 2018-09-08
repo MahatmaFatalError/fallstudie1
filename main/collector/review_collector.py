@@ -44,6 +44,15 @@ class ReviewCollector(Collector):
             while result.get_success():
                 for restaurant in restaurants:
                     self.current_restaurant_id = restaurant.id
+                    # if there is a change in zip codes;
+                    # all reviews from current zip code are successfully collected into db
+                    # set it to collected
+                    if restaurant.zip_code is not self.current_zip_code:
+                        sql.update_entity('ZipCode',
+                                          'zip_code',
+                                          self.current_zip_code,
+                                          'review_collected',
+                                          True)
                     self.current_zip_code = restaurant.zip_code
                     self.current_city = restaurant.city
                     for locale in locale_list:
@@ -61,13 +70,7 @@ class ReviewCollector(Collector):
                                     success = self._save(entity_id, datastore_entity)
                                     if success:
                                         result.set_success(success)
-                                        sql.update_entity('ZipCode',
-                                                          'zip_code',
-                                                          self.current_zip_code,
-                                                          'review_collected',
-                                                          True)
                                         sql.commit_session()
-
                             else:
                                 self.logger.debug('No Reviews found for restaurant {0} in {1}'
                                                   .format(restaurant.name, self.current_city))

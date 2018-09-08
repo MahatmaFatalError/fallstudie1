@@ -105,14 +105,6 @@ class Review(Base):
     language = Column(String)
 
 
-class RatingWord(Base):
-    __tablename__ = constants.SQL_TABLE_RATING_WORD
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String)
-    tfidf = Column(Numeric)
-
-
 class Restaurant(Base):
     __tablename__ = constants.SQL_TABLE_RESTAURANT
 
