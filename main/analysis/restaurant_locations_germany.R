@@ -10,8 +10,8 @@ con = dbConnect(pg, user="postgres", password="team123",
 
 ## dtab = dbReadTable(con, "restaurant")
 restaurants_final = dbGetQuery(con, "select * from restaurants_final")
-summary(dtab)
-str(dtab)
+summary(restaurants_final)
+str(restaurants_final)
 hist(dtab$buying_power)
 
 
@@ -31,17 +31,17 @@ foodCat = factor(dtab$category)
 #levels(foodCat)
 dtab$category = foodCat
 
-dtab$category1 = factor(dtab$category1)
-dtab$category2 = factor(dtab$category2)
-dtab$category3 = factor(dtab$category3)
+restaurants_final$category1 = factor(restaurants_final$category1)
+restaurants_final$category2 = factor(restaurants_final$category2)
+restaurants_final$category3 = factor(restaurants_final$category3)
 
 cityCat = factor(dtab$city)
 dtab$city = cityCat
-dtab$state = factor(dtab$state)
+restaurants_final$state = factor(restaurants_final$state)
 plot(dtab$state)
 
 ## linear Regression
-fit.lr <- lm(rating ~ price_range + review_count + state + population_sqkm + buying_power_groups, data=dtab )
+fit.lr <- lm(rating ~ price_range + review_count + state + population_sqkm + buying_power + category1 + category2 + category3, data=restaurants_final )
 #fit.lr <- lm(cbind(price_range,state,review_count,buying_power, population_sqkm, rent_avg) ~ rating, data=dtab )
 summary(fit.lr)
 
