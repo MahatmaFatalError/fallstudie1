@@ -1,25 +1,19 @@
 import json
 import logging
-import pandas as pd
 from collections import defaultdict
 from config import constants
 from main.helper.db_helper import DatastoreHelper, SqlHelper
 from main.helper import util
 
 logger = logging.getLogger(__name__)
+city_string = 'Bochum'
 
 
 def run():
-    # city_string = str(input("Type in the city you want to analyze!. Name is case-sensitive!"))
-    # For testing purposes
-    city_string = 'Mannheim'
-
-    # action = int(input("Which action do you want to perform? (1) Group or (2) Count?"))
-    # For testing purposes
     action = 2
 
     # fetch city from db
-    zip_codes = fetch_zip_codes_from_database(city_string)
+    zip_codes = fetch_zip_codes_from_database()
 
     if action is 2:  # count action
         fav_items, categories, services, menu_items = create_count_city(zip_codes)
@@ -32,7 +26,8 @@ def run():
         write_result(result, 'fav_items_group')
 
 
-def fetch_zip_codes_from_database(city_string):
+def fetch_zip_codes_from_database():
+    global city_string
     sql = SqlHelper(constants.SQL_DATABASE_NAME)
     sql.create_session()
     city_from_db = sql.fetch_city_by_name(city_string)
@@ -95,10 +90,11 @@ def fetch_restaurant_by_zip_code(zip_code):
     datastore = DatastoreHelper()
 
     datastore_content = datastore.fetch_entity(
-        constants.GCP_ENTITY_SPEISEKARTE,
-        1000,
-        0,
-        '=',
+        entity_name=constants.GCP_ENTITY_SPEISEKARTE,
+        limit=1000,
+        offset=0,
+        operator='=',
+        only_keys=False,
         zip_code=zip_code
     )
     return datastore_content
@@ -153,6 +149,9 @@ def create_favoutite_items_plz(datastore_content):
 
 
 def write_result(result, title):
+    global city_string
+
+    title += ('_' + city_string)
     with open('result/' + title + '.txt', 'w', encoding="utf-8") as outfile:
         json.dump(result, outfile, indent=4, ensure_ascii=False)
 
