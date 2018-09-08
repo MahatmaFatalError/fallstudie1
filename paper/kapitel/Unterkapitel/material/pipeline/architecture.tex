@@ -60,10 +60,10 @@ The separation into different layers also fulfils our third requirement.
 As explained in chapter \fullref{par:sources} our biggest data source is the Fusion \ac{API} of Yelp and
 the Search \ac{API} of ImmobilienScout24.
 Due to the fact that Yelp data - with the exception of the Business ID - may not be stored for more than 24 hours,\cite{YelpFaq}
-the amount of data collected is limited.
+the amount of data collected is manageable.
 
 Due to the manageable amount of data that should be available to us in the end and the limited time period to complete this project,
-we consciously forgo a batch layer - and therefore also the Lambda architecture -
+we consciously forgo a batch layer and therefore also the Lambda architecture
 in order not to unnecessarily increase the complexity of our architecture but also to reduce the processing time of data at the same time.
 So we decided for a simplified version of the Kappa architecture.
 

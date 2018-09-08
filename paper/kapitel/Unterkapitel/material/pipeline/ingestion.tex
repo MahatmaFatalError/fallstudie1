@@ -1,11 +1,13 @@
 \paragraph{Data Ingestion}
 \label{par:ingestion}
+As descriped in\cite{ingestion} \textit{Data Ingestion} is the process of obtaining and importing data for immediate use or storage in a database.
+In our usecase we are collecting data from various data sources - either from a static source or contineous data stream like the Yelp Fusion or ImmobilienScout24 \ac{API} - and storing them unchanged in our \gds{} instance.
 
-
-The \code{collector.py} module is the base class for the flow logic of the concrete \textit{collectors}.
+For the implementation of \textit{Data Ingestion} the \code{collector.py} module was developed.
+Within this module is the base class for the flow logic of the concrete \textit{collectors}.
 Due to the inhomogeneity of the data sources and the associated different logic per \textit{collector}, the \code{Collector} class only contains the logic
-to store a newly created entity in the \gds{} and other auxiliary methods for the concrete \textit{Collectors}.
-That means that the flow logic can not only be implemented in the base class, but must also be implemented to a large extent in the subclasses.
+to store a newly created entity in the \gds{} and other auxiliary methods.
+That means that it is not possible to implement the flow logic in the base class, but be implemented to a large extent in each subclasses.
 
-To realize the \textbf{collector} the Python library \code{google-cloud-datastore} were used.
+To realize the \textbf{collector} and its subclasses the Python library \code{google-cloud-datastore} is used.
 The library \code{google-cloud-datastore} is a client with which it is possible to perform all known \ac{CRUD} operations for the \gds{}.
