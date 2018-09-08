@@ -12,8 +12,9 @@ con = dbConnect(pg, user="postgres", password="team123",
 restaurants_final = dbGetQuery(con, "select * from restaurants_final")
 summary(restaurants_final)
 str(restaurants_final)
-hist(dtab$buying_power)
-
+hist(restaurants_final$review_count)
+boxplot(restaurants_final$review_count)
+summary(restaurants_final$review_count)
 
 # categorize buying power into opgroups
 dtab$buying_power_groups <- cut(dtab$buying_power, breaks=c(-Inf, 20000, 24000, 28000, Inf), labels=c("low","middle", "upper middle","high"))
@@ -90,6 +91,16 @@ shapiro.test(restaurants_final$buying_power[1:5000])
 cor.test(restaurants_final$buying_power,restaurants_final$rating, method="pearson")
 
 View(dtab)
+
+
+# latex
+install.packages("stargazer")
+library(stargazer)
+stargazer(restaurants_final)
+
+stats = dbGetQuery(con, "select city, count(id), sum(review_count) from restaurants_in_germany group by city")
+stargazer(stats)
+
 
 # disconnect from the database
 dbDisconnect(con)

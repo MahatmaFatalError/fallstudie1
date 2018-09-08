@@ -29,7 +29,7 @@ dtab = dbGetQuery(con, "select
                   max(population_sqkm) population_sqkm,
                   max(state) state
                   from restaurants_in_germany
-                  where review_count >= 9 and population_sqkm > 0
+                  where review_count >= 10 and population_sqkm > 0
                   group by city
                   having sum(review_count)  > 138 and count(review_count) >= 28")
 
