@@ -1,4 +1,11 @@
 \paragraph{Data Ingestion}
 \label{par:ingestion}
-For collecting the yelp data we used the yelp API. Therefor we wrote a script with python. In the following you can some code:
-%code einfügen
+
+
+The \code{collector.py} module is the base class for the flow logic of the concrete \textit{collectors}.
+Due to the inhomogeneity of the data sources and the associated different logic per \textit{collector}, the \code{Collector} class only contains the logic
+to store a newly created entity in the \gds{} and other auxiliary methods for the concrete \textit{Collectors}.
+That means that the flow logic can not only be implemented in the base class, but must also be implemented to a large extent in the subclasses.
+
+To realize the \textbf{collector} the Python library \code{google-cloud-datastore} were used.
+The library \code{google-cloud-datastore} is a client with which it is possible to perform all known \ac{CRUD} operations for the \gds{}.

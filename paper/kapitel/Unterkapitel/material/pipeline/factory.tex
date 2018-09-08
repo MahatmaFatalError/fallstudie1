@@ -5,8 +5,9 @@ For this reason it is extremely important that our program is written in such a 
 This was realized by a combination of dynamic programming and a simple \textit{Factory Pattern}\footnote{https://en.wikipedia.org/wiki/Factory_method_pattern}.
 By using the factory pattern we can abstract from the implementation logic and quickly and easily connect new data sources to the existing logic without changing anything in the underlying process.
 
-The part of the program that is responsible for the \textit{Data Ingestion}, \ie for collecting the data and the subsequent storage of the data in \gds{}, is called \textbf{collector}
-and that part that is responsible for the \textit{Data Storage} part is called \textbf{transporter}
+The part of the program that is responsible for collecting and storing the data in \gds{}, is called \textbf{collector}
+and that part that is responsible for transporting and mapping the raw data into \pg{} is called \textbf{transporter}
+
 There are two modules that realize the factory pattern for both collector and transporter:
 
 \begin{itemize}
