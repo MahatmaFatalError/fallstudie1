@@ -1,13 +1,14 @@
 \subsubsection{Data Ingestion}
 \label{subsubsec:ingestion}
 As descriped in\cite{ingestion} \textit{Data Ingestion} is the process of obtaining and importing data for immediate use or storage in a database.
-In our usecase we are collecting data from various data sources - either from a static source or contineous data stream like the Yelp Fusion or ImmobilienScout24 \ac{API} - and storing them unchanged in our \gds{} instance.
+In our usecase we are collecting data from various data sources, thus we need different implementation approaches on each kind of datasource.
 
-For the implementation of \textit{Data Ingestion} the \code{collector.py} module was developed.
-Within this module is the base class for the flow logic of the concrete \textit{collectors}.
-Due to the inhomogeneity of the data sources and the associated different logic per \textit{collector}, the \code{Collector} class only contains the logic
-to store a newly created entity in the \gds{} and other auxiliary methods.
-That means that it is not possible to implement the flow logic in the base class, but be implemented to a large extent in each subclasses.
 
-To realize the \textbf{collector} and its subclasses the Python library \code{google-cloud-datastore} is used.
-The library \code{google-cloud-datastore} is a client with which it is possible to perform all known \ac{CRUD} operations for the \gds{}.
+% For the implementation of \textit{Data Ingestion} the \code{collector.py} module was developed.
+% Within this module is the base class for the flow logic of the concrete \textit{collectors}.
+% Due to the inhomogeneity of the data sources and the associated different logic per \textit{collector}, the \code{Collector} class only contains the logic
+% to store a newly created entity in the \gds{} and other auxiliary methods.
+% That means that it is not possible to implement the flow logic in the base class, but be implemented to a large extent in each subclasses.
+%
+% To realize the \textbf{collector} and its subclasses the Python library \code{google-cloud-datastore} is used.
+% The library \code{google-cloud-datastore} is a client with which it is possible to perform all known \ac{CRUD} operations for the \gds{}.
