@@ -24,13 +24,6 @@ Also in the price\_range attribute there were occasional occuring \code{NULL} va
 If this was not the case, the \code{NULL} values were filled with the mode of the price\_range from the current city.
 \paragraph{City Cleaning}
 Despite the fact that the \code{city} attribute of a restaurant always came from Yelp it came to a mixture of the German and English language.
-The following city names had to be changed to their German counterparts:
-\begin{enumerate}
-  \item Hanover
-  \item Dusseldorf
-  \item Nuremberg
-  \item Munich
-\end{enumerate}
 Furthermore, the German city \"Frankfurt am Main\" was available in different spellings.
 However, this could be fixed with a simple \ac{SQL} statement.
 \paragraph{Buying Power Cleaning}
