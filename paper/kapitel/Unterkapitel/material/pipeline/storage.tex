@@ -11,6 +11,6 @@ data source is to be connected.
 In summary, the following steps had to be taken to develop a new \textit{transporter}:
 \begin{itemize}
   \item Create a new \pg{} table with \code{sqlalchemy}
-  \item  Create a new \code{<example>\_transporter.py} file that inherits from the base class.
+  \item Create a new \code{<example>\_transporter.py} file that inherits from the base class.
   \item Implementation of the \code{map()} Methdode in which the \gds{} entity is received and one or more \code{sqlalchemy} object(s) are created and returned.
 \end{itemize}

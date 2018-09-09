@@ -12,8 +12,8 @@ The requirements for our architecture are as follows:
 
 When dealing with large amounts of data, the following two architectural approaches distinguish between each other:
 
-\begin{description}
-\item [Lambda Architectur:] Named after the Greek $\lambda$, this approach is characterized by the fact that the streaming data is processed in two ways.
+\paragraph{Lambda Architectur}
+Named after the Greek $\lambda$, this approach is characterized by the fact that the streaming data is processed in two ways.
 On the one hand, the data stream is routed directly to a \textit{Speed Layer}, which is often based on in-memory technology,
 processes it in real time and makes it available to the \textit{Serving Layer}.
 Since streams are by definition infinite and the speed layer is expensive and physically finite,
@@ -29,8 +29,8 @@ which has not yet been processed by the batch layer.\cite{lambda} \cite{jaxkappa
 	\label{fig:KafkaArchitecture}
 \end{figure}
 
-
-\item [Kappa Architectur:] This approach, designed by Confluent co-founder and CEO Jay Kreps, dispenses with batch processing and therefore only requires
+\paragraph{Kappa Architectur}
+This approach, designed by Confluent co-founder and CEO Jay Kreps, dispenses with batch processing and therefore only requires
 \textit{Ingestion-}, \textit{Speed-} and \textit{Serving-Layer}.
 This saves the development and operation of two separate layers and the time-consuming mixing of batch data with live data in the \textit{Serving-Layer}.
 A prerequisite, however, is that the \textit{Ingestion-Layer} does not only pass through data volatilely,
@@ -47,8 +47,6 @@ This approach was named after the Greek $\kappa$ in order to illustrate both pro
 	\caption[Scheme of $\kappa$ Architectur]{Scheme of $\kappa$ Architectur\cite{jaxkappa}}
 	\label{fig:KappaArchitecture}
 \end{figure}
-
-\end{description}
 
 Both the Kappa and the Lamba architecture cover our requirements.
 Via the input stream, any number of data sources can be accessed, in the
