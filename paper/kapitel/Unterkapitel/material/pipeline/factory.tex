@@ -2,15 +2,14 @@
 \label{subsubsec:scale}
 As explained in \fullref{subsubsec:sources} we have different data sources from which the required data must be retrieved.
 For this reason it is extremely important that our program has to be scalable not only in the sense of hardware/memory and architecture but also in the sense of implementation.
-
+\newline
 This was realized by a combination of dynamic programming and a simple \textit{Factory Pattern}\footnote{\url{https://en.wikipedia.org/wiki/Factory_method_pattern}}.
-
+\newline
 The part of the program that is responsible for\textit{Data Ingestion} is called \textit{collector}
 and that part that is responsible for transporting and mapping the raw data into \pg{} is called \textit{transporter}
-
+\newline
 Both the \textit{collector} and the \textit{transporter} are realized with the factory pattern.
 By using the factory pattern we can abstract from the implementation logic and quickly and easily connect new data sources to the existing logic without changing anything in the underlying process.
-
 % There are two modules that realize the factory pattern for both collector and transporter:
 % \begin{itemize}
 %   \item \code{factory.py}

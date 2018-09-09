@@ -2,16 +2,14 @@
 \label{subsubsec:architecture}
 In order for our project, described in \fullref{subsec:usecase}, to succeed, it is of inestimable value to have a
 architecture that supports this in the best possible way.
-
 The requirements for our architecture are as follows:
 \begin{enumerate}
   \item Multiple data sources must be supported.
   \item All data collected must be stored in its original representation to be able to answer still unknown questions at a later point in time.
   \item The areas of data acquisition, analysis and visualization must be separated.
 \end{enumerate}
-
 When dealing with large amounts of data, the following two architectural approaches distinguish between each other:
-
+\newline
 \paragraph{Lambda Architectur}
 Named after the Greek $\lambda$, this approach is characterized by the fact that the streaming data is processed in two ways.
 On the one hand, the data stream is routed directly to a \textit{Speed Layer}, which is often based on in-memory technology,
@@ -21,14 +19,12 @@ the stream is routed from \textit{Ingestion Layer} into the \textit{Batch Layer}
 This layer stores the data persistently and starts a batch job after a defined interval to process the started data and transfer it to the serving layer.
 So it is the responsibility of the serving layer to mix the aggregated inventory data from the batch layer with the real-time data of the speed layer,
 which has not yet been processed by the batch layer.\cite{lambda} \cite{jaxkappa}
-
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=10cm]{berle_lambda-architektur_3.jpg}
 	\caption[Scheme of $\lambda$ architecture]{Scheme of $\lambda$ architecture\cite{jaxkappa}}
 	\label{fig:KafkaArchitecture}
 \end{figure}
-
 \paragraph{Kappa Architectur}
 This approach, designed by Confluent co-founder and CEO Jay Kreps, dispenses with batch processing and therefore only requires
 \textit{Ingestion-}, \textit{Speed-} and \textit{Serving-Layer}.
@@ -51,18 +47,18 @@ Via the input stream, any number of data sources can be accessed, in the
 data ingestion layer, all collected data is stored, and then the data is processed and can be persisted in the serving layer.
 The analysis part can now be executed on the serving layer.
 The separation into different layers also fulfils our third requirement.
-
+\newline
 % TODO: kann das so stehen bleiben?
 As explained in chapter \fullref{subsubsec:sources} our biggest data source is the Fusion \ac{API} of Yelp and
 the Search \ac{API} of ImmobilienScout24.
 Due to the fact that Yelp data - with the exception of the Business ID - may not be stored for more than 24 hours,\cite{YelpFaq}
 the amount of data collected is manageable.
-
+\newline
 Due to the manageable amount of data that should be available to us in the end and the limited time period to complete this project,
 we consciously forgo a batch layer and therefore also the Lambda architecture
 in order not to unnecessarily increase the complexity of our architecture but also to reduce the processing time of data at the same time.
 So we decided for a simplified version of the Kappa architecture.
-
+\newline
 In step 1, also known as \textit{Data Ingestion} we collect the data from different data sources and write them unchanged into \gds{}
 The second step consists of transporting the data into the \pg{} database from where it can be analyzed later on.
 The transport included not only the simple moving of the data from the source to the target database but also the conversion of the data
@@ -72,5 +68,4 @@ but also sorting out not used attributes. This second step is also referred to a
 The last step, the analysis of the data, was done depending on the scenario either with the Bi- and Software Analysis Software Tableau\footnote{\url{https://www.tableau.com/}} or various Scripts written in either \code{Python} or \code{R}.
 \newline
 The following picture shows the previously described variant of the Kappa architecture.
-
 %TODO: picture
