@@ -19,7 +19,7 @@ YELP_SEARCH_TERM = 'restaurants'
 
 # Immoscout24 API constants
 IMMOSCOUT_GEO_URL_1 = 'https://rest.immobilienscout24.de/restapi/api/gis/v2.0/geoautocomplete/DEU?i='
-IMMOSCOUT_GEO_URL_2 = '&t=city'
+IMMOSCOUT_GEO_URL_2 = '&t=city,quarterOrTown&l=1'
 IMMOSCOUT_SEARCH_URL = 'https://rest.immobilienscout24.de/restapi/api/search/v1.0/search/region'
 IMMOSCOUT_HEADERS = {'content-type': 'application/json',
                      'Accept': 'application/json'}

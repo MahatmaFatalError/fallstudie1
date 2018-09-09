@@ -1,22 +1,25 @@
-\subsubsection{The Factory Pattern}
-\label{subsubsec:factory}
+\subsubsection{Scalability}
+\label{subsubsec:scale}
 As explained in \fullref{subsubsec:sources} we have different data sources from which the required data must be retrieved.
-For this reason it is extremely important that our program is written in such a way that new data sources can be connected at any time.
+For this reason it is extremely important that our program has to be scalable not only in the sense of hardware/memory and architecture but also in the sense of implementation.
+
 This was realized by a combination of dynamic programming and a simple \textit{Factory Pattern}\footnote{\url{https://en.wikipedia.org/wiki/Factory_method_pattern}}.
+
+The part of the program that is responsible for\textit{Data Ingestion} is called \textit{collector}
+and that part that is responsible for transporting and mapping the raw data into \pg{} is called \textit{transporter}
+
+Both the \textit{collector} and the \textit{transporter} are realized with the factory pattern.
 By using the factory pattern we can abstract from the implementation logic and quickly and easily connect new data sources to the existing logic without changing anything in the underlying process.
 
-The part of the program that is responsible for collecting and storing the data in \gds{}, is called \textbf{collector}
-and that part that is responsible for transporting and mapping the raw data into \pg{} is called \textbf{transporter}
-There are two modules that realize the factory pattern for both collector and transporter:
-
-\begin{itemize}
-  \item \code{factory.py}
-  \item \code{creator.py}
-  \item \code{collector.py}
-  \item \code{transporter.py}
-\end{itemize}
-
-The module \code{factory.py} contains both the class \code{AbstractFactory}, which is an abstract variant of a concrete factory, and the class
-\code{EverythingFactory} which inherits from the \code{AbstractFactory} and instantiates concrete classes of \code{collector.py} and \code{transporter.py}.
-with help of the \code{creator.py} module.
-This auxiliary class in this module consists of several static methods which create and return an instance of a \textit{collector}/\textit{transporter} instance.
+% There are two modules that realize the factory pattern for both collector and transporter:
+% \begin{itemize}
+%   \item \code{factory.py}
+%   \item \code{creator.py}
+%   \item \code{collector.py}
+%   \item \code{transporter.py}
+% \end{itemize}
+%
+% The module \code{factory.py} contains both the class \code{AbstractFactory}, which is an abstract variant of a concrete factory, and the class
+% \code{EverythingFactory} which inherits from the \code{AbstractFactory} and instantiates concrete classes of \code{collector.py} and \code{transporter.py}.
+% with help of the \code{creator.py} module.
+% This auxiliary class in this module consists of several static methods which create and return an instance of a \textit{collector}/\textit{transporter} instance.
