@@ -24,13 +24,25 @@ Take a look at ```price_range.py``` script.
 DELETE FROM public.restaurant WHERE country != 'DE'
 ```
 
-## 4.1  "Frankfurt" harmonization
+## 4.1  City harmonization
 ```sql
 update restaurant set city = 'Frankfurt am Main'
 where city = 'Frankfurt' and state = 'HE'
 
 update restaurant set city = 'Frankfurt am Main'
 where city = 'Frankfurt Am Main' and state = 'HE'
+
+UPDATE public.city
+SET "type"='Großstadt'
+WHERE population >= 100000;
+
+UPDATE public.city
+SET "type"='Mittelstadt'
+WHERE population >= 20000 and  population < 100000 ;
+
+UPDATE public.city
+SET "type"='Kleinstadt'
+WHERE population < 20000 ;
 ```
 
 # 5.  ```street``` cleaning
