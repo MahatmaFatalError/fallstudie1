@@ -40,14 +40,12 @@ To ensure a correct replay of the messages, the buffer is based on a canonical l
 longer be changed or moved in their order.
 This approach was named after the Greek $\kappa$ in order to illustrate both proximity and demarcation to the $\lambda$ architecture.
 \cite{Kappa} \cite{Kappa2}
-
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=10cm]{berle_lambda-architektur_4.jpg}
 	\caption[Scheme of $\kappa$ Architectur]{Scheme of $\kappa$ Architectur\cite{jaxkappa}}
 	\label{fig:KappaArchitecture}
 \end{figure}
-
 Both the Kappa and the Lamba architecture cover our requirements.
 Via the input stream, any number of data sources can be accessed, in the
 data ingestion layer, all collected data is stored, and then the data is processed and can be persisted in the serving layer.

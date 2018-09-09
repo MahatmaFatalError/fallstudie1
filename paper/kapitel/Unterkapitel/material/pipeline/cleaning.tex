@@ -7,23 +7,22 @@ inevitable to get a good and accurate analysis result.
 However, even with supposedly good data sources such as \acp{API}, there may be errors in the data.
 such as \zb{} the mixing of different languages or the lack of information.
 Differences in data quality can also occur in the process of data collection.
-
+\newline
 This paragraph explains the measures taken in this project to clean up the data collected.
-
-\paragraph{review\_count cleaning}
+\paragraph{Review Count Cleaning}
 In the \pg{} database the review\_count of some restaurants was assigned the value \code{NULL}.
 If a new comparison with the Yelp \ac{API} did not result in a change of the review count,
 this \code{NULL} value was replaced by the number 0.
-\paragraph{address cleaning}
+\paragraph{Address Cleaning}
 The \ac{API} of Yelp is designed so that an HTTP code 403 or 404 will be transmitted if no address to a restaurant
 can be found.
 With a separate python script the Yelp \ac{API} was addressed again to find the restaurant's address.
 If still no city or postcode was found for this restaurant, this restaurant was deleted for reasons of simplicity,
 since a restaurant without a postcode or city has no use for the subsequent analysis.
-\paragraph{price\_range cleaning}
+\paragraph{Price Range Cleaning}
 Also in the price\_range attribute there were occasional occuring \code{NULL} values which possibly could be filled when addressing the Yelp \ac{API} a second time.
 If this was not the case, the \code{NULL} values were filled with the mode of the price\_range from the current city.
-\paragraph{city cleaning}
+\paragraph{City Cleaning}
 Despite the fact that the \code{city} attribute of a restaurant always came from Yelp it came to a mixture of the German and English language.
 The following city names had to be changed to their German counterparts:
 \begin{enumerate}
@@ -34,15 +33,12 @@ The following city names had to be changed to their German counterparts:
 \end{enumerate}
 Furthermore, the German city \"Frankfurt am Main\" was available in different spellings.
 However, this could be fixed with a simple \ac{SQL} statement.
-\paragraph{buying\_power cleaning}
+\paragraph{Buying Power Cleaning}
 The data source found for acquiring the buying\_power for various german cities unfortunately contained data for some of the german cities,
 but the average buying\_power for germany.
 For this reason, the missing buying\_power was replaced by the average buying\_power in Germany in order to be able to carry out at least a rough analysis.
-\paragraph{rent\_avg cleaning}
+\paragraph{Average Rent Cleaning}
 Also with the average purchase price of a restaurant per m\textsuperscript{2} the original data source did not include all cities of Germany and therefore
 some \code{NULL} values remained in the database.
 These have been replaced with the Germany-wide average.
-\newline
-For reasons of traceability, all values that were recalculated have been
-not stored in the original table or overwritten the original values
-but it was decided to store them in a separate table.
+\paragraph{Menu Items Cleaning}
