@@ -22,7 +22,7 @@ if __name__ == '__main__':
     for index, row in immo_df.iterrows():
         print(str(index + 1) + ". " + row['city'])
     # Zero price means, you have to ask the advertiser
-    filter_price_zero = immo_df[immo_df['price'] > 0]
+    filter_price_zero = immo_df[immo_df['price'] >= 0]
 
     # Calcualting min/max rest_budget for seats: 52 (100 %) to 65 (125 %)
     result = filter_price_zero.assign(min = lambda x: calc(x['price'], x['priceintervaltype'], x['totalfloorspace'], constants.SEATS_MAX),
