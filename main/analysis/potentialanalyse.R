@@ -27,11 +27,12 @@ dtab = dbGetQuery(con, "select
                   max(buying_power) bp,
                   max(size_sqkm) size_sqkm,
                   max(population_sqkm) population_sqkm,
-                  max(state) state
+                  max(state) state,
+                  max(type) city_type
                   from restaurants_in_germany
                   where review_count >= 10 and population_sqkm > 0
                   group by city
-                  having sum(review_count)  > 138 and count(review_count) >= 28")
+                  having sum(review_count)  >= 39 and count(*) >= 20")
 
 # Wertebereiche standardisieren
 dtab$z_restaurants_per_sqkm <- SoftMax(dtab$restaurants_per_sqkm)
@@ -46,15 +47,19 @@ dtab$potential <- (dtab$z_population_restaurants_sqkm) * (dtab$z_reviewcounts_pe
 
 
 View(arrange(dtab, desc(potential)))
-insert <- arrange(dtab[, c(1, 12, 17)], desc(potential))
+insert <- arrange(dtab[, c(1, 12, 13, 18)], desc(potential))
 dbExecute(con, "TRUNCATE TABLE top_cities")
 dbWriteTable(con, "top_cities", value = insert[1:100, ], row.names = FALSE, append = TRUE) #append = TRUE
 dbExecute(con, "REFRESH MATERIALIZED VIEW categorie_frequency_materialized WITH DATA")
 dbExecute(con, "REFRESH MATERIALIZED VIEW top10_city_category_2 WITH DATA;")
 
+summary(insert)
+
 ### korrelationskoeff buying power mit price range, scatter plot // -> keine nennenswerte korrelation
 ### durchschnitts rating pro PLZ von den städten ->  table top10_city_plz
 
+library(stargazer)
+stargazer(insert[1:10,], summary=FALSE)
 
 # Kontingenzanalyse lokale kategorieverteilung vs globale verteilung  -> table top10_city_category
 # für top10 cities
@@ -76,6 +81,7 @@ while(i<10){
   cat("\n")
   print(str_c(i, ". p-value:",r$p.value))
   print(subset(local_distribution, residuals <= -2))
+  #stargazer(subset(local_distribution, residuals <= -2), summary=FALSE, rownames=FALSE)
 }
 
 
@@ -98,6 +104,7 @@ while(i<10){
   cat("\n")
   print(str_c(i, ". p-value:",r$p.value))
   print(subset(local_distribution, residuals <= -2))
+  stargazer(subset(local_distribution, residuals <= -2), summary=FALSE, rownames=FALSE)
 }
 
 

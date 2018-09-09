@@ -96,11 +96,39 @@ View(dtab)
 # latex
 install.packages("stargazer")
 library(stargazer)
+
+allecities= dbGetQuery(con, "select * from restaurants_in_germany")
+großstadt = dbGetQuery(con, "select * from restaurants_in_germany where type = 'Großstadt'")
+mittelstadt = dbGetQuery(con, "select * from restaurants_in_germany where type = 'Mittelstadt'")
+kleinstadt = dbGetQuery(con, "select * from restaurants_in_germany where type = 'Kleinstadt'")
+summary(großstadt$review_count)
+summary(mittelstadt$review_count)
+summary(kleinstadt$review_count)
+
+boxplot(review_count~type, data=allecities)
+
+summary(großstadt$review_count)
+
+großstadt = dbGetQuery(con, "select * from restaurants_in_germany where type = 'Großstadt'")
+summary(großstadt$review_count)
 stargazer(restaurants_final)
 
-stats = dbGetQuery(con, "select city, count(id), sum(review_count) from restaurants_in_germany group by city")
-stargazer(stats)
 
+stats = dbGetQuery(con, "select city, count(id) restaraunts, sum(review_count) review_counts from restaurants_in_germany group by city")
+statsGroßstadt = dbGetQuery(con, "select city, count(id) restaraunts, sum(review_count) review_counts from restaurants_in_germany where type = 'Großstadt' group by city")
+statsMittelstadt = dbGetQuery(con, "select city, count(id) restaraunts, sum(review_count) review_counts from restaurants_in_germany where type = 'Mittelstadt' group by city")
+statsKleinstadt = dbGetQuery(con, "select city, count(id) restaraunts, sum(review_count) review_counts from restaurants_in_germany where type = 'Kleinstadt' group by city")
+summary(stats)
+summary(statsGroßstadt)
+summary(statsMittelstadt)
+summary(statsKleinstadt)
+
+
+stargazer(stats)
+summary(stats)
+boxplot(stats$restaraunts)
+boxplot(stats$review_counts)
+histogram(stats$review_counts)
 
 # disconnect from the database
 dbDisconnect(con)
