@@ -28,5 +28,20 @@ Where df\textsubscript{t} is the number of documents containing the term t and N
 The factor of these two figures then forms the \ac{TFIDF} measure.\cite{droid18}
 \newline
 For our purposes not every single word of an yelp review is of importance.
-Therefore, the following measures were taken in order to be able to analyse the evaluations as accurately as possible.
-\paragraph{Text Preprocessing}
+To filter words with a low information content from an existing text, there are several methods from the area of \textit{Text Preprocessing}.
+The following methods were used to improve the information density of restaurant reviews in order to calculate a meaningful \ac{TFIDF}.
+\paragraph{Tokenization}
+Tokenization is the process to divide a coherent sentence into single pieces, called tokens.
+Beside the subdivision into single pieces, the so called stopwords and the punctuation is removed.
+After executing Tokenization on this exemplary sentence below
+\begin{center}
+  \textitbf{Hello, my name is Bob!}
+\end{center}
+a list of three words
+\begin{center}
+  \textitbf{Hello} \textitbf{name} and \textitbf{Bob}
+\end{center}
+will remain.\newline
+The sentence structure and the grammatical correctness of the sentence are lost, but the words with a high expressiveness remain.
+\paragraph{Stemming}
+\paragraph{\acs{POS} Tagging}

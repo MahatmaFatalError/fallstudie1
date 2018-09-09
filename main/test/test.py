@@ -19,9 +19,11 @@ sql.create_session()
 # print(cities[1])
 # print(cities[0])
 
-# analyzer = TextAnalyzer('german', False)
-#
-# text = ',,,,,'
+analyzer = TextAnalyzer('english', False, False, '../../data/tree_tagger')
+
+text = analyzer.text_process('Hello, my name is Bob!')
+
+print(text)
 #
 # menu_item_improved = util.convert_list_to_string(analyzer.text_process(text))
 # if menu_item_improved:
@@ -33,7 +35,7 @@ sql.create_session()
 # result = datastore.fetch_entity('THD_Speisekarte', None, None, True, '=', transported=False, zip_code=44866)
 # print(result)
 
-sql._update_entity('ZipCode', 'zip_code', '10115', 'review_collected', False)
+# sql._update_entity('ZipCode', 'zip_code', '10115', 'review_collected', False)
 
 sql.commit_session()
 
