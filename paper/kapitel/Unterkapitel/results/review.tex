@@ -1,0 +1,32 @@
+\subsection{Review Analysis}
+\label{subsec:review}
+As mentioned in \fullref{subsec:usecase} it is not only the goal to propose one or more cities for the opening of a restaurant,
+ but also to give recommendations for qualitative characteristics of a restaurant.
+\newline
+For this purpose, the available reviews of a city are analyzed with the help of \ac{NLP}.
+\ac{NLP} is the computer-based attempt to support any text with the help of a set of technologies and linguistic knowledge.\cite{Liddy01}
+The goal of \ac{NLP} is to achieve a human-like processing of language.\cite{Liddy01}
+The frequency of a certain word within the reviews - and thus also the importance of the word - can be expressed by \ac{TFIDF}.
+This \ac{KPI} consists of a total of two calculations.
+First the \ac{TF} is calculated.
+This indicates how often a single word appears within a given document.
+Mathematically this means:
+\newline
+\begin{equation}
+  tf\textsubscript{i,j} = \frac{n\textsubscript{i,j}}{\sum_{k} n\textsubscript{i,j}}
+	\label{eq:tf}
+\end{equation}
+Since in the pure term-frequency the totality of documents is disregarded, there is the \ac{IDF} measure.
+The \ac{IDF} measure indicates how often a single word occurs within the body of documents.\footnote{The totality of all documents}
+It is given by the equation below.
+\newline
+\begin{equation}
+  idf(w) = \log \frac{N}{df\textsubscript{t}}
+	\label{eq:tf}
+\end{equation}
+Where df\textsubscript{t} is the number of documents containing the term t and N is the total number of documents in the corpus.
+The factor of these two figures then forms the \ac{TFIDF} measure.\cite{droid18}
+\newline
+For our purposes not every single word of an yelp review is of importance.
+Therefore, the following measures were taken in order to be able to analyse the evaluations as accurately as possible.
+\paragraph{Text Preprocessing}
