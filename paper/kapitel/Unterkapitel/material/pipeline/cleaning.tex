@@ -34,4 +34,10 @@ We solved this isssue by replacing, the missing buying\_power with the average b
 Also with the average purchase price of a restaurant per m\textsuperscript{2} the original data source did not include all cities of Germany and therefore
 some \code{NULL} values remained in the database.
 These have been replaced with the Germany-wide average.
-\paragraph{Menu Items Cleaning}
+\paragraph{Menu Item Cleaning}
+Although most of the cleaning took place after the persistence of the data in the database, the various dishes on a menu had to be
+cleaned before it was written to the database.
+By scraping these data directly from the web, it often happened that they were not only semantically wrong, but also containing only
+special characters or an empty string.
+Especially these entries without any informational content had to be removed before they were stored in the database.
+This was done with several algorithms from the area of the \textit{Text Preprocessing}\footnote{Please rfer to \fullref{subsec:review} to learn more about \textit{Text Preprocessing}}
