@@ -2,8 +2,8 @@
 \label{subsec:moneten}
 The target, mentioned in \fullref{subsec:usecase}, is to generate a turnover of 40000 euros per month. The available Budget
  is 750000 euros high. In order to generate this turnover a calculation with various parameters such as seat turnover,
- opening days, consumption and area of the guest section are required. To analyze the minimum number of seats for the
- restaurant is calculated as follows:
+ opening days, consumption and area of the guest section are required. To calculate the minimum number of seats for the
+ restaurant the following formula is used:
 \begin{center}
 \begin{equation}
 \begin{aligned}
@@ -15,11 +15,11 @@ The target, mentioned in \fullref{subsec:usecase}, is to generate a turnover of 
 \end{equation}
 \end{center}
 
-With having the rounded minimum number of seats the calculation of the total floor space is the next step. This parameter is
- necessary for a specific query of the ImmobilienScout24 Search API \cite{ImmoScout} as well as the number of seats,
- which can be applied as range of values. The lower threshold is 52 seats and the upper threshold is 65 seats. The upper
- threshold is an increase of 25 percent. This interval can be used to calculate the required total floor area using the
- following formula:
+With having the rounded minimum number of seats the computation of the total floor space is next. The total
+ floor space parameter is necessary for the specific query of the ImmobilienScout24 Search API \cite{ImmoScout} and as
+ well as the number of seats, which can be applied as range of values. The lower threshold is 52 seats and the upper
+ threshold is 65 seats. The upper threshold is an increase of 25 percent. This interval can be used to calculate the
+ required total floor area using the following formula:
 
 \begin{equation}
 \begin{aligned}
@@ -30,12 +30,12 @@ With having the rounded minimum number of seats the calculation of the total flo
 \end{equation}
 
 where $floorspace_{guest}$ is the average floor space for a System-Service-Restaurant per guest \cite{FlaecheGast} and the
- percentage of the guest area is 40 percent mentioned in \cite{FlaecheGastronomie}.
+ amount of the guest area is 40 percent mentioned in \cite{FlaecheGastronomie}.
 
- In order to apply the financing analysis, the Geo-ID of the top 10 cities is queried using the Geo \ac{API} of
- ImmobilienScout24. With this specific ID the real estate object can be queried via the Search \ac{API} and the
- defined parameters $min.number_{seats}$, $total.floor.area_{min}$, $total.floor.area_{max}$, the realestate specific
- parameter \textit{gastronomy} and gastronomytype \textit{reastaurant}.
+In order to apply the financing analysis, the Geo-ID of the top 10 cities is queried using the \textit{GeoAutoCompletion (GAC)
+ v2 \ac{API}} of ImmobilienScout24. With this specific ID the real estate object can be queried via the Search \ac{API}
+ with the defined parameters of the Region Search Query. The used available Parameters are $min.number_{seats}$, $total.floor.area_{min}$,
+ $total.floor.area_{max}$, the realestate specific parameter \textit{gastronomy} and gastronomytype \textit{restaurant}.
 
 
  % link to ImmobilienScout24 Search API \cite{ImmoScout}
