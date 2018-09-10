@@ -1,2 +1,43 @@
 \subsection{Monetary Analysis}
 \label{subsec:moneten}
+The target, mentioned in \fullref{subsec:usecase}, is to generate a turnover of 40000 euros per month. The available Budget
+ is 750000 euros high. In order to generate this turnover a calculation with various parameters such as seat turnover,
+ opening days, consumption and area of the guest section are required. To calculate the minimum number of seats for the
+ restaurant the following formula is used:
+\begin{center}
+\begin{equation}
+\begin{aligned}
+	min.number_{seats} = \frac{turnover.restaurant_{month}}{turnover.seat_{day} \times average.consumption_{guest} \times opening_{days}} \\
+	= \frac{40000 euros}{1.5 \times 20 euros \times 26} \\
+	= 51.28
+\end{aligned}
+\label{eq:number_seats_benchmark}
+\end{equation}
+\end{center}
+
+With having the rounded minimum number of seats the computation of the total floor space is next. The total
+ floor space parameter is necessary for the specific query of the ImmobilienScout24 Search API \cite{ImmoScout} and as
+ well as the number of seats, which can be applied as range of values. The lower threshold is 52 seats and the upper
+ threshold is 65 seats. The upper threshold is an increase of 25 percent. This interval can be used to calculate the
+ required total floor area using the following formula:
+
+\begin{equation}
+\begin{aligned}
+	total.floor.area_{min} = floorspace_{guest} \times seats_{min} \times \frac{100}{40} \\
+	total.floor.area_{max} = floorspace_{guest} \times seats_{max} \times \frac{100}{40} \\
+\end{aligned}
+\label{eq:total_floor_space}
+\end{equation}
+
+where $floorspace_{guest}$ is the average floor space for a System-Service-Restaurant per guest \cite{FlaecheGast} and the
+ amount of the guest area is 40 percent mentioned in \cite{FlaecheGastronomie}.
+
+In order to apply the financing analysis, the Geo-ID of the top 10 cities is queried using the \textit{GeoAutoCompletion (GAC)
+ v2 \ac{API}} of ImmobilienScout24. With this specific ID the real estate object can be queried via the Search \ac{API}
+ with the defined parameters of the Region Search Query. The used available Parameters are $min.number_{seats}$, $total.floor.area_{min}$,
+ $total.floor.area_{max}$, the realestate specific parameter \textit{gastronomy} and gastronomytype \textit{restaurant}.
+
+
+ % link to ImmobilienScout24 Search API \cite{ImmoScout}
+ % \cite{FlaecheGastronomie}, \cite{BenchmarkGastronomie}, \cite{FlaecheGast}
+
