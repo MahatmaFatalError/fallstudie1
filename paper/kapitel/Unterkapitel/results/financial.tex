@@ -32,6 +32,12 @@ With having the rounded minimum number of seats the calculation of the total flo
 where $floorspace_{guest}$ is the average floor space for a System-Service-Restaurant per guest \cite{FlaecheGast} and the
  percentage of the guest area is 40 percent mentioned in \cite{FlaecheGastronomie}.
 
+ In order to apply the financing analysis, the Geo-ID of the top 10 cities is queried using the Geo \ac{API} of
+ ImmobilienScout24. With this specific ID the real estate object can be queried via the Search \ac{API} and the
+ defined parameters $min.number_{seats}$, $total.floor.area_{min}$, $total.floor.area_{max}$, the realestate specific
+ parameter \textit{gastronomy} and gastronomytype \textit{reastaurant}.
+
+
  % link to ImmobilienScout24 Search API \cite{ImmoScout}
  % \cite{FlaecheGastronomie}, \cite{BenchmarkGastronomie}, \cite{FlaecheGast}
 
