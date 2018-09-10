@@ -57,8 +57,9 @@ class Collector(ABC, threading.Thread):
                 collected = getattr(zip_code_object, delta_handling_attribute)
                 if not collected:
                     self.zip_codes.append(zip_code_object.zip_code)
-
         sql.close_session()
+        self.logger.info('Found {0} zip codes with delta handling attribute {1}'
+                         .format(len(self.zip_codes), delta_handling_attribute))
 
     def _fetch_entities_by_zip_code(self, entity_name):
         result_all = []

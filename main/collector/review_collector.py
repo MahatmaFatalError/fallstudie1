@@ -59,27 +59,31 @@ class ReviewCollector(Collector):
                     for locale in locale_list:
                         self.current_locale = locale
                         yelp_entity, status_code = self.yelp.get_reviews(self.current_restaurant_id, locale)
-                        if 'error' not in yelp_entity:
-                            reviews = yelp_entity['reviews']
-                            if len(reviews) > 0:
-                                datastore_entity = self._create_datastore_entity(yelp_entity)
-                                entity_id = self.current_city + '@' + \
-                                            str(self.current_zip_code) + '@' + \
-                                            str(self.current_restaurant_id) + '@' + \
-                                            locale
-                                if not self.test_mode:
-                                    success = self._save(entity_id, datastore_entity)
-                                    if success:
-                                        result.set_success(success)
-                                        sql.commit_session()
+                        if not status_code == 403:
+                            if 'error' not in yelp_entity:
+                                reviews = yelp_entity['reviews']
+                                if len(reviews) > 0:
+                                    datastore_entity = self._create_datastore_entity(yelp_entity)
+                                    entity_id = self.current_city + '@' + \
+                                                str(self.current_zip_code) + '@' + \
+                                                str(self.current_restaurant_id) + '@' + \
+                                                locale
+                                    if not self.test_mode:
+                                        success = self._save(entity_id, datastore_entity)
+                                        if success:
+                                            result.set_success(success)
+                                            sql.commit_session()
+                                else:
+                                    self.logger.debug('No Reviews found for restaurant {0} in {1}'
+                                                      .format(restaurant.name, self.current_city))
                             else:
-                                self.logger.debug('No Reviews found for restaurant {0} in {1}'
-                                                  .format(restaurant.name, self.current_city))
+                                message = yelp_entity['error']['description']
+                                result.set_success(False)
+                                result.set_message(message)
+                                raise YelpError(yelp_entity['error']['code'], message)
                         else:
-                            message = yelp_entity['error']['description']
-                            result.set_success(False)
-                            result.set_message(message)
-                            raise YelpError(yelp_entity['error']['code'], message)
+                            self.logger.debug('No Reviews found for restaurant {0} in {1}'
+                                              .format(restaurant.name, self.current_city))
             else:
                 result.set_success(False)
                 result.set_message('Failure when saving Review Entity to Datastore')
