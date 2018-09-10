@@ -1,7 +1,7 @@
 \subsection{Review Analysis}
 \label{subsec:review}
 As mentioned in \fullref{subsec:usecase} it is not only the goal to propose one or more cities for the opening of a restaurant,
- but also to give recommendations for qualitative characteristics of a restaurant.
+but also to give recommendations for qualitative characteristics of a restaurant.
 \newline
 For this purpose, the available reviews of a city are analyzed with the help of \ac{NLP}.
 \ac{NLP} is the computer-based attempt to support any text with the help of a set of technologies and linguistic knowledge.\cite{Liddy01}
@@ -44,4 +44,19 @@ a list of three words
 will remain.\newline
 The sentence structure and the grammatical correctness of the sentence are lost, but the words with a high expressiveness remain.
 \paragraph{Stemming}
+In linguistic morphology and information retrieval, stemming is the process for reducing inflected (or sometimes derived) words to their stem.\cite{TextMiner14}
+Als Folge dessen wird zum Einen die zu analysierende Menge der Wörter reduziert aber
+auch die Häufigkeit eines Wortes durch die Reduktion auf den Stamm erhöht.
+Folgende Grafik verdeutlicht diesen Sachverhalt:
+\bild{stemming.png}{Stemming example}{stemming}{own representation}{0.75}
 \paragraph{\acs{POS} Tagging}
+\ac{POS} Tagging is another important topic in the area of \ac{NLP}.
+Doing this words in a document are marked with a tag.
+This tag describes the individual components of a document with their respective types \eg{} nouns, adjectives, verbs, separators, numbers, currencies and so on.
+With this it is possible to filter out the types that are insignificant for the analysis, such as numbers or currencies, thus further reducing the number of words and
+to increase the meaning of the remaining words.
+\newline
+By reading out the ratings and evaluating the most frequently used words, values can be found out on which characteristics the restaurant visitors attach the most importance.
+By grouping the ratings into very good (5 stars) and very bad (1 star) it is possible to give recommendations for different characteristics of a restaurant which increase the likelihood of very good ratings.
+and minimize the risk of very poor ratings.
+% TODO Top 10 List for Bochum (1 & 5 Sterne)
