@@ -21,7 +21,8 @@ stemming = False
 tagging = True
 language = 'german'
 group_by_category = False
-city = None
+city = 'Bochum'
+save_as_latex = True
 
 
 #####################################
@@ -136,6 +137,7 @@ def write_result(result, file_name):
     global cumulated
     global stemming
     global reviews_df
+    global save_as_latex
 
     top_how_much_string = str(top_how_much)
     title = file_name + '_top_' + top_how_much_string + '_of_' + str(reviews_df.shape[0])
@@ -145,17 +147,38 @@ def write_result(result, file_name):
         title += '_cumulated'
     if stemming:
         title += '_stemmed'
-    title += '.txt'
+    if not save_as_latex:
+        title += '.txt'
+    else:
+        title += '.tex'
 
-    with open('result/' + title, 'w') as result_file:
-        result_file.write(file_name)
-        result_file.write('\n')
-        result_file.write('------------------------ TOP ' + top_how_much_string + ' ----------------------------------')
-        result_file.write('\n')
-        result_sorted_by_tfidf = sorted(result.items(), key=lambda tup: tup[1], reverse=reversed_result)[:top_how_much]
-        for word, score in result_sorted_by_tfidf:
-            result_file.write('{0} - {1}'.format(word, score))
+    # sort result by tfidf
+    result_sorted_by_tfidf = sorted(result.items(), key=lambda tup: tup[1], reverse=reversed_result)[:top_how_much]
+
+    if not save_as_latex:
+        with open('result/' + title, 'w') as result_file:
+            result_file.write(file_name)
             result_file.write('\n')
+            result_file.write('------------------------ TOP ' + top_how_much_string + ' ------------------------------')
+            result_file.write('\n')
+            for word, score in result_sorted_by_tfidf:
+                result_file.write('{0} - {1}'.format(word, score))
+                result_file.write('\n')
+    else:
+        # first build dataframe and then convert to latex table
+        word_column = []
+        score_column = []
+        for word, score in result_sorted_by_tfidf:
+            word_column.append(word)
+            score_column.append(score)
+        result_dict = {
+            'word': word_column,
+            'score': score_column
+        }
+        df = pd.DataFrame.from_dict(result)
+        # write df to tex file
+        with open('result/' + title, 'w') as result_tex:
+            result_tex.write(df.to_latex())
 
 
 if __name__ == '__main__':
