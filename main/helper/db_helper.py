@@ -175,7 +175,7 @@ class SqlHelper:
         return result
 
     def fetch_entity_where(self, class_name, fetch_all=True, negated=False, **kwargs):
-        self.logger.info('Fetching Enitity {0} from PostgreSQL')
+        self.logger.info('Fetching Enitity {0} from PostgreSQL'.format(class_name))
         mod = __import__('main.database.init_db', fromlist=[class_name])
         entity_class = getattr(mod, class_name)
         query = self.session.query(entity_class)
@@ -203,4 +203,6 @@ class SqlHelper:
 
     def update_entity(self, class_name, attribute_to_select, attribute_value, attribute_to_set, value_to_set):
         db_object = self.fetch_entity_where(class_name, False, False, **{attribute_to_select: attribute_value})
+        self.logger.debug('Entity to Update: {0}, Attribute to Update: {1} with Value: {2}'
+                          .format(db_object, attribute_to_set, value_to_set))
         setattr(db_object, attribute_to_set, value_to_set)

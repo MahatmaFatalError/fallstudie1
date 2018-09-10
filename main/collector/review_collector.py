@@ -47,10 +47,11 @@ class ReviewCollector(Collector):
                     # if there is a change in zip codes;
                     # all reviews from current zip code are successfully collected into db
                     # set it to collected
-                    if restaurant.zip_code is not self.current_zip_code:
+                    self.logger.debug('Restaurant Zip: {0}'.format(restaurant.zip_code))
+                    if self.current_zip_code and restaurant.zip_code is not self.current_zip_code:
                         sql.update_entity('ZipCode',
                                           'zip_code',
-                                          self.current_zip_code,
+                                          str(self.current_zip_code),
                                           'review_collected',
                                           True)
                     self.current_zip_code = restaurant.zip_code
@@ -63,7 +64,7 @@ class ReviewCollector(Collector):
                             if len(reviews) > 0:
                                 datastore_entity = self._create_datastore_entity(yelp_entity)
                                 entity_id = self.current_city + '@' + \
-                                            str(self.current_zip_code) + '.@' + \
+                                            str(self.current_zip_code) + '@' + \
                                             str(self.current_restaurant_id) + '@' + \
                                             locale
                                 if not self.test_mode:

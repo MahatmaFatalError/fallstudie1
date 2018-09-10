@@ -49,7 +49,7 @@ class Collector(ABC, threading.Thread):
 
         sql.create_session()
         for city in self.cities:
-            self.logger.info('Fetching zip codes for {0} from PostGreSQL'.format(city))
+            self.logger.info('Fetching zip codes for {0} from PostgreSQL'.format(city))
             city_from_db = sql.fetch_city_by_name(city)
             # get zip codes
             zip_codes = city_from_db.zip_codes
@@ -73,5 +73,6 @@ class Collector(ABC, threading.Thread):
                                             zip_code=str(zip_code))
             result_all += result
         sql.close_session()
+        self.logger.info('Fetched {0} entities from Datastore by zip code'.format(len(result_all)))
         return result_all
 
