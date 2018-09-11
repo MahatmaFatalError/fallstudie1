@@ -41,49 +41,48 @@ class ReviewCollector(Collector):
         restaurants = self._fetch_all_restaurants()
         locale_list = ['en_US', 'de_DE']
         if restaurants:
-            while result.get_success():
-                for restaurant in restaurants:
-                    self.current_restaurant_id = restaurant.id
-                    # if there is a change in zip codes;
-                    # all reviews from current zip code are successfully collected into db
-                    # set it to collected
-                    self.logger.debug('Restaurant Zip: {0}'.format(restaurant.zip_code))
-                    if self.current_zip_code and restaurant.zip_code is not self.current_zip_code:
-                        sql.update_entity('ZipCode',
-                                          'zip_code',
-                                          str(self.current_zip_code),
-                                          'review_collected',
-                                          True)
-                    self.current_zip_code = restaurant.zip_code
-                    self.current_city = restaurant.city
-                    for locale in locale_list:
-                        self.current_locale = locale
-                        yelp_entity, status_code = self.yelp.get_reviews(self.current_restaurant_id, locale)
-                        if not status_code == 403:
-                            if 'error' not in yelp_entity:
-                                reviews = yelp_entity['reviews']
-                                if len(reviews) > 0:
-                                    datastore_entity = self._create_datastore_entity(yelp_entity)
-                                    entity_id = self.current_city + '@' + \
-                                                str(self.current_zip_code) + '@' + \
-                                                str(self.current_restaurant_id) + '@' + \
-                                                locale
-                                    if not self.test_mode:
-                                        success = self._save(entity_id, datastore_entity)
-                                        if success:
-                                            result.set_success(success)
-                                            sql.commit_session()
-                                else:
-                                    self.logger.debug('No Reviews found for restaurant {0} in {1}'
-                                                      .format(restaurant.name, self.current_city))
+            for restaurant in restaurants:
+                self.current_restaurant_id = restaurant.id
+                # if there is a change in zip codes;
+                # all reviews from current zip code are successfully collected into db
+                # set it to collected
+                self.logger.debug('Restaurant Zip: {0}'.format(restaurant.zip_code))
+                if self.current_zip_code and restaurant.zip_code is not self.current_zip_code:
+                    sql.update_entity('ZipCode',
+                                      'zip_code',
+                                      str(self.current_zip_code),
+                                      'review_collected',
+                                      True)
+                self.current_zip_code = restaurant.zip_code
+                self.current_city = restaurant.city
+                for locale in locale_list:
+                    self.current_locale = locale
+                    yelp_entity, status_code = self.yelp.get_reviews(self.current_restaurant_id, locale)
+                    if not status_code == 403:
+                        if 'error' not in yelp_entity:
+                            reviews = yelp_entity['reviews']
+                            if len(reviews) > 0:
+                                datastore_entity = self._create_datastore_entity(yelp_entity)
+                                entity_id = self.current_city + '@' + \
+                                            str(self.current_zip_code) + '@' + \
+                                            str(self.current_restaurant_id) + '@' + \
+                                            locale
+                                if not self.test_mode:
+                                    success = self._save(entity_id, datastore_entity)
+                                    if success:
+                                        result.set_success(success)
+                                        sql.commit_session()
                             else:
-                                message = yelp_entity['error']['description']
-                                result.set_success(False)
-                                result.set_message(message)
-                                raise YelpError(yelp_entity['error']['code'], message)
+                                self.logger.debug('No Reviews found for restaurant {0} in {1}'
+                                                  .format(restaurant.name, self.current_city))
                         else:
-                            self.logger.debug('No Reviews found for restaurant {0} in {1}'
-                                              .format(restaurant.name, self.current_city))
+                            message = yelp_entity['error']['description']
+                            result.set_success(False)
+                            result.set_message(message)
+                            raise YelpError(yelp_entity['error']['code'], message)
+                    else:
+                        self.logger.debug('No Reviews found for restaurant {0} in {1}'
+                                          .format(restaurant.name, self.current_city))
             else:
                 result.set_success(False)
                 result.set_message('Failure when saving Review Entity to Datastore')
