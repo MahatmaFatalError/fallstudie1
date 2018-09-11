@@ -1,16 +1,23 @@
 import json
 import logging
+import pandas as pd
 from collections import defaultdict
 from config import constants
+from helper.text_analyzer import TextAnalyzer
 from main.helper.db_helper import DatastoreHelper, SqlHelper
 from main.helper import util
+import re
 
 logger = logging.getLogger(__name__)
 city_string = 'Bochum'
+save_as_latex = True
+action = 2  # 1 = group, 2 = just count
 
+tree_tagger_dir = '../../../data/tree_tagger'
+analyzer = TextAnalyzer('german', True, False, tree_tagger_dir)
 
 def run():
-    action = 2
+    global action
 
     # fetch city from db
     zip_codes = fetch_zip_codes_from_database()
@@ -60,22 +67,29 @@ def create_count_city(zip_codes):
                     favs = restaurant['favourite_items']
                     if favs is not None:
                         for favoutite_item in favs:
-                            item = favoutite_item.lower()
-                            fav_items[item] += 1
+                            item = process_item(favoutite_item)
+                            if item:
+                                fav_items[item] += 1
                     cats = restaurant['categories']
                     if cats is not None:
                         for category in cats:
-                            categories[category] += 1
+                            category = process_item(category)
+                            if category:
+                                categories[category] += 1
                     menu = restaurant['menu']
                     if menu is not None:
                         for item in menu:
                             items = item['menu_items']
                             for x in items:
-                                menu_items[x] += 1
+                                x = process_item(x)
+                                if x:
+                                    menu_items[x] += 1
                     servs = restaurant['services']
                     if servs is not None:
                         for service in servs:
-                            services[service] += 1
+                            service = process_item(service)
+                            if service:
+                                services[service] += 1
 
     # sort dictionaries by count
     fav_items = sorted(fav_items.items(), key=lambda elem: elem[1], reverse=True)
@@ -84,6 +98,13 @@ def create_count_city(zip_codes):
     services = sorted(services.items(), key=lambda elem: elem[1], reverse=True)
 
     return fav_items, categories, services, menu_items
+
+
+def process_item(item):
+    items = analyzer.text_process(item)
+    item = ' '.join(items)
+    # item = re.sub(r'\W+', ' ', item)
+    return item
 
 
 def fetch_restaurant_by_zip_code(zip_code):
@@ -150,10 +171,28 @@ def create_favoutite_items_plz(datastore_content):
 
 def write_result(result, title):
     global city_string
+    global save_as_latex
 
-    title += ('_' + city_string)
-    with open('result/' + title + '.txt', 'w', encoding="utf-8") as outfile:
-        json.dump(result, outfile, indent=4, ensure_ascii=False)
+    title += ('_' + city_string.lower())
+
+    if not save_as_latex:
+        with open('result/' + title + '.txt', 'w', encoding="utf-8") as outfile:
+            json.dump(result, outfile, indent=4, ensure_ascii=False)
+    else:
+        if action == 2:
+            item_column = []
+            count_column = []
+            for item in result:
+                item_column.append(item[0])
+                count_column.append(item[1])
+            result_dict = {
+                'item': item_column,
+                'count': count_column
+            }
+            df = pd.DataFrame.from_dict(result_dict)
+            # write df to tex file
+            with open('result/' + title + '.tex', 'w', encoding='utf-8') as result_tex:
+                result_tex.write(df.to_latex())
 
 
 if __name__ == '__main__':
