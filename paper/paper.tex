@@ -5,7 +5,7 @@
 \input{config/docinfo.tex}
 
 \begin{document}
-%\frontmatter
+% \frontmatter
 
 % Römische Ziffern für die "Front-Matter"
 %\setcounter{page}{0}
@@ -16,7 +16,7 @@
 \input{config/titelblatt}
 
 % Arabische Zahlen für den Hauptteil
-%\mainmatter
+% \mainmatter
 
 % ------------------------------------------------------------------
 % Hauptteil der Arbeit
@@ -35,19 +35,20 @@
 \phantomsection
 
 % Backmatter mit normalem Zeilenabstand setzen
-%\backmatter
-%\singlespacing
+% \backmatter
+% \singlespacing
 
 % Römische Ziffern für die "Back-Matter", fortlaufend mit frontmatter
-%\pagenumbering{roman}
-%\setcounter{page}{\value{frontmatterpage}}
+% \pagenumbering{roman}
+% \setcounter{page}{\value{frontmatterpage}}
 
 % Abkürzungsverzeichnis
 \section*{List of Abbreviations}
 \input{config/abkuerzungen}
 
 % Acknowledgement
-\input{kapitel/acknowledgement}
+% needed?
+% \input{kapitel/acknowledgement}
 
 % Quellenverzeichnis erzeugen
 \bibliographystyle{splncs04}

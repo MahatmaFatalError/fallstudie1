@@ -35,9 +35,10 @@ For calculation of the tree models the same independent variables are chosen exc
 While the tree is easy to read, its leafs are doubtful as they result in a similar distribution of ratings, depicted by box plots.
 Interestingly, the tree lacks a decision node based on the review counts which has been significant in the regression model.
 After checking the trained model on the basis of test data for cross-validation, the already suspected result is confirmed: $R^2$ of 0.00236 confirms the assumption that crucial independent variables are missing in the data.
-\bildWOCite{kapitel/unterkapitel/results/ctree.png}{Unbiased Conditional Inference Tree of Yelp restaurant data}{ctree}{}{}
+\bildWOCite{ctree.png}{Unbiased Conditional Inference Tree of Yelp restaurant data}{ctree}{}{}
 
 \subsubsection{3rd Approach - Benchmarking of Potential}
+\label{subsubsec:potential}
 The preceding results substantiate lack of essential information which would be necessary in order to achieve proper prediction quality. Hence, this approach reclaims basic ranking techniques to calculate a \ac{KPI} which states the suitability of a city in combination with a food category.\newline
 First of all, a list of cities ordered by their general potential fit needs to be generated. In order to calculate this synthetic potential \ac{KPI}  we propose the following equation:
 \begin{equation}
