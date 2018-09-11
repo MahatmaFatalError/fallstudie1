@@ -29,7 +29,7 @@ class TextAnalyzer:
 
     def text_process(self, text):
         # Remove punctutation
-        no_punc = [char for char in text if char not in string.punctuation]
+        no_punc = [char.lower() for char in text if char not in string.punctuation]
         # Join the characters again to form the string.
         no_punc = ''.join(no_punc)
         # Remove any stopwords

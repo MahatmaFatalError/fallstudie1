@@ -13,11 +13,11 @@ reviews_df = None
 
 # If you want to, change things here! #
 top_how_much = 50
-rating = 5
+rating = 1
 tree_tagger_dir = '../../../data/tree_tagger'
 reversed_result = True  # True = absteigend
 cumulated = True
-stemming = False
+stemming = True
 tagging = True
 language = 'german'
 group_by_category = False
@@ -75,7 +75,7 @@ def fetch_reviews_from_postgres(with_categories):
                 'JOIN food_category AS fc ' \
                 'ON (r.restaurant_id = fc.restaurant_id);'
     else:
-        query = 'SELECT r.rating, r.text, r.language, zip.zip_code, city.name' \
+        query = 'SELECT r.rating, r.text, r.language, zip.zip_code, city.name as city ' \
                 'FROM review AS r ' \
                 'JOIN restaurant AS rest ' \
                 'ON (r.restaurant_id = rest.id) ' \
@@ -175,7 +175,7 @@ def write_result(result, file_name):
             'word': word_column,
             'score': score_column
         }
-        df = pd.DataFrame.from_dict(result)
+        df = pd.DataFrame.from_dict(result_dict)
         # write df to tex file
         with open('result/' + title, 'w') as result_tex:
             result_tex.write(df.to_latex())

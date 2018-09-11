@@ -19,9 +19,9 @@ sql.create_session()
 # print(cities[1])
 # print(cities[0])
 
-analyzer = TextAnalyzer('english', True, False, '../../data/tree_tagger')
+analyzer = TextAnalyzer('german', True, False, '../../data/tree_tagger')
 
-text = analyzer.text_process('friendlier')
+text = analyzer.text_process('lecker')
 
 print(text)
 #
