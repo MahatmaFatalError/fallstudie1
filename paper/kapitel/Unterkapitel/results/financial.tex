@@ -1,42 +1,88 @@
 \subsection{Investment Analysis}
 \label{subsec:moneten}
-The target, mentioned in \fullref{subsec:usecase}, is to generate a turnover of 40000 euros per month. The available Budget
- is 750000 euros high. In order to generate this turnover a calculation with various parameters such as seat turnover,
- opening days, consumption and area of the guest section are required. To calculate the minimum number of seats for the
- restaurant the following formula is used:
+The target, mentioned in \fullref{subsec:usecase}, is to generate a turnover of 40000 euros per month. For this purpose
+ a budget of 750000 euros is available. Based on the analyzed Top 10 cities, all affordable real estate objects will be
+ selected. Therefor the following steps are necessary: \\
+\indent 1. Calculate the required total floor space and the number of seats for the restaurant \\
+\indent 2. Looking for real estate objects that matching these requirements \\
+\indent 3. Filter only affordable real estate objects \\
+
+\subsubsection{1. Calculate the required total floor space and the number of seats for the restaurant}
+In order to generate this above-mentioned monthly turnover a calculation with parameters such as turnover per seat and day,
+ opening days, average consumption per guest and seat and the area of the guest section are required. To calculate the
+ minimum number of seats the restaurant needs to reach the monthly turnover is:
 \begin{center}
 \begin{equation}
 \begin{aligned}
-	min.number_{seats} = \frac{turnover.restaurant_{month}}{turnover.seat_{day} \times average.consumption_{guest} \times opening_{days}} \\
-	= \frac{40000 euros}{1.5 \times 20 euros \times 26} \\
-	= 51.28
+	min.number.seats =&\frac{turnover.restaurant.month}{turnover.seat.day \times avg.consumption.guest.day \times opening.days.month} \\
+	=&\frac{40000 euros}{1.5 \times 20 euros \times 26} \\
+	=&51.28
 \end{aligned}
 \label{eq:number_seats_benchmark}
 \end{equation}
 \end{center}
 
+where $turnover.seat.day.$ and $avg.consumption.guest.day$ given by \cite{BenchmarkGastronomie}. $opening.days.month$
+ are calculated as usual in the gastronomy as 6 days a week. For montly analysis the 6 days per week are multitplied by
+\begin{equation}
+    \begin{aligned}
+        opening.days.month & = week.working.days \times avg.weeks.year \\
+        & = 6 days \times \frac{52 weeks.year}{12 month.year} \\
+        & = 26 days
+    \end{aligned}
+    \label{eq:opening_days}
+\end{equation}
+wihtin a month.
+
+
 With having the rounded minimum number of seats the computation of the total floor space is next. The total
- floor space parameter is necessary for the specific query of the ImmobilienScout24 Search API \cite{ImmoScout} and as
- well as the number of seats, which can be applied as range of values. The lower threshold is 52 seats and the upper
- threshold is 65 seats. The upper threshold is an increase of 25 percent. This interval can be used to calculate the
- required total floor area using the following formula:
+ floor space parameter is necessary for the specific query of the ImmobilienScout24 Search API \cite{ImmoScout} and
+ the number of seats as well. The number of seats can be applied as range of values. The lower threshold is calculated to 52 seats and
+ the upper threshold is 65 seats. The upper threshold is defined as an increase of 25 percent of the minimum number of seats.
+ This interval can be used to calculate the required total floor area using the following formula:
 
 \begin{equation}
-\begin{aligned}
-	total.floor.area_{min} = floorspace_{guest} \times seats_{min} \times \frac{100}{40} \\
-	total.floor.area_{max} = floorspace_{guest} \times seats_{max} \times \frac{100}{40} \\
-\end{aligned}
-\label{eq:total_floor_space}
+    \begin{aligned}
+        total.floor.area.min = floor.area.guest \times seats.min \times \frac{100}{40} \\
+        total.floor.area.max = floor.area.guest \times seats.max \times \frac{100}{40} \\
+    \end{aligned}
+    \label{eq:total_floor_space}
 \end{equation}
 
-where $floorspace_{guest}$ is the average floor space for a System-Service-Restaurant per guest \cite{FlaecheGast} and the
+where $floor.area.guest$ is the average floor space for a System-Service-Restaurant per guest \cite{FlaecheGast} and the
  amount of the guest area is 40 percent mentioned in \cite{FlaecheGastronomie}.
 
-In order to apply the financing analysis, the Geo-ID of the top 10 cities is queried using the \textit{GeoAutoCompletion (GAC)
- v2 \ac{API}} of ImmobilienScout24. With this specific ID the real estate object can be queried via the Search \ac{API}
- with the defined parameters of the Region Search Query. The used available Parameters are $min.number_{seats}$, $total.floor.area_{min}$,
- $total.floor.area_{max}$, the realestate specific parameter \textit{gastronomy} and gastronomytype \textit{restaurant}.
+\subsubsection{2. Looking for real estate objects that matching these requirements}
+In order to apply the financing analysis, the Geo-ID of the top 10 cities is queried using the GeoAutoCompletion (GAC)
+ v2 \ac{API} of ImmobilienScout24 \cite{ImmoScout}. Having this specific ID the real estate object can be queried via ImmobilienScout24 Search \ac{API}
+ with the defined parameters of the Region Search Query. The used Parameters are $min.number.seats$,
+ $max.number.seats$, $total.floor.area.min$, $total.floor.area.max$, the real estate specific parameter
+ "gastronomy" and the gastronomy-type "restaurant". The results are stored in the \pg{} database.
+
+\subsubsection{3. Filter only affordable real estate objects}
+The found real estate objects will be checked for affordability. The created equation is
+\begin{center}
+    \begin{equation}
+        \begin{aligned}
+        rest.budget = & available.budget \\
+            &- price.real.estate.object \times multiplier \\
+            &- furnish.costs.sqm \times total.floor.space \\
+            &- seats.min \times furnish.costs.seat
+        \end{aligned}
+        \label{eq:affordable}
+    \end{equation}
+\end{center}
+
+where multiplier is depending on whether the object is payed onetime only or by rent every month. If the real estate
+ object has a rental property the multiplier is set to twelve otherwise it's one. The $furnish.costs.sqm$ and
+ $furnish.costs.seat$ are parameters used from \cite{BenchmarkGastronomie}. $price.real.estate.object$ and
+ $total.floor.space$ where given through the result of the ImmobilienScout24 Search \ac{API}. \\
+ This calculation will be applied to
+ every object and if the \textit{rest.budget} is greater or equal zero the object is affordable. For some results the
+ \textit{rest.budget} is zero because there are some real estate objects on ImmobilienScout24 where their
+ price is only available on request, so their price is presented as zero but their are also interesting. \\
+
+Finally, it should be mentioned that the results are volatile and depending on the current real estate market.
 
 
- % link to ImmobilienScout24 Search API \cite{ImmoScout}
- % \cite{FlaecheGastronomie}, \cite{BenchmarkGastronomie}, \cite{FlaecheGast}
+
