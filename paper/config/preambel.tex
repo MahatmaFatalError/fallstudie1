@@ -49,6 +49,13 @@
 % \usepackage{mathptmx}      % use Times fonts if available on your TeX system
 \usepackage{mathtools}
 
+% Use for Appendix Chapter
+\makeatletter
+\newcommand{\@chapapp}{\relax}%
+\makeatother
+
+\usepackage[title,toc,titletoc,header]{appendix}
+
 % Farben definieren
 \definecolor{linkblue}{RGB}{0, 0, 100}
 \definecolor{linkblack}{RGB}{0, 0, 0}
