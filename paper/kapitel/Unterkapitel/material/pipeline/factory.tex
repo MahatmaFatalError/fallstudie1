@@ -5,7 +5,7 @@ For this reason it is extremely important that to be  scalable not only in the s
 \newline
 This is realized by a combination of dynamic programming and a simple \textit{Factory Pattern}\footnote{\url{https://en.wikipedia.org/wiki/Factory_method_pattern}}.%TODO: lieber nicht wikipedia zitieren sondern original von GoF
 \newline
-The \textit{ollector} is responsible for\textit{Data Ingestion}, while the \textit{transporter} is responsible for transporting and mapping the raw data into \pg{}. Both the \textit{collector} and the \textit{transporter} are realized with the factory pattern. By using the factory pattern we can abstract from the implementation logic which allows to quickly and easily add new data sources to the existing logic without changing anything in the underlying process.
+The \textit{collector} is responsible for\textit{Data Ingestion}, while the \textit{transporter} is responsible for transporting and mapping the raw data into \pg{}. Both the \textit{collector} and the \textit{transporter} are realized with the factory pattern. By using the factory pattern we can abstract from the implementation logic which allows to quickly and easily add new data sources to the existing logic without changing anything in the underlying process.
 % There are two modules that realize the factory pattern for both collector and transporter:
 % \begin{itemize}
 %   \item \code{factory.py}
