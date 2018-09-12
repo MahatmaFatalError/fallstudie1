@@ -44,9 +44,8 @@ data ingestion layer, all collected data is stored and after preprocessing persi
 The analysis part can then be executed on the serving layer.
 The separation into different layers also fulfills the third requirement. Since the Kappa architecture covers all requirements mentioned above, the concrete implementation follows this pattern in an streamlined interpretation.
 \newline
-% TODO: kann das so stehen bleiben?
-As explained in chapter \fullref{subsec:sources} our biggest data source is the Fusion \ac{API} of Yelp and
-the Search \ac{API} of ImmobilienScout24. %TODO Wozu brauche ich diese information?
+% As explained in chapter \fullref{subsec:sources} our biggest data source is the Fusion \ac{API} of Yelp and
+% the Search \ac{API} of ImmobilienScout24.
 %Due to the fact that Yelp data - with the exception of the Business ID - may not be stored for more than 24 hours,\cite{YelpFaq} the amount of data collected is manageable.
 \newline
 In step 1, also known as \textit{Data Ingestion} we collect the data from different data sources and write them unchanged into \gds{}.
@@ -59,4 +58,3 @@ Depending on the concrete scenario, the analysis of the data is conducted either
 \newline
 The following picture shows the previously described variant of the Kappa architecture.
 \bild{architektur.png}{Simplified $\kappa$ Architecture}{architecture}{own representation}{0.75}
-%TODO: ist das nicht selbstverständlich eine eigene darstellung? M.M.n kann die Fußnote entfallen

@@ -33,15 +33,14 @@ The following methods were used to improve the information density of restaurant
 \paragraph{Tokenization}
 Tokenization is the process to divide a coherent sentence into single pieces, called tokens.
 Beside the subdivision into single pieces, the so called stopwords and the punctuation is removed.
-After executing Tokenization on this exemplary sentence below
-\begin{center}
-  \textitbf{Hello, my name is Bob!}
-\end{center}
-a list of three words
-\begin{center}
-  \textitbf{hello} \textitbf{name} and \textitbf{bob}
-\end{center}
-will remain.\newline
+After Tokenization is executed on this example sentence:
+\newline
+\textitbf{\code{Yes, the 5 stars are deserved: here you can drink and buy the best coffee in Bochum (and maybe in the Ruhr area?).}}
+\newline
+only the following list of words/tokens will remain:
+\newline
+\textitbf{\code{['yes', '5', 'stars', 'deserved', 'drink', 'buy', 'best', 'coffee', 'bochum', 'maybe', 'ruhr', 'area']}}
+\newline
 The sentence structure and the grammatical correctness of the sentence are lost, but the words with a high expressiveness remain.
 \paragraph{Stemming}
 In linguistic morphology and information retrieval, stemming is the process for reducing inflected (or sometimes derived) words to their stem.\cite{TextMiner14}

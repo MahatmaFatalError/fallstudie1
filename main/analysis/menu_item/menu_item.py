@@ -14,7 +14,8 @@ save_as_latex = True
 action = 2  # 1 = group, 2 = just count
 
 tree_tagger_dir = '../../../data/tree_tagger'
-analyzer = TextAnalyzer('german', True, False, tree_tagger_dir)
+analyzer = TextAnalyzer('german', True, True, tree_tagger_dir)
+
 
 def run():
     global action

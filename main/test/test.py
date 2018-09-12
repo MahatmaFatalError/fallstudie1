@@ -19,9 +19,11 @@ sql.create_session()
 # print(cities[1])
 # print(cities[0])
 
-analyzer = TextAnalyzer('german', True, False, '../../data/tree_tagger')
+analyzer = TextAnalyzer('english', False, False, '../../data/tree_tagger')
 
-text = analyzer.text_process('lecker')
+review = 'Yes, the 5 stars are deserved: here you can drink and buy the best coffee in Bochum (and maybe in the Ruhr area?). I usually only take the roasted coffee'
+
+text = analyzer.text_process(review)
 
 print(text)
 #
@@ -40,4 +42,3 @@ print(text)
 sql.commit_session()
 
 sql.close_session()
-
