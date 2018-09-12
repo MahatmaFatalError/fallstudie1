@@ -1,14 +1,12 @@
 \subsubsection{Data Storage}
 \label{subsubsec:storage}
-In order for the data to be available for analysis and visualization, it must be read from the \gds{} and imported into the \pg{} database.
-Before the data in the \pg{} can be personalized, it must be mapped to the respective table format.
+To make the data available for analysis and visualization, it must be read from the \gds{}, mapped to the respective table format and eventually persisted into the \pg{} database tables.
 \newline
-This process is called \textit{Data Storage} and the Python module which contains the whole Logic is called \code{transporter.py}.
-If it is required to implement a new transporter the only part that has to be written is the mapping from a \gds{} Entity to a \pg{} table.
+This \textit{Data Storage} process is handled by the  \code{transporter}. If it is required to implement a new transporter the only part that needs to be written is the mapping from a \gds{} Entity to a \pg{} table.
 \newline
-In summary, the following steps had to be taken to develop a new \textit{transporter}:
-\begin{itemize}
+In summary, the following steps describe the development of a new \textit{transporter}:
+\begin{enumerate}
   \item Create a new \pg{} table
   \item Create a new \code{<example>\_transporter.py} module that inherits from the base \code{Transporter} class.
   \item Implementation of the mapping method.
-\end{itemize}
+\end{enumerate}
