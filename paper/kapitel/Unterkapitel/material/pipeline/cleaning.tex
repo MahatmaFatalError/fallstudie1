@@ -1,24 +1,15 @@
 \subsection{Data Cleaning}
 \label{subsec:cleaning}
-The quality of data can be described in many dimensions like \eg{} the trustworthiness of the data source, the consistency of the data,
-or their accuracy as well as their topicality.
+The quality of data can be described in many dimensions like the trustworthiness of the data source, the consistency of the data,
+or their accuracy as well as their topicality.%TODO: Quelle!
 Just with very unstructured data, as in our case the collected dishes from the web page \url{speisekarte.de}, the cleaning of the data is
-inevitable to get a good and accurate analysis result.
-However, even with supposedly good data sources such as \acp{API}, there may be errors in the data.
-such as \eg{} the mixing of different languages or the lack of information.
-Differences in data quality can also occur in the process of data collection.
+inevitable to get a good and accurate analysis result. %TODO: speisekarte ist bisher nirgends als datenquelle erwähnt. Fehlt ggf. in data sources
+However, even with supposedly reliable data sources such as \acp{API}, there may be errors in the data such as mixing of different languages or the lack of information.
 \newline
-This paragraph explains the measures taken in this project to clean up the data collected.
-\paragraph{Review Count Cleaning}
-In the \pg{} database the review\_count of some restaurants was assigned the value \code{NULL}.
-If a new comparison with the \ylp{} \ac{API} did not result in a change of the review count,
-this \code{NULL} value was replaced by the number 0.
+The following paragraphs explains the measures conducted to clean up the collected data.
+\paragraph{Review Count Cleaning:} \code{NULL} values of review\_count are substituted by the number 0.
 \paragraph{Address Cleaning}
-The \ac{API} of \ylp{} is designed so that an HTTP code 403 or 404 will be transmitted if no address to a restaurant
-can be found.
-With a python script the \ylp{} \ac{API} was addressed again to find the restaurant's address.
-If still no city or postcode was found for this restaurant, this restaurant was deleted for reasons of simplicity,
-since a restaurant without a postcode or city has no use for the subsequent analysis.
+Concerning restaurants without a valid address the \ylp{} \ac{API} was addressed again to find the restaurant's address.If still no city or postcode is found, this restaurant gets deleted for the reasons of simplicity, since a restaurant without a postcode or city has no use for the subsequent analysis.
 \paragraph{Price Range Cleaning}
 In the price\_range attribute there were occasional occuring \code{NULL} values which possibly could be filled when addressing the \ylp{} \ac{API} a second time.
 If this was not the case, the \code{NULL} values were filled with the mode of the price\_range from the current city.
