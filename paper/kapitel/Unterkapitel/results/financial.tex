@@ -1,13 +1,13 @@
 \subsection{Investment Analysis}
 \label{subsec:moneten}
-The target, mentioned in \fullref{subsec:usecase}, is to generate a turnover of 40000 euros per month. For this purpose
+The target, mentioned in \fullref{sec:introduction}, is to generate a turnover of 40000 euros per month. For this purpose
  a budget of 750000 euros is available. Based on the analyzed Top 10 cities, all affordable real estate objects will be
  selected. Therefor the following steps are necessary: \\
 \indent 1. Calculate the required total floor space and the number of seats for the restaurant \\
 \indent 2. Looking for real estate objects that matching these requirements \\
 \indent 3. Filter only affordable real estate objects \\
 
-\subsubsection{1. Calculate the required total floor space and the number of seats for the restaurant}
+\subsubsection{Calculate the required total floor space and the number of seats for the restaurant}
 In order to generate this above-mentioned monthly turnover a calculation with parameters such as turnover per seat and day,
  opening days, average consumption per guest and seat and the area of the guest section are required. To calculate the
  minimum number of seats the restaurant needs to reach the monthly turnover is:
@@ -52,14 +52,14 @@ With having the rounded minimum number of seats the computation of the total flo
 where $floor.area.guest$ is the average floor space for a System-Service-Restaurant per guest \cite{FlaecheGast} and the
  amount of the guest area is 40 percent mentioned in \cite{FlaecheGastronomie}.
 
-\subsubsection{2. Looking for real estate objects that matching these requirements}
+\subsubsection{Looking for real estate objects that matching these requirements}
 In order to apply the financing analysis, the Geo-ID of the top 10 cities is queried using the GeoAutoCompletion (GAC)
  v2 \ac{API} of ImmobilienScout24 \cite{ImmoScout}. Having this specific ID the real estate object can be queried via ImmobilienScout24 Search \ac{API}
  with the defined parameters of the Region Search Query. The used Parameters are $min.number.seats$,
  $max.number.seats$, $total.floor.area.min$, $total.floor.area.max$, the real estate specific parameter
  "gastronomy" and the gastronomy-type "restaurant". The results are stored in the \pg{} database.
 
-\subsubsection{3. Filter only affordable real estate objects}
+\subsubsection{Filter only affordable real estate objects}
 The found real estate objects will be checked for affordability. The created equation is
 \begin{center}
     \begin{equation}
