@@ -1,48 +1,13 @@
 \section{Discussion}
 \label{sec:discussion}
-% 15-20 Zeilen
-%
-% Vergleich zu bisherigen Algorithmen
-% Gab es Ausreißer, die nicht untersucht wurden?
-%
-% Offene Probleme?
-% - Zu wenig daten (im sinne von Breite), zB Tourismus Daten um Besucher zu bestimmen
-% - Aufliederung der Städte nach klien, mittel, großstadt
-% -
-% -
-% -
-% -
-
-% Notizen
-%
-% rating als indikator für umsatz
-% daten aus verschiedenen datenquellen --> umgesetzt durch architektur
-% historische daten & live daten
-% trotz limitierte Resosurcen konnten einige Datenquellen gefunden werden um Aussagen über mögliche Städte, Restaurants etc.
-%
-% Inhalte
-% 1. Entwicklung von KPI für Potenzial --> Liste vo Städten
-% 2. immoscout api aktuelle live von gastronomie immobilien
-%     - literaturrecherche --> Parameter zur Findung Umsatz, Größe, Sitzplatz etc.
-% 3. Berechnungen von finanziellen Möglichkeiten durch die Beschränkung in use case description
-% 4. Empfehlung für eine Anzahl von Immobilien in einer Stadt mit hohem Potenzial
-% 5. Analyse von Reviews --> wichtige qualitative Attribute um ein gutes Rating zu erhalten
-% 6. Speisekarten(n) der Stadt --> beliebte Speisen und Services
-% 7. Unterrepräsentierte Kategorien könnten genutzt werden um ein Restaurant zu öffnen.
-%   Vergleich zu ganz Deutschland kommt die kategorie gut an
-
-\paragraph{Conclusion}
-The aim of the paper was to recommend in which cities in Germany a new restaurant of a certain kind can be opened and taking into account the financial framework conditions. To achieve this, we first integrated the restaurant data into the Google Cloud Datastore using the Yelp API and self-developed python code to store it in a \pg{} database instance. Despite the limited resources we found additional data sources and integrated them to the existing data. The used data sources are live data such as Immoscout or Yelp as well as data which was published several years ago. After the data had been cleansed and standardized accordingly, the analysis could begin. The original idea was to use revenue as a dependent variable for a regression analysis. However, no turnover data for Germany's restaurants could be found publicly available on the Internet. Instead, we have used the rating as an indicator for a successful restaurant business and as a dependent variable. However, this approach turned out to be unsuitable as the rating was not significant. This assumption could also be confirmed by a visualisation in Tableau, as there was an even distribution of restaurants throughout Germany irrespective of the level of the rating. % Verweis auf Grafik im Anhang 
-Even the second approach with a decision tree did not provide significant results for the analysis. Therefore we have used other parameters to develop an own KPI to obtain the potential of possible cities. One important parameter was the restaurant density which was calculated from the existing restaurants and the population of Germany. The sum of the user reviews and the average rating were added to this formula. These were smoothed with a SoftMax function to eliminate outliers. With this KPI a top 10 list of potential cities could be identified. Within these top 10 most of the cities were in the federal state of Nordrhein-Westfalen led by Bochum. Afterwards we analyzed the potential cities for underrepresented restaurant categories. For this purpose, the number of restaurants per city was compared with all restaurants in Germany. It could be determined that a traditional German restaurant or a café could be considered as a possible restaurant category in Bochum.
-In order to achieve the required turnover from the usecase, a formula for calculating the parameters was developed using a benchmark. Subsequently, a search was carried out via the Immoscout API for commercial real estate for sale and rent that meet these requirements. The objects were checked for their affordability. %table cities?
-Using a self-developed algorithm, individual user reviews were picked up and analyzed from the Yelp platform. With this review analysis certain words were determined and aggregated. The frequency of the words was used to determine which features customers considered to be most important. %result? 
-\newline
-As the menu can be also an important indicator of success we analyzed the menus of restaurants in Bochum. It turned out that rumpsteak is the most popular item of customers.
-The method in this paper describes a recommended procedure for opening a restaurant in a city in Germany at a pre-defined financial framework with the help of publicly accessible data.
+The aim of the paper was to recommend in which cities in Germany a new restaurant of a certain kind can be opened and taking into account the financial framework conditions. To achieve this, we first integrated the restaurant data of Yelp into the \ac{GCP}. Despite the limited resources we found more data sources like population density, buying power and rent prices and integrated them to the existing data. The used data sources are live data such as Yelp and Immobilienscout as well as data which was published several years ago. After the data was cleansed and standardized accordingly, the analysis could begin. The original idea was to use the turnover as a dependent variable for a regression analysis. However, no turnover data for Germany's restaurants could be found publicly available on the Internet. Instead, we have used the rating as an indicator for a successful restaurant business and as a dependent variable. This approach turned out to be unsuitable as the rating was not significant. Even the second approach with a decision tree did not provide significant results for the analysis. Therefore we have used other parameters to develop an own \ac{KPI} to obtain the potential of possible cities. With this \ac{KPI} a top 10 list could be identified. Within these top 10 most of the cities are in the federal state of Nordrhein-Westfalen led by Bochum. Afterwards we analyzed the potential cities for underrepresented restaurant categories. For this purpose, the number of restaurants per city was compared with all restaurants in Germany. It could be determined that a traditional German restaurant or a café could be considered as a possible restaurant category in Bochum.
+In order to achieve the required turnover from the usecase, a formula was developed using a benchmark of Germany's catering industry. Subsequently, a search was carried out via the Immoscout \ac{API} for commercial buildings for sale and rent that checks their affordability. %table cities? 
+With the text analysis we examined the individual user reviews from Yelp and determined and aggregated certain words of it. The frequency of the words was used to identify which characteristics customers considered to be most important. %result? 
+As the menu can be also an important indicator of success we analyzed the menus of restaurants in Bochum. It turned out that rumpsteak is the most popular item of customers. \newline
+On the basis of various publicly accessible data, we have given a recommendation for investors in which city in Germany it is advisable to start a restaurant business of a certain kind. We have also considered the financial framework of the usecase and offer suggestions for possible commercial buildings.
 
 %future work
-\paragraph{Future Work}
-Obviously, there are many different ways to improve the obtained results and to extend this thesis. First of all, the analysis of the restaurant data refers exclusively to the Yelp platform. In order to validate this data it would be useful to collect further data from other sources such as Google or Facebook. The same applies to the determination of real estate and the rent index which refer solely to Immobilienscout. \newline
+Obviously, there are many different ways to improve the obtained results and to extend this thesis. First of all, the analysis of the restaurant data refers exclusively to the Yelp platform. In order to validate this data it would be useful to collect further data from other sources such as Google or Facebook. The same applies to the determination of commercial buildings and the rent index which refer solely to Immobilienscout. \newline
 Moreover the potential formula could be improved by using further independent variables. In addition to the population data, tourism data of the individual cities in Germany could also be included to obtain more representative results for the ratio between people and restaurants. Concerning this matter a data acquisition could also be carried out. This could be done through surveys of residents and tourists to receive further and more precise results for the potential formula. For the latter, only positive and independent variables were considered in this paper. However, also the influence of negative factors such as data from crime statistics could be relevant. \newline
 When selecting the individual restaurant categories, the influence of ethnic groups could also be significant. As there are certain neighbourhoods in cities where people with a migration background live. Data from the platform of Google Trends could also be used for a specific restaurant category or food to identify current trends at an early stage. With this it's possible to create or change an appropriate menu. \newline
 The review analysis could be enhanced by analyzing the uploaded images on Yelp. With the usage of certain criteria for photo qualities it would be possible to prove and extend the significance of the existing user reviews. The financial analysis could also be improved by using current data of the wages and salaries of Germany‘s population.
