@@ -3,11 +3,11 @@
 As described in \cite{ingestion} \textit{Data Ingestion} is the process of obtaining and importing data for immediate use or storage in a database. In our use case we collect data from various data sources, thus we need different implementation approaches on each kind of data source. \newline
 In total, data from five different types are collected:
 \begin{itemize}
-  \item \ac{JSON}
-  \item \ac{API} %TODO: was bedeutet das? spezifischer! ist doc hauch JSON oder?
-  \item \ac{PDF}
+  \item \ac{JSON} aus nicht verifizierter Quelle
+  \item \ac{API}
+  \item \acs{PDF}
   \item \ac{CSV}
-  \item Web %TODO: was bedeutet das? spezifischer! HTML?
+  \item \acs{HTML} content
 \end{itemize}
 A challenge that should not be underestimated is ensuring quality of the data.
 While \ac{API}, \ac{CSV} and \ac{JSON} files consist of very structured data and reading them does not require much effort,
