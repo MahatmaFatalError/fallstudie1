@@ -1,12 +1,13 @@
 \subsubsection{Data Storage}
 \label{subsubsec:storage}
-To make the data available for analysis and visualization, it must be read from the \gds{}, mapped to the respective table format and eventually persisted into the \pg{} database tables.
+To make the data available for analysis and visualization, it must be read from the \gds{}, mapped to the respective table format and persisted in \pg{} database tables.
 \newline
-This \textit{Data Storage} process is handled by the  \code{transporter}. If it is required to implement a new transporter the only part that needs to be written is the mapping from a \gds{} Entity to a \pg{} table.
+This \textit{Data Storage} process is handled by the \code{transporter}.
+If it is required to implement a new transporter the only part that needs to be written is the mapping from a \gds{} entity to a \pg{} table.
 \newline
 In summary, the following steps describe the development of a new \textit{transporter}:
 \begin{enumerate}
-  \item Create a new \pg{} table
-  \item Create a new \code{<example>\_transporter.py} module that inherits from the base \code{Transporter} class.
-  \item Implementation of the mapping method.
+  \item Creation of a new \pg{} table
+  \item Creation of a new \code{transporter} subclass
+  \item Implementation of the abstract mapping method
 \end{enumerate}

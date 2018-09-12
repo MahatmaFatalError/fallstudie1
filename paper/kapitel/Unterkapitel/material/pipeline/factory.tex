@@ -1,11 +1,13 @@
 \subsubsection{Scalability}
 \label{subsubsec:scale}
 As explained in \fullref{subsec:sources} we have different data sources from which the required data must be retrieved.
-For this reason it is extremely important that to be  scalable not only in the sense of hardware utilization but also in the sense of implementation effort to add an additional source.
+For this reason it is extremely important that the architecture needs to be scalable not only in the sense of hardware utilization but also in the sense of implementation effort to add an additional source.
 \newline
-This is realized by a combination of dynamic programming and a simple \textit{Factory Pattern}\footnote{\url{https://en.wikipedia.org/wiki/Factory_method_pattern}}.%TODO: lieber nicht wikipedia zitieren sondern original von GoF
+This is realized by a combination of dynamic programming and a simple \textit{Factory Pattern}\cite{GoF}.
 \newline
-The \textit{collector} is responsible for\textit{Data Ingestion}, while the \textit{transporter} is responsible for transporting and mapping the raw data into \pg{}. Both the \textit{collector} and the \textit{transporter} are realized with the factory pattern. By using the factory pattern we can abstract from the implementation logic which allows to quickly and easily add new data sources to the existing logic without changing anything in the underlying process.
+A so called \textit{collector} is responsible for\textit{Data Ingestion}, while a \textit{transporter} is responsible for transporting and mapping the raw data into \pg{}.
+Both \textit{collector} and \textit{transporter} are realized with the factory pattern.
+By using the factory pattern we can abstract from the implementation logic which allows to quickly and easily add new data sources to the existing logic without changing anything in the underlying process.
 % There are two modules that realize the factory pattern for both collector and transporter:
 % \begin{itemize}
 %   \item \code{factory.py}
