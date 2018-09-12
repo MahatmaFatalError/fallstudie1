@@ -1,17 +1,15 @@
 \subsubsection{Data Ingestion}
 \label{subsubsec:ingestion}
-As descriped in\cite{ingestion} \textit{Data Ingestion} is the process of obtaining and importing data for immediate use or storage in a database.
-In our usecase we are collecting data from various data sources, thus we need different implementation approaches on each kind of datasource.
-\newline
-Across all \code{collectors} data were collected from a total of five different types of data sources:
+As described in \cite{ingestion} \textit{Data Ingestion} is the process of obtaining and importing data for immediate use or storage in a database. In our use case we collect data from various data sources, thus we need different implementation approaches on each kind of data source. \newline
+In total, data from five different types are collected:
 \begin{itemize}
-  \item \ac{JSON}
+  \item \ac{JSON} aus nicht verifizierter Quelle
   \item \ac{API}
   \item \acs{PDF}
   \item \ac{CSV}
   \item \acs{HTML} content
 \end{itemize}
-A part that should not be underestimated is the resulting quality of the data.
+A challenge that should not be underestimated is ensuring quality of the data.
 While \ac{API}, \ac{CSV} and \ac{JSON} files consist of very structured data and reading them does not require much effort,
 data from a \ac{PDF} file or homepage are unstructured and require a higher implementation effort and possibly an additional
 \textit{Data Cleaning} step is required before using them in the analysis part to get the results that are truly reflecting the reality.
