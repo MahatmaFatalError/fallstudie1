@@ -13,7 +13,7 @@ reviews_df = None
 
 # If you want to, change things here! #
 top_how_much = 50
-rating = 1
+rating = 5
 tree_tagger_dir = '../../../data/tree_tagger'
 reversed_result = True  # True = absteigend
 cumulated = True
