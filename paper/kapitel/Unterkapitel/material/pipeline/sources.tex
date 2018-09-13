@@ -1,10 +1,18 @@
 \subsection{Data Sources}
 \label{subsec:sources}
-Many different sources were found and integrated for the analysis of suitable cities for a restaurant. The community website Yelp was one of the most important data sources for the evaluations. The Yelp Fusion\footnote{\href{https://www.yelp.com/fusion}{www.yelp.com/fusion}} interface provides valuable information about existing restaurants to indicate their quality or potential competitors. Available restaurant data include i.a. the number of restaurants, restaurant name, type of food, count of ratings, the mean rating in general as well as the coordinates of the restaurant with latitude and longitude.\\% However, the storage time of Yelp data is limited, so a suitable infrastructure for data ingestion and analysis is needed.
-\\
-As stated by \cite{locana}, buying power in the catchment area of a gastronomy business is a crucial factor in the sense that buying power determines the price level of a restaurant. It makes little sense to open a five-star restaurant in a social focus area. That's why a survey conducted in 2018 by \cite{buyingpower} containing information about buying power in German cities is also adapted for integration.
+Many different sources were found and integrated for the analysis of suitable cities for a restaurant. 
 \newline
-In connection with buying power it is absolutely necessary to be aware of rental costs in specific locations in order to afford the property for long term\cite{locana}. Thereupon an interface to a popular real estate platform \cite{ImmoScout} opens up the possibility to get accurate real time rental and property prices to include them in our analysis.
+\paragraph{Yelp}
+The community website Yelp was one of the most important data sources for the evaluations. The Yelp Fusion\footnote{\href{https://www.yelp.com/fusion}{www.yelp.com/fusion}} interface provides valuable information on existing restaurants to indicate their quality or potential competitors. Available restaurant data includes the number of restaurants, the name of the restaurant, the type of food, the number of ratings, the average rating in general, and the coordinates of the restaurant with latitude and longitude. However, the storage time of the Yelp data is limited, so an appropriate infrastructure for data acquisition and analysis must be in place.
 \newline
-Finally, the Federal Statistical Office of Germany provides fine grained data about city areas, population and therefore population density in form of a downloadable Excel spread sheet.\cite{destatis}
-
+\paragraph {Buying Power}
+As stated by \cite{locana}, buying power in a restaurant's catchment area is a critical factor in the sense that purchasing power determines the price level of a restaurant. It makes little sense to open a five-star restaurant in a social area. Therefore we also integrated a survey \cite{buyingpower} from the year 2018 with information about purchasing power in German cities and used it for our analyses.
+\newline
+\paragraph{Immobilienscout24}
+In connection with purchasing power, it is absolutely necessary to be aware of the rental costs at certain locations in order to finance the property in the long term\cite{locana}. An interface to a popular real estate platform \cite{ImmoScout} then opened up the possibility of obtaining accurate real-time rental and real estate prices and including them in our analysis.
+\newline
+\paragraph{Speisekarte}
+In order to be competitive, a recommendation should be made about what foods are popular or what services people are interested in. With the help of a programmed algorithm we were able to collect the words from a website \cite{speisekarte} for the evaluation of dishes from certain cities. These were aggregated to be used for our analysis.
+\newline
+\paragraph{GermanCities}
+Finally, the Federal Statistical Office provides fine-grained data on urban areas, population and thus population density in the form of a downloadable Excel table.\cite{destatis}
