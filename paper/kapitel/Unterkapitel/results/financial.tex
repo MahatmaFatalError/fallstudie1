@@ -14,9 +14,9 @@ In order to generate this above-mentioned monthly revenue a calculation with par
 \begin{center}
 \begin{equation}
 \begin{aligned}
-	min.number.seats =&\lceil\frac{revenue.restaurant.month}{revenue.seat.day \times avg.consumption.guest.day \times opening.days.month}\rceil \\
-	=&\lceil\frac{40,000 \ \text{\euro{}} }{1.5 \times 20 \ \text{\euro{}} \times 26}\rceil \\
-	=&52
+	min.number.seats & = \lceil\frac{revenue.restaurant.month}{revenue.seat.day \times avg.consumption.guest.day \times opening.days.month}\rceil \\
+	& = \lceil\frac{40,000 \ \text{\euro{}} }{1.5 \times 20 \ \text{\euro{}} \times 26}\rceil \\
+	& = 52
 \end{aligned}
 \label{eq:number_seats_benchmark}
 \end{equation}
@@ -64,10 +64,10 @@ The found real estate objects will be checked for affordability. The created equ
 \begin{center}
     \begin{equation}
         \begin{aligned}
-        rest.budget = & available.budget \\
-            &- price.real.estate.object \times multiplier \\
-            &- furnish.costs.sqm \times total.floor.space \\
-            &- seats.min \times furnish.costs.seat
+            rest.budget & = available.budget \\
+                & - price.real.estate.object \times multiplier \\
+                & - furnish.costs.sqm \times total.floor.space \\
+                & - seats.min \times furnish.costs.seat
         \end{aligned}
         \label{eq:affordable}
     \end{equation}
