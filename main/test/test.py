@@ -19,7 +19,7 @@ sql.create_session()
 # print(cities[1])
 # print(cities[0])
 
-analyzer = TextAnalyzer('english', False, False, '../../data/tree_tagger')
+analyzer = TextAnalyzer('english', True, False, '../../data/tree_tagger')
 
 review = 'Yes, the 5 stars are deserved: here you can drink and buy the best coffee in Bochum (and maybe in the Ruhr area?). I usually only take the roasted coffee'
 

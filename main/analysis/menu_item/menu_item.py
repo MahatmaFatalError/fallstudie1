@@ -6,15 +6,17 @@ from config import constants
 from helper.text_analyzer import TextAnalyzer
 from main.helper.db_helper import DatastoreHelper, SqlHelper
 from main.helper import util
-import re
 
 logger = logging.getLogger(__name__)
 city_string = 'Bochum'
 save_as_latex = True
 action = 2  # 1 = group, 2 = just count
-
+language = 'german'
+stemming = True
+tagging = True
 tree_tagger_dir = '../../../data/tree_tagger'
-analyzer = TextAnalyzer('german', True, True, tree_tagger_dir)
+
+analyzer = TextAnalyzer(language, stemming, tagging, tree_tagger_dir)
 
 
 def run():
