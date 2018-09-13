@@ -1,5 +1,3 @@
-
-
 class Result:
 
     success = None
