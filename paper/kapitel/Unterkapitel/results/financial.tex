@@ -1,34 +1,34 @@
 \subsection{Investment Analysis}
 \label{subsec:moneten}
-The target, mentioned in \fullref{sec:introduction}, is to generate a turnover of 40,000 \euro per month. For this purpose
- a budget of 750,000 \euro is available. Based on the analyzed Top 10 cities, all affordable real estate objects will be
+The target, mentioned in \fullref{sec:introduction}, is to generate a revenue of 40,000 \euro{} per month. For this purpose
+ a budget of 750,000 \euro{} is available. Based on the analyzed Top 10 cities, all affordable real estate objects will be
  selected. Therefor the following steps are necessary: \\
 \indent 1. Calculate the required total floor space and the number of seats for the restaurant \\
-\indent 2. Looking for real estate objects that matching these requirements \\
+\indent 2. Looking for real estate objects which match these requirements \\
 \indent 3. Filter only affordable real estate objects \\
 
 \subsubsection{Calculate the required total floor space and the number of seats for the restaurant}
-In order to generate this above-mentioned monthly turnover a calculation with parameters such as turnover per seat and day,
+In order to generate this above-mentioned monthly revenue a calculation with parameters such as revenue per seat and day,
  opening days, average consumption per guest and seat and the area of the guest section are required. To calculate the
- minimum number of seats the restaurant needs to reach the monthly turnover is:
+ minimum number of seats the restaurant needs to reach the monthly revenue is:
 \begin{center}
 \begin{equation}
 \begin{aligned}
-	min.number.seats =&\frac{turnover.restaurant.month}{turnover.seat.day \times avg.consumption.guest.day \times opening.days.month} \\
-	=&\frac{40000 euros}{1.5 \times 20 euros \times 26} \\
-	=&51.28
+	min.number.seats =&\lceil\frac{revenue.restaurant.month}{revenue.seat.day \times avg.consumption.guest.day \times opening.days.month}\rceil \\
+	=&\lceil\frac{40,000 \ \text{\euro{}} }{1.5 \times 20 \ \text{\euro{}} \times 26}\rceil \\
+	=&52
 \end{aligned}
 \label{eq:number_seats_benchmark}
 \end{equation}
 \end{center}
 
-where $turnover.seat.day.$ and $avg.consumption.guest.day$ given by \cite{BenchmarkGastronomie}. $opening.days.month$
- are calculated as usual in the gastronomy as 6 days a week. For montly analysis the 6 days per week are multitplied by
+where $revenue.seat.day.$ and $avg.consumption.guest.day$ given by \cite{BenchmarkGastronomie}. $opening.days.month$
+ are calculated as usual in the gastronomy as 6 days a week. For monthly analysis the 6 days per week are multiplied by
 \begin{equation}
     \begin{aligned}
         opening.days.month & = week.working.days \times avg.weeks.year \\
-        & = 6 days \times \frac{52 weeks.year}{12 month.year} \\
-        & = 26 days
+        & = 6 \ days \times \frac{52 \ weeks.year}{12 \ month.year} \\
+        & = 26 \ days
     \end{aligned}
     \label{eq:opening_days}
 \end{equation}
@@ -49,7 +49,7 @@ With having the rounded minimum number of seats the computation of the total flo
     \label{eq:total_floor_space}
 \end{equation}
 
-where $floor.area.guest$ is the average floor space for a System-Service-Restaurant per guest \cite{FlaecheGast} and the
+where $floor.area.guest$ is the average floor space for a System-Service-Restaurant per guest is 1.5 square meter \cite{FlaecheGast} and the
  amount of the guest area is 40 percent mentioned in \cite{FlaecheGastronomie}.
 
 \subsubsection{Looking for real estate objects that matching these requirements}
