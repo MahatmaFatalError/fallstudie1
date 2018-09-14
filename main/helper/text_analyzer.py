@@ -1,6 +1,6 @@
 import logging
 import string
-
+import nltk
 import treetaggerwrapper
 from nltk import SnowballStemmer
 from nltk.corpus import stopwords
@@ -33,7 +33,11 @@ class TextAnalyzer:
         # Join the characters again to form the string.
         no_punc = ''.join(no_punc)
         # Remove any stopwords
-        no_stopwords = [word for word in no_punc.split() if word.lower() not in stopwords.words(self.language)]
+        try:
+            no_stopwords = [word for word in no_punc.split() if word.lower() not in stopwords.words(self.language)]
+        except LookupError:
+            nltk.download('stopwords')
+            no_stopwords = [word for word in no_punc.split() if word.lower() not in stopwords.words(self.language)]
         result = no_stopwords
 
         if self.tagging:

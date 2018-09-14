@@ -3,10 +3,9 @@ import logging
 import pandas as pd
 from collections import defaultdict
 from config import constants
-from helper.text_analyzer import TextAnalyzer
 from main.helper.db_helper import DatastoreHelper, SqlHelper
 from main.helper import util
-import re
+from main.helper.text_analyzer import TextAnalyzer
 
 logger = logging.getLogger(__name__)
 city_string = 'Bochum'
