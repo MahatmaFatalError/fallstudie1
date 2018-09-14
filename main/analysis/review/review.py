@@ -13,7 +13,7 @@ reviews_df = None
 
 # If you want to, change things here! #
 top_how_much = 50
-rating = 1
+rating = 5
 tree_tagger_dir = '../../../data/tree_tagger'
 reversed_result = True  # True = absteigend
 cumulated = True
@@ -22,7 +22,7 @@ tagging = True
 language = 'german'
 group_by_category = False
 city = 'Bochum'
-save_as_latex = True
+save_as_latex = False
 
 
 #####################################
@@ -138,9 +138,12 @@ def write_result(result, file_name):
     global stemming
     global reviews_df
     global save_as_latex
+    global city
 
     top_how_much_string = str(top_how_much)
     title = file_name + '_top_' + top_how_much_string + '_of_' + str(reviews_df.shape[0])
+    if city:
+        title += ('_' + city.lower())
     if reversed_result:
         title += '_reversed'
     if cumulated:

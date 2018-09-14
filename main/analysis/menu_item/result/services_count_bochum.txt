@@ -1,0 +1,70 @@
+[
+    [
+        "familienfreund restaurant",
+        16
+    ],
+    [
+        "hund erlaubt",
+        14
+    ],
+    [
+        "vegetar ess",
+        13
+    ],
+    [
+        "terrass",
+        13
+    ],
+    [
+        "platz feierlich",
+        12
+    ],
+    [
+        "kreditkart akzeptiert",
+        11
+    ],
+    [
+        "mittagst",
+        11
+    ],
+    [
+        "parkplatz",
+        10
+    ],
+    [
+        "behindertenfreund",
+        8
+    ],
+    [
+        "biergart",
+        8
+    ],
+    [
+        "internetzugang",
+        6
+    ],
+    [
+        "durchgeh warm kuch",
+        6
+    ],
+    [
+        "lieferservic",
+        5
+    ],
+    [
+        "glutenfrei",
+        4
+    ],
+    [
+        "rauch erlaubt",
+        2
+    ],
+    [
+        "bio",
+        1
+    ],
+    [
+        "fremdenzimm",
+        1
+    ]
+]

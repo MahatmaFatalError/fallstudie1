@@ -39,7 +39,7 @@ This approach was named after the Greek $\kappa$ in order to illustrate both pro
 	\label{fig:KappaArchitecture}
 \end{figure}
 Via the input stream, any number of data sources can be accessed. In the
-data ingestion layer, all collected data is stored and after preprocessing persisted in the serving layer. %TODO: was ist mit dem speed layer?
+data ingestion layer, all collected data is stored and after preprocessing persisted in the serving layer.
 The analysis part can then be executed on the serving layer.
 The separation into different layers also fulfills the third requirement. Since the Kappa architecture covers all requirements mentioned above, the concrete implementation follows this pattern in an streamlined interpretation.
 \newline

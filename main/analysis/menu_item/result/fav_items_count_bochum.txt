@@ -1,0 +1,2026 @@
+[
+    [
+        "rumpsteak",
+        7
+    ],
+    [
+        "gemischt eis",
+        4
+    ],
+    [
+        "grilltell",
+        4
+    ],
+    [
+        "tiramisu",
+        4
+    ],
+    [
+        "mouss au chocolat",
+        4
+    ],
+    [
+        "mongo´s asia brunch",
+        3
+    ],
+    [
+        "mouss au chocolat birn vanillesauc",
+        2
+    ],
+    [
+        "limonenjoghurtmouss erdbeersauc sahn",
+        2
+    ],
+    [
+        "lyche",
+        2
+    ],
+    [
+        "norweg lachsfilet",
+        2
+    ],
+    [
+        "formaggio misto",
+        2
+    ],
+    [
+        "pizza margherita",
+        2
+    ],
+    [
+        "wien schnitzel",
+        2
+    ],
+    [
+        "taxitell",
+        2
+    ],
+    [
+        "jag schnitzel",
+        2
+    ],
+    [
+        "cheeseburg",
+        2
+    ],
+    [
+        "pizza",
+        2
+    ],
+    [
+        "cassata",
+        2
+    ],
+    [
+        "gyros uberback",
+        2
+    ],
+    [
+        "crème fraîch",
+        2
+    ],
+    [
+        "lammhax",
+        2
+    ],
+    [
+        "menu",
+        2
+    ],
+    [
+        "schnitzel wien art",
+        2
+    ],
+    [
+        "gambas al ajillo",
+        2
+    ],
+    [
+        "grunkohl",
+        2
+    ],
+    [
+        "raubertell",
+        1
+    ],
+    [
+        "klein schweineschnitzel",
+        1
+    ],
+    [
+        "hahnchengeschnetzelt",
+        1
+    ],
+    [
+        "kunef",
+        1
+    ],
+    [
+        "dana sac",
+        1
+    ],
+    [
+        "anatoli fruhstuck tell",
+        1
+    ],
+    [
+        "party famili packung",
+        1
+    ],
+    [
+        "namisushi",
+        1
+    ],
+    [
+        "bandosushi",
+        1
+    ],
+    [
+        "bb doubl beef“ burg",
+        1
+    ],
+    [
+        "gegrillt grun spargel",
+        1
+    ],
+    [
+        "tbon steak irland",
+        1
+    ],
+    [
+        "sushi 4 4",
+        1
+    ],
+    [
+        "tropical desir",
+        1
+    ],
+    [
+        "black sesam ice",
+        1
+    ],
+    [
+        "fetakas tomat",
+        1
+    ],
+    [
+        "hawaii",
+        1
+    ],
+    [
+        "thunfisch",
+        1
+    ],
+    [
+        "4 knusprig geback hahnchenbruststreif",
+        1
+    ],
+    [
+        "italian burg",
+        1
+    ],
+    [
+        "fajita wrap",
+        1
+    ],
+    [
+        "lachsfilet gemusebett orangenbuttersauc krokett",
+        1
+    ],
+    [
+        "royal bull",
+        1
+    ],
+    [
+        "red bull scaviray prosecco",
+        1
+    ],
+    [
+        "veuv clicquot",
+        1
+    ],
+    [
+        "“caffè zentral” fruhstuck 2 person",
+        1
+    ],
+    [
+        "bel paes",
+        1
+    ],
+    [
+        "dolc",
+        1
+    ],
+    [
+        "banan",
+        1
+    ],
+    [
+        "spezialdays",
+        1
+    ],
+    [
+        "postr dessert",
+        1
+    ],
+    [
+        "para niños kindertell",
+        1
+    ],
+    [
+        "minestron",
+        1
+    ],
+    [
+        "pizza funghi",
+        1
+    ],
+    [
+        "pizza quattro stagioni",
+        1
+    ],
+    [
+        "hofsted schnitzel gefullt schink kas",
+        1
+    ],
+    [
+        "kartoffeleck",
+        1
+    ],
+    [
+        "folienkartoffel",
+        1
+    ],
+    [
+        "holland kuttermatj",
+        1
+    ],
+    [
+        "antipasto misto della vetrina",
+        1
+    ],
+    [
+        "dessert della casa",
+        1
+    ],
+    [
+        "gambas salat",
+        1
+    ],
+    [
+        "lust meer",
+        1
+    ],
+    [
+        "chick chees monst mix 2 person",
+        1
+    ],
+    [
+        "hausgemacht kuch",
+        1
+    ],
+    [
+        "weinempfehl portugies weissherb",
+        1
+    ],
+    [
+        "pochiert crem tahitivanill",
+        1
+    ],
+    [
+        "braciol di bufalo al ragu",
+        1
+    ],
+    [
+        "spezzatino di bufalo",
+        1
+    ],
+    [
+        "fettin pizzaiola capres",
+        1
+    ],
+    [
+        "susskartoffel dipp wahl",
+        1
+    ],
+    [
+        "ofenkartoffel heringsstip",
+        1
+    ],
+    [
+        "biet taglich 2 supp eintopf vegetar vegan supp aktuell infos taglich facebook",
+        1
+    ],
+    [
+        "salat „italiano“",
+        1
+    ],
+    [
+        "salat „espana“",
+        1
+    ],
+    [
+        "salat „cesare“",
+        1
+    ],
+    [
+        "sambus 3 stuck",
+        1
+    ],
+    [
+        "masa beirut vorspeis hauptgericht dessert",
+        1
+    ],
+    [
+        "masa maroush hauptgericht",
+        1
+    ],
+    [
+        "panang curry p",
+        1
+    ],
+    [
+        "flamed tandoori ft",
+        1
+    ],
+    [
+        "mongo´s bbq mb",
+        1
+    ],
+    [
+        "salat „lendchen“",
+        1
+    ],
+    [
+        "klein chefsalat",
+        1
+    ],
+    [
+        "schollenfilet „finkenward art“",
+        1
+    ],
+    [
+        "insalata di pollo",
+        1
+    ],
+    [
+        "antipasto misto",
+        1
+    ],
+    [
+        "combinazion di mamma",
+        1
+    ],
+    [
+        "mild matj",
+        1
+    ],
+    [
+        "andechs pfann",
+        1
+    ],
+    [
+        "geschnetzelt schweinefilet",
+        1
+    ],
+    [
+        "pizza capricciosa",
+        1
+    ],
+    [
+        "pizza carpaccio",
+        1
+    ],
+    [
+        "spaghetti bolognes",
+        1
+    ],
+    [
+        "cola fanta sprit cola light 1l flasch mitnehm",
+        1
+    ],
+    [
+        "lambrusco rosso bianco 07l",
+        1
+    ],
+    [
+        "bier 05l",
+        1
+    ],
+    [
+        "knusprig ent verschied gemus",
+        1
+    ],
+    [
+        "knusprig ent rot curry gemus",
+        1
+    ],
+    [
+        "knusprig ent susssau sauc gemus",
+        1
+    ],
+    [
+        "tbon steak",
+        1
+    ],
+    [
+        "el gauchoplatt",
+        1
+    ],
+    [
+        "pfefferhuftsteak",
+        1
+    ],
+    [
+        "gross gemischt salattell",
+        1
+    ],
+    [
+        "schweineschnitzel",
+        1
+    ],
+    [
+        "vanilleeis",
+        1
+    ],
+    [
+        "pizza rucola e pomodorini",
+        1
+    ],
+    [
+        "gamberoni",
+        1
+    ],
+    [
+        "churros",
+        1
+    ],
+    [
+        "quesadillas capres",
+        1
+    ],
+    [
+        "club burrito",
+        1
+    ],
+    [
+        "champignonschnitzel",
+        1
+    ],
+    [
+        "lammsteak",
+        1
+    ],
+    [
+        "bento 1",
+        1
+    ],
+    [
+        "karaag nudelsupp",
+        1
+    ],
+    [
+        "gem sushi tell",
+        1
+    ],
+    [
+        "malai kofta",
+        1
+    ],
+    [
+        "jaffna curry",
+        1
+    ],
+    [
+        "butterzart huhnerbrust plus keul nuss batura",
+        1
+    ],
+    [
+        "thainudeln",
+        1
+    ],
+    [
+        "klein frisch salattell",
+        1
+    ],
+    [
+        "frisch gartensalat",
+        1
+    ],
+    [
+        "browni",
+        1
+    ],
+    [
+        "stoned prawn",
+        1
+    ],
+    [
+        "the real beef rib eye",
+        1
+    ],
+    [
+        "schnitzeltasch querenburg",
+        1
+    ],
+    [
+        "schnitzeltasch hofsted",
+        1
+    ],
+    [
+        "innenstadt",
+        1
+    ],
+    [
+        "chipiron rellenos",
+        1
+    ],
+    [
+        "boqueron al vinagr",
+        1
+    ],
+    [
+        "ciruelas en bacón",
+        1
+    ],
+    [
+        "wasabi special",
+        1
+    ],
+    [
+        "japan reiskuch",
+        1
+    ],
+    [
+        "schwarz tell",
+        1
+    ],
+    [
+        "fresh fit",
+        1
+    ],
+    [
+        "salat saison",
+        1
+    ],
+    [
+        "hahnchenburstfilet",
+        1
+    ],
+    [
+        "saganaki me sousámi",
+        1
+    ],
+    [
+        "taramas",
+        1
+    ],
+    [
+        "riganato",
+        1
+    ],
+    [
+        "chili sauc",
+        1
+    ],
+    [
+        "erdnuss sauc",
+        1
+    ],
+    [
+        "sussesauersauc",
+        1
+    ],
+    [
+        "jagerpfann",
+        1
+    ],
+    [
+        "ratsherrenpfann",
+        1
+    ],
+    [
+        "kasslernack",
+        1
+    ],
+    [
+        "gemuseplatt",
+        1
+    ],
+    [
+        "gebrat ent a la szechuan",
+        1
+    ],
+    [
+        "rindfleisch gebrat zwiebeln",
+        1
+    ],
+    [
+        "gansekeul vorbestell",
+        1
+    ],
+    [
+        "gamba pfann",
+        1
+    ],
+    [
+        "mediterran",
+        1
+    ],
+    [
+        "currywurst",
+        1
+    ],
+    [
+        "putensteak",
+        1
+    ],
+    [
+        "8 hahnchenteil",
+        1
+    ],
+    [
+        "zing burg",
+        1
+    ],
+    [
+        "filet burg",
+        1
+    ],
+    [
+        "fischtell",
+        1
+    ],
+    [
+        "garnel paniert",
+        1
+    ],
+    [
+        "calamaris pfann",
+        1
+    ],
+    [
+        "filetsteak",
+        1
+    ],
+    [
+        "epigrammplatt",
+        1
+    ],
+    [
+        "seniorentell wahl salat",
+        1
+    ],
+    [
+        "gemischt eis heiss amarenakirsch vanillesahn",
+        1
+    ],
+    [
+        "geback apfelring vanillesoss",
+        1
+    ],
+    [
+        "klein schnitzel apfelmus",
+        1
+    ],
+    [
+        "72 feuerspiess flambiert",
+        1
+    ],
+    [
+        "404 trikala tell",
+        1
+    ],
+    [
+        "132 filetsteak",
+        1
+    ],
+    [
+        "acadi burg",
+        1
+    ],
+    [
+        "tzatziki",
+        1
+    ],
+    [
+        "aioli",
+        1
+    ],
+    [
+        "putenfilet",
+        1
+    ],
+    [
+        "herm platt",
+        1
+    ],
+    [
+        "jalapeños",
+        1
+    ],
+    [
+        "the awesom duffl",
+        1
+    ],
+    [
+        "brooklyn byt cheesecak",
+        1
+    ],
+    [
+        "87 rotbarschfilet",
+        1
+    ],
+    [
+        "82 chines hummerkrabb",
+        1
+    ],
+    [
+        "k8 peking ent pro per",
+        1
+    ],
+    [
+        "gyros",
+        1
+    ],
+    [
+        "nikolausplatt",
+        1
+    ],
+    [
+        "lammcarré krauterkrust",
+        1
+    ],
+    [
+        "milchkalbsleb pet farm",
+        1
+    ],
+    [
+        "schnitzel hollandais",
+        1
+    ],
+    [
+        "holstein schnitzel",
+        1
+    ],
+    [
+        "rumpsteak art haus",
+        1
+    ],
+    [
+        "pfefferspiess",
+        1
+    ],
+    [
+        "vegetar tell",
+        1
+    ],
+    [
+        "gebrat poulardenbrust tranch ratatouillegemus",
+        1
+    ],
+    [
+        "schnitzel holstein art",
+        1
+    ],
+    [
+        "kalbsleb berlin art butt gebrat",
+        1
+    ],
+    [
+        "filet bif de lomo zart stuck rind",
+        1
+    ],
+    [
+        "zanderfilet",
+        1
+    ],
+    [
+        "zwiebelrostbrat",
+        1
+    ],
+    [
+        "classic set",
+        1
+    ],
+    [
+        "futo maki",
+        1
+    ],
+    [
+        "raup roll",
+        1
+    ],
+    [
+        "rucola parmesan gerostet pinienkern",
+        1
+    ],
+    [
+        "warm vorspeisenvariation",
+        1
+    ],
+    [
+        "mouss au chocolat gluhweinkirsch",
+        1
+    ],
+    [
+        "spaghetti shrimps gemus tomatensauc",
+        1
+    ],
+    [
+        "spaghetti schafskas oliv",
+        1
+    ],
+    [
+        "spaghetti pesto kl tomatensalat",
+        1
+    ],
+    [
+        "eis schokoladensauc amarettosirup beer",
+        1
+    ],
+    [
+        "tag tort",
+        1
+    ],
+    [
+        "lach",
+        1
+    ],
+    [
+        "bayer crème",
+        1
+    ],
+    [
+        "panna cotta pinha colada",
+        1
+    ],
+    [
+        "lemonchocolat cheesecak glas",
+        1
+    ],
+    [
+        "saft",
+        1
+    ],
+    [
+        "milch",
+        1
+    ],
+    [
+        "zitron",
+        1
+    ],
+    [
+        "roastbeefschnittch",
+        1
+    ],
+    [
+        "schnitzel onkel martin",
+        1
+    ],
+    [
+        "jagerschnitzel",
+        1
+    ],
+    [
+        "insalata rimini",
+        1
+    ],
+    [
+        "insalata capriccio",
+        1
+    ],
+    [
+        "parma e rucola",
+        1
+    ],
+    [
+        "weiss mouss",
+        1
+    ],
+    [
+        "cheesecak tart",
+        1
+    ],
+    [
+        "bunt beet",
+        1
+    ],
+    [
+        "schweineruckensteak",
+        1
+    ],
+    [
+        "knusprig gebrat bauernent",
+        1
+    ],
+    [
+        "schweinefiletmedaillon",
+        1
+    ],
+    [
+        "mauricetell",
+        1
+    ],
+    [
+        "auswahl international rohmilchkas",
+        1
+    ],
+    [
+        "manchego",
+        1
+    ],
+    [
+        "hausgemacht eissort pro kugel",
+        1
+    ],
+    [
+        "candy bar shak",
+        1
+    ],
+    [
+        "burg burg bun serviert",
+        1
+    ],
+    [
+        "micro",
+        1
+    ],
+    [
+        "apfelstrudel",
+        1
+    ],
+    [
+        "steaksandwich",
+        1
+    ],
+    [
+        "burg",
+        1
+    ],
+    [
+        "wienerschnitzel",
+        1
+    ],
+    [
+        "sauerbrat",
+        1
+    ],
+    [
+        "franz ferdinand kaiserschnitzel",
+        1
+    ],
+    [
+        "mousaka",
+        1
+    ],
+    [
+        "bifteki",
+        1
+    ],
+    [
+        "portion spanferkel",
+        1
+    ],
+    [
+        "ice cream paletas berlin",
+        1
+    ],
+    [
+        "kokos panna cotta",
+        1
+    ],
+    [
+        "vietnames coffe pie",
+        1
+    ],
+    [
+        "filetspitz waldpilzrahm",
+        1
+    ],
+    [
+        "lammkarre",
+        1
+    ],
+    [
+        "rinderroulad",
+        1
+    ],
+    [
+        "riesenrad",
+        1
+    ],
+    [
+        "rumpsteak bratkartoffeln",
+        1
+    ],
+    [
+        "gut ute",
+        1
+    ],
+    [
+        "lammfilet al pep verd",
+        1
+    ],
+    [
+        "rinderfilet grill xxl",
+        1
+    ],
+    [
+        "rumpsteak grill xxl",
+        1
+    ],
+    [
+        "1 margherita",
+        1
+    ],
+    [
+        "pizzablech mista",
+        1
+    ],
+    [
+        "102 insalata capricciosa",
+        1
+    ],
+    [
+        "panna cotta",
+        1
+    ],
+    [
+        "tortellini alla romanella",
+        1
+    ],
+    [
+        "gamberoni fradiavolo",
+        1
+    ],
+    [
+        "gamberoni alla griglia",
+        1
+    ],
+    [
+        "echt donninghaus currywurst",
+        1
+    ],
+    [
+        "frikadell spezial",
+        1
+    ],
+    [
+        "ritterburghaussalat",
+        1
+    ],
+    [
+        "geback ananas",
+        1
+    ],
+    [
+        "geback banan",
+        1
+    ],
+    [
+        "kugel eis wahl",
+        1
+    ],
+    [
+        "hausgemacht lasagn",
+        1
+    ],
+    [
+        "insalata contadina",
+        1
+    ],
+    [
+        "rucolasalat parmesan",
+        1
+    ],
+    [
+        "schnitzelvariation chef art",
+        1
+    ],
+    [
+        "kolpinghauspfann",
+        1
+    ],
+    [
+        "paris zwiebelsupp",
+        1
+    ],
+    [
+        "95 manti",
+        1
+    ],
+    [
+        "71 yogurtlu adana",
+        1
+    ],
+    [
+        "38 et corbasi",
+        1
+    ],
+    [
+        "astic",
+        1
+    ],
+    [
+        "insalata mista",
+        1
+    ],
+    [
+        "antipasti misti",
+        1
+    ],
+    [
+        "lasagneblech",
+        1
+    ],
+    [
+        "pizzablech margherita",
+        1
+    ],
+    [
+        "angebot 4",
+        1
+    ],
+    [
+        "klein schnitzel wien art rostkartoffeln",
+        1
+    ],
+    [
+        "schnorritell",
+        1
+    ],
+    [
+        "lammruck zwiebelmus",
+        1
+    ],
+    [
+        "rindfleisch szchuanart",
+        1
+    ],
+    [
+        "reiswein",
+        1
+    ],
+    [
+        "pflanmenwein",
+        1
+    ],
+    [
+        "dondurma",
+        1
+    ],
+    [
+        "meyv salatasi",
+        1
+    ],
+    [
+        "arkadas tatlisi",
+        1
+    ],
+    [
+        "ganz holt gan beilag 4 person",
+        1
+    ],
+    [
+        "neuling steak schmorzwiebeln rostkartoffeln salat",
+        1
+    ],
+    [
+        "krauterknoblauchsuppch crouton",
+        1
+    ],
+    [
+        "jhardareis",
+        1
+    ],
+    [
+        "mango mouss",
+        1
+    ],
+    [
+        "mango kulfi",
+        1
+    ],
+    [
+        "special",
+        1
+    ],
+    [
+        "bolognes",
+        1
+    ],
+    [
+        "pizza mista",
+        1
+    ],
+    [
+        "pizza salam",
+        1
+    ],
+    [
+        "hausgemacht tiramisu",
+        1
+    ],
+    [
+        "tortellini al forno",
+        1
+    ],
+    [
+        "tagliatell nostran",
+        1
+    ],
+    [
+        "insalata com bochum",
+        1
+    ],
+    [
+        "gnocchi al capres",
+        1
+    ],
+    [
+        "gnocchi ai 4 formaggi",
+        1
+    ],
+    [
+        "mykonos tell",
+        1
+    ],
+    [
+        "akropolis tell",
+        1
+    ],
+    [
+        "babykalamar",
+        1
+    ],
+    [
+        "gyros “artemis”",
+        1
+    ],
+    [
+        "gyrostell",
+        1
+    ],
+    [
+        "tortelloni al pistaccio verd",
+        1
+    ],
+    [
+        "parmigiana di melanzan",
+        1
+    ],
+    [
+        "penn",
+        1
+    ],
+    [
+        "gemischt eisbech",
+        1
+    ],
+    [
+        "frisch nordseekrabb",
+        1
+    ],
+    [
+        "pfefferrahmschnitzel",
+        1
+    ],
+    [
+        "marathon platt",
+        1
+    ],
+    [
+        "fruhstucksbuffet",
+        1
+    ],
+    [
+        "hawaiitoast schink ananas kas uberback",
+        1
+    ],
+    [
+        "thunfischtoast schink zwiebeln kas uberback",
+        1
+    ],
+    [
+        "kasetell",
+        1
+    ],
+    [
+        "hausgemacht tiramisù",
+        1
+    ],
+    [
+        "3gangeuberraschungsmenu wahlweis fisch fleisch",
+        1
+    ],
+    [
+        "kartoffellauchroulad brickteigmantel krautersalat kurbiskern",
+        1
+    ],
+    [
+        "raffaellobech",
+        1
+    ],
+    [
+        "meeresfruchtepasta",
+        1
+    ],
+    [
+        "leberkas´",
+        1
+    ],
+    [
+        "biet vorbestell",
+        1
+    ],
+    [
+        "mettwurstpfann „haus spitz“",
+        1
+    ],
+    [
+        "pfannkuch",
+        1
+    ],
+    [
+        "gegrillt maishahnchenbrust",
+        1
+    ],
+    [
+        "gegrillt schweinemedaillon",
+        1
+    ],
+    [
+        "gegrillt lachsfilet",
+        1
+    ],
+    [
+        "hawaiischnitzel",
+        1
+    ],
+    [
+        "klein rumpsteak pomm frit salat",
+        1
+    ],
+    [
+        "schnitzel wien art pomm frit gemus",
+        1
+    ],
+    [
+        "original wien kalbsschnitzel bratkartoffeln knackig blattsalat",
+        1
+    ],
+    [
+        "sauerbrat ochsenbrust apfelrotkraut kartoffelnock",
+        1
+    ],
+    [
+        "gebrat salbeilammfilet gemus provenc rucolakartoffelroulad",
+        1
+    ],
+    [
+        "mooh phad noa mai",
+        1
+    ],
+    [
+        "mooh phad kink",
+        1
+    ],
+    [
+        "mooh phad bai gra pao",
+        1
+    ],
+    [
+        "frisch datteln buttersaucerresauc vanilleeis",
+        1
+    ],
+    [
+        "charolaisfilet barolosauc",
+        1
+    ],
+    [
+        "gemusetell waldhaus",
+        1
+    ],
+    [
+        "leck",
+        1
+    ],
+    [
+        "chorizo a la miel",
+        1
+    ],
+    [
+        "aceitunas mezcladas",
+        1
+    ],
+    [
+        "champinon ajillo",
+        1
+    ],
+    [
+        "137 spaghetti aglio e olio",
+        1
+    ],
+    [
+        "52 pennetomatensahnesauc",
+        1
+    ],
+    [
+        "86 sauerrahm",
+        1
+    ],
+    [
+        "vanillequark himbeersauc",
+        1
+    ],
+    [
+        "orektika",
+        1
+    ],
+    [
+        "statt pomm reis",
+        1
+    ],
+    [
+        "penelopepfannch",
+        1
+    ],
+    [
+        "sousukakia spezial",
+        1
+    ],
+    [
+        "juni – august",
+        1
+    ],
+    [
+        "april mai",
+        1
+    ],
+    [
+        "septemb",
+        1
+    ],
+    [
+        "dessert trattoria",
+        1
+    ],
+    [
+        "casatta",
+        1
+    ],
+    [
+        "fischstabch",
+        1
+    ],
+    [
+        "hahnchenbrustfilet",
+        1
+    ],
+    [
+        "klein schnitzel",
+        1
+    ],
+    [
+        "gourmet tell",
+        1
+    ],
+    [
+        "polapola",
+        1
+    ],
+    [
+        "reisauflauf aromatisiert pflaum",
+        1
+    ],
+    [
+        "filet wel kartoffelkrust sahnig schwarzwurzelgemus",
+        1
+    ],
+    [
+        "pizza prosciutto",
+        1
+    ],
+    [
+        "tartufo",
+        1
+    ],
+    [
+        "schwarz tagliatell",
+        1
+    ],
+    [
+        "tagliatell",
+        1
+    ],
+    [
+        "caesar salad",
+        1
+    ],
+    [
+        "lachsforellenfiletmit stielmusrhabarbergemus estragonschaumund risoleekartoffeln",
+        1
+    ],
+    [
+        "spaghettini tomat knoblauch rucola parmesan",
+        1
+    ],
+    [
+        "spaghetti alla bolognes",
+        1
+    ],
+    [
+        "carpaccio di manzo",
+        1
+    ],
+    [
+        "mozzarella di buffola",
+        1
+    ],
+    [
+        "gesund tell",
+        1
+    ],
+    [
+        "obazda",
+        1
+    ],
+    [
+        "espressopudding",
+        1
+    ],
+    [
+        "gewurzt couscoussalat",
+        1
+    ],
+    [
+        "welsfilet",
+        1
+    ],
+    [
+        "tapas variadas de pescado",
+        1
+    ],
+    [
+        "champiñon al ajillo",
+        1
+    ],
+    [
+        "eis heiss",
+        1
+    ],
+    [
+        "melitzanosalata",
+        1
+    ],
+    [
+        "holzfallerschnitzel",
+        1
+    ],
+    [
+        "versch belag",
+        1
+    ],
+    [
+        "funghi",
+        1
+    ],
+    [
+        "tomat mozzarella",
+        1
+    ],
+    [
+        "gegrillt gansebrat",
+        1
+    ],
+    [
+        "schweinefiletmedaillon iber schwein",
+        1
+    ],
+    [
+        "gamberoni alia griglia",
+        1
+    ],
+    [
+        "combinazion",
+        1
+    ],
+    [
+        "pizza tiziana",
+        1
+    ],
+    [
+        "schwein iber schwein",
+        1
+    ],
+    [
+        "medaillon schweinefilet",
+        1
+    ],
+    [
+        "gemischt salat",
+        1
+    ],
+    [
+        "gross salattell",
+        1
+    ],
+    [
+        "kegl toast",
+        1
+    ],
+    [
+        "eiskaffe",
+        1
+    ],
+    [
+        "pfannengyros",
+        1
+    ],
+    [
+        "insalata di tonno gross",
+        1
+    ],
+    [
+        "pizza buongustaia klein",
+        1
+    ],
+    [
+        "pizza broccoli klein",
+        1
+    ],
+    [
+        "schultenhof pfann",
+        1
+    ],
+    [
+        "seezungenrollch",
+        1
+    ],
+    [
+        "doppelt portion fleisch",
+        1
+    ],
+    [
+        "chili chees burg",
+        1
+    ],
+    [
+        "veggi burg",
+        1
+    ],
+    [
+        "gold stabchenspezial 2 person",
+        1
+    ],
+    [
+        "sichuanspezial 2 person",
+        1
+    ],
+    [
+        "shanghaispezial 2 person",
+        1
+    ],
+    [
+        "schnitzel",
+        1
+    ],
+    [
+        "damentoast",
+        1
+    ],
+    [
+        "doppelt currywurst",
+        1
+    ],
+    [
+        "geback ent mandeln bambusspross chamignon",
+        1
+    ],
+    [
+        "babipangang fein geschnitt – geback schweinefleisch susssaur scharf orangensauc",
+        1
+    ],
+    [
+        "ya kai ngau chap",
+        1
+    ],
+    [
+        "maccheroni gyros kas uberback",
+        1
+    ],
+    [
+        "maccaroni tortellini kas uberback",
+        1
+    ],
+    [
+        "maccheroni verd kas uberback",
+        1
+    ],
+    [
+        "rigatoni alla giovanni",
+        1
+    ],
+    [
+        "piccata romana",
+        1
+    ],
+    [
+        "fettina alla bolognes",
+        1
+    ],
+    [
+        "sis tell",
+        1
+    ],
+    [
+        "donertasch",
+        1
+    ],
+    [
+        "hirtensalat",
+        1
+    ],
+    [
+        "steaktell",
+        1
+    ],
+    [
+        "gyros uberback komplett",
+        1
+    ],
+    [
+        "barbarenburg",
+        1
+    ],
+    [
+        "elfenburg",
+        1
+    ],
+    [
+        "elsass flammkuch",
+        1
+    ],
+    [
+        "yanmei",
+        1
+    ],
+    [
+        "bananensplit",
+        1
+    ],
+    [
+        "shrimps verschied gemus",
+        1
+    ],
+    [
+        "ausflug trop huhnerbrust bambus morcheln chinakohl glasnudeln",
+        1
+    ],
+    [
+        "neugier huhn huhnerbrust chin pilz bambus",
+        1
+    ],
+    [
+        "spaghettieis",
+        1
+    ],
+    [
+        "kiddybox",
+        1
+    ],
+    [
+        "tagliolini",
+        1
+    ],
+    [
+        "gnocchi",
+        1
+    ],
+    [
+        "gebrat kalbsleb",
+        1
+    ],
+    [
+        "zwiebelschnitzel",
+        1
+    ],
+    [
+        "teufelssteak",
+        1
+    ],
+    [
+        "12 jagerpfann",
+        1
+    ],
+    [
+        "specki",
+        1
+    ],
+    [
+        "ruhrpott",
+        1
+    ],
+    [
+        "tagliatell salmon",
+        1
+    ],
+    [
+        "schaschlik",
+        1
+    ],
+    [
+        "molos tell",
+        1
+    ],
+    [
+        "saltimbocca wolfsbarschfilet",
+        1
+    ],
+    [
+        "dessert tris la scala",
+        1
+    ],
+    [
+        "dorad ganz krauterbutt salat beilag wahl",
+        1
+    ],
+    [
+        "burgunderbrat rotkohl kartoffeltal",
+        1
+    ],
+    [
+        "cordon bleu schweinefilet rahmwirsing bratkartoffeln",
+        1
+    ],
+    [
+        "schweinemedaillon",
+        1
+    ],
+    [
+        "westfal herrencrem",
+        1
+    ],
+    [
+        "seezung gegrillt",
+        1
+    ],
+    [
+        "gemischt desserttell",
+        1
+    ],
+    [
+        "sutlac mittelsuss",
+        1
+    ],
+    [
+        "spanisch caramelpudding",
+        1
+    ],
+    [
+        "blaubartz kaptensdin",
+        1
+    ],
+    [
+        "pollitocalimero",
+        1
+    ],
+    [
+        "stifado",
+        1
+    ],
+    [
+        "arnaki frikass me marouli",
+        1
+    ],
+    [
+        "giouvetsi arni me chilopit",
+        1
+    ],
+    [
+        "gambas speckmantel rosa pfeffersauc",
+        1
+    ],
+    [
+        "gebrat doradenfilet krauterol",
+        1
+    ],
+    [
+        "filet weiss wel tomat mozzarella gratiniert",
+        1
+    ],
+    [
+        "zigeun schnitzel",
+        1
+    ],
+    [
+        "beyti kebap",
+        1
+    ],
+    [
+        "imam bayildi",
+        1
+    ],
+    [
+        "karis izgara",
+        1
+    ],
+    [
+        "plato de pescado variado",
+        1
+    ],
+    [
+        "backpflaum speckmantel",
+        1
+    ],
+    [
+        "massala gambas",
+        1
+    ],
+    [
+        "massala mixed huhn rind",
+        1
+    ],
+    [
+        "massala vegetar saisongemus",
+        1
+    ],
+    [
+        "tres doc",
+        1
+    ],
+    [
+        "tod schokolad",
+        1
+    ],
+    [
+        "pudim flan",
+        1
+    ],
+    [
+        "pomm frit",
+        1
+    ],
+    [
+        "gebrat reisnudeln",
+        1
+    ],
+    [
+        "gebrat nudeln",
+        1
+    ],
+    [
+        "gross eisportion",
+        1
+    ],
+    [
+        "92 krabbencocktail",
+        1
+    ],
+    [
+        "crème brûlée",
+        1
+    ],
+    [
+        "gemischt eis 3 kugeln",
+        1
+    ],
+    [
+        "warm apfelbirnentart",
+        1
+    ],
+    [
+        "hausgemacht blueberry muffin",
+        1
+    ],
+    [
+        "orang dreierlei",
+        1
+    ],
+    [
+        "pizza hawaii spezial tomatensauc",
+        1
+    ],
+    [
+        "pizza texas tomatensauc",
+        1
+    ],
+    [
+        "pizza gourmet",
+        1
+    ],
+    [
+        "paelha a moda de casa",
+        1
+    ],
+    [
+        "prato misto de peix",
+        1
+    ],
+    [
+        "gambas picant",
+        1
+    ]
+]

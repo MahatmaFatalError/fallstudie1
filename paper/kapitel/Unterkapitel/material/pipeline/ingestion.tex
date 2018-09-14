@@ -3,16 +3,15 @@
 As described in \cite{ingestion} \textit{Data Ingestion} is the process of obtaining and importing data for immediate use or storage in a database. In our use case we collect data from various data sources, thus we need different implementation approaches on each kind of data source. \newline
 In total, data from five different types are collected:
 \begin{itemize}
-  \item \ac{JSON} Files
-  \item \ac{CSV} Files
+  \item \ac{CSV} files
   \item \ac{API}
-  \item \acs{PDF}
+  \item \acs{PDF} files
   \item \acs{HTML} content
 \end{itemize}
 A challenge that should not be underestimated is ensuring quality of the data.
-While \ac{API}, \ac{CSV} and \ac{JSON} files consist of very structured data and reading them does not require much effort,
-data from a \ac{PDF} file or homepage are unstructured and require a higher implementation effort and possibly an additional
-\textit{Data Cleaning} step is required before using them in the analysis part to get the results that are truly reflecting the reality.
+While \ac{API} and \ac{CSV} files consist of very structured data and reading them does not require much effort,
+data from a \ac{PDF} file or homepage are unstructured and require a higher implementation effort and possibly additional
+\textit{Data Cleaning} steps are required before using them in the analysis part to get the results that are truly reflecting the reality.
 % For the implementation of \textit{Data Ingestion} the \code{collector.py} module was developed.
 % Within this module is the base class for the flow logic of the concrete \textit{collectors}.
 % Due to the inhomogeneity of the data sources and the associated different logic per \textit{collector}, the \code{Collector} class only contains the logic

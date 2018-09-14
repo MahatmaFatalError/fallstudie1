@@ -9,11 +9,14 @@ from main.helper.text_analyzer import TextAnalyzer
 
 logger = logging.getLogger(__name__)
 city_string = 'Bochum'
-save_as_latex = True
-action = 2  # 1 = group, 2 = just count
-
+save_as_latex = False
+action = 1  # 1 = group, 2 = just count
+language = 'german'
+stemming = True
+tagging = False
 tree_tagger_dir = '../../../data/tree_tagger'
-analyzer = TextAnalyzer('german', True, True, tree_tagger_dir)
+
+analyzer = TextAnalyzer(language, stemming, tagging, tree_tagger_dir)
 
 
 def run():

@@ -5,7 +5,7 @@ from config import constants
 from main.collector.collector import Collector
 from main.helper.db_helper import SqlHelper
 from urllib.error import HTTPError
-from main.helper.jessy_spider import SpeisekarteSpider
+from main.helper.web_scraper import SpeisekarteSpider
 
 
 class SpeisekarteCollector(Collector):

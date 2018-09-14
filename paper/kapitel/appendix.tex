@@ -4,7 +4,7 @@
 \section{City Analysis}
 \label{app:cityanalysis}
 \bildWOCite{ctree.png}{Unbiased Conditional Inference Tree of Yelp restaurant data}{ctree}{}{}
-
+\section{Underrepresented Food Categories in Bochum}
 \begin{table}[!htbp] \centering
 	\caption{Underrepresented food categories}
 	\label{tab:foodcats}
@@ -59,6 +59,20 @@
 	\end{tabular}
 \end{table}
 
+\begin{table}[!htbp] \centering
+	\caption{affordable real estate objects Bochum}
+	\label{tab:realestate}
+	\begin{tabular}{@{\extracolsep{5pt}} ccccccc}
+		\\[-1.8ex]\hline
+		\hline \\[-1.8ex]
+		city & quarter & postcode & price & priceinterval & totalfloorspace & rest\_budget \\
+		\hline \\[-1.8ex]
+		Bochum & Gleisdreieck &	$44787$ & $0$ & MONTH & $200$ & $437000$ \\
+		Bochum & Wattenscheid-Mitte & $44866$ & $350000$ & ONE\_TIME\_CHARGE & $210$ & $72000$ \\
+		\hline \\[-1.8ex]
+	\end{tabular}
+\end{table}
+
 \section{Categories in Bochum}
 \label{app:category}
 \input{kapitel/unterkapitel/results/menu/categories_count_bochum}
@@ -71,4 +85,7 @@
 \section{Restaurant Services in Bochum}
 \label{app:services}
 \input{kapitel/unterkapitel/results/menu/services_count_bochum}
+\section{Top 20 5-Star Review Words in Bochum}
+\label{app:review}
+\input{kapitel/unterkapitel/results/review/5_star_review_bochum}
 \end{appendices}
