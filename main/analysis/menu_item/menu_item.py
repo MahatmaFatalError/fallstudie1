@@ -10,7 +10,7 @@ from main.helper import util
 logger = logging.getLogger(__name__)
 city_string = 'Bochum'
 save_as_latex = False
-action = 2  # 1 = group, 2 = just count
+action = 1  # 1 = group, 2 = just count
 language = 'german'
 stemming = True
 tagging = False
