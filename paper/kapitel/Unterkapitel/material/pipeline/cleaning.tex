@@ -14,7 +14,7 @@ The following paragraphs explains the measures conducted to clean up the collect
 If there were restaurants without a valid address the \ylp{} \ac{API} was addressed again to find the restaurant's address.
 If still no city or postcode is found, this restaurant gets deleted for the reasons of simplicity, since a restaurant without a postcode or city has no use for the subsequent analysis.
 \paragraph{Price Range Cleaning}
-In the price\_range attribute there were occasional occuring \code{NULL} values which possibly could be filled when addressing the \ylp{} \ac{API} a second time.
+In the price\_range attribute there were occasional occurring \code{NULL} values which possibly could be filled when addressing the \ylp{} \ac{API} a second time.
 If this was not the case, the \code{NULL} values were filled with the mode of the price\_range from the current city.
 \paragraph{City Cleaning}
 Despite the fact that the \code{city} attribute of a restaurant always came from Yelp it came to a mixture of the German and English language,
@@ -23,7 +23,7 @@ Furthermore, the German city ''Frankfurt am Main'' was available in different sp
 However, this could be fixed with a simple \ac{SQL} statement.
 \paragraph{Buying Power Cleaning}
 The data source found for acquiring the buying\_power for various german cities unfortunately contained not the buying\_power for all german cities.
-We solved this isssue by replacing the missing buying\_power with the average buying\_power in Germany in order to be able to carry out at least a rough analysis.
+We solved this issue by replacing the missing buying\_power with the average buying\_power in Germany in order to be able to carry out at least a rough analysis.
 \paragraph{Average Purchase Price Cleaning}
 Also with the average purchase price of a restaurant per m\textsuperscript{2} the original data source did not include all cities of Germany and therefore
 some \code{NULL} values remained in the database.
